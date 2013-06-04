@@ -46,7 +46,9 @@ public class MainFrame extends javax.swing.JFrame {
     private ArrayList<String> parentIds = null;
     private ArrayList<String> prdTypes = new ArrayList<>();
     private ArrayList<String> statuses = new ArrayList<>();
+    private ArrayList<String> polarizations = new ArrayList<>();
     private final Configuration cfg = new Configuration();
+    private Template template = null;
     private final Random rng = new Random();
     private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
 
@@ -58,6 +60,7 @@ public class MainFrame extends javax.swing.JFrame {
             cfg.setDirectoryForTemplateLoading(
                     new File(getClass().getResource("templates").toURI()));
             cfg.setObjectWrapper(new DefaultObjectWrapper());
+            template = cfg.getTemplate("getrecords-response.ftl");
         } catch (IOException | URISyntaxException ex) {
         }
         statuses.add("NEW");
@@ -69,6 +72,10 @@ public class MainFrame extends javax.swing.JFrame {
         prdTypes.add("L1");
         prdTypes.add("L1B");
         prdTypes.add("ORTHO");
+        polarizations.add("HH");
+        polarizations.add("VV");
+        polarizations.add("HV");
+        polarizations.add("VH");
         initComponents();
     }
 
@@ -116,6 +123,18 @@ public class MainFrame extends javax.swing.JFrame {
         lF2 = new javax.swing.JLabel();
         spHeight = new javax.swing.JSpinner();
         chCenter = new javax.swing.JCheckBox();
+        chCloudCov = new javax.swing.JCheckBox();
+        lCc1 = new javax.swing.JLabel();
+        spCldCovFrom = new javax.swing.JSpinner();
+        lCc2 = new javax.swing.JLabel();
+        spCldCovTo = new javax.swing.JSpinner();
+        chSnowCov = new javax.swing.JCheckBox();
+        spSnwCovFrom = new javax.swing.JSpinner();
+        lSc1 = new javax.swing.JLabel();
+        spSnwCovTo = new javax.swing.JSpinner();
+        lSc2 = new javax.swing.JLabel();
+        chPolarztn = new javax.swing.JCheckBox();
+        bPlrztnVals = new javax.swing.JButton();
         pArch = new javax.swing.JPanel();
         jCheckBox2 = new javax.swing.JCheckBox();
         pAcq = new javax.swing.JPanel();
@@ -276,6 +295,59 @@ public class MainFrame extends javax.swing.JFrame {
         chCenter.setText("Calc. product center");
         chCenter.setEnabled(false);
 
+        chCloudCov.setText("Cloud coverage");
+        chCloudCov.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chCloudCovActionPerformed(evt);
+            }
+        });
+
+        lCc1.setText("from");
+        lCc1.setEnabled(false);
+
+        spCldCovFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spCldCovFrom.setEnabled(false);
+
+        lCc2.setText("to");
+        lCc2.setEnabled(false);
+
+        spCldCovTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spCldCovTo.setEnabled(false);
+
+        chSnowCov.setText("Snow coverage");
+        chSnowCov.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chSnowCovActionPerformed(evt);
+            }
+        });
+
+        spSnwCovFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spSnwCovFrom.setEnabled(false);
+
+        lSc1.setText("to");
+        lSc1.setEnabled(false);
+
+        spSnwCovTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spSnwCovTo.setEnabled(false);
+
+        lSc2.setText("from");
+        lSc2.setEnabled(false);
+
+        chPolarztn.setText("Polarization");
+        chPolarztn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chPolarztnActionPerformed(evt);
+            }
+        });
+
+        bPlrztnVals.setText("Allowed values...");
+        bPlrztnVals.setEnabled(false);
+        bPlrztnVals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPlrztnValsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pProdLayout = new javax.swing.GroupLayout(pProd);
         pProd.setLayout(pProdLayout);
         pProdLayout.setHorizontalGroup(
@@ -283,24 +355,41 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(pProdLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pProdLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(bPlrztnVals))
                     .addComponent(chSensing)
                     .addComponent(chParentId)
                     .addComponent(jLabel8)
                     .addComponent(chOrbitNum)
                     .addComponent(chFootprint)
                     .addGroup(pProdLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
                         .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pProdLayout.createSequentialGroup()
-                                .addComponent(lF1)
+                                .addGap(22, 22, 22)
+                                .addComponent(lCc1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(spCldCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lF2)
+                                .addComponent(lCc2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(chCenter))
+                                .addComponent(spCldCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(chCloudCov))
+                        .addGap(18, 18, 18)
+                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pProdLayout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(lSc2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spSnwCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lSc1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spSnwCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(chSnowCov)))
+                    .addGroup(pProdLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pProdLayout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -348,8 +437,19 @@ public class MainFrame extends javax.swing.JFrame {
                                         .addComponent(lOf1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(spLstOrbitOfs, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(chLastOrbitOfs))))))
-                .addContainerGap(111, Short.MAX_VALUE))
+                                    .addComponent(chLastOrbitOfs)))
+                            .addGroup(pProdLayout.createSequentialGroup()
+                                .addComponent(lF1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lF2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(chCenter))))
+                    .addComponent(chPolarztn))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pProdLayout.setVerticalGroup(
             pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,13 +502,35 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chFootprint)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lF1)
-                    .addComponent(spWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lF2)
-                    .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chCenter))
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pProdLayout.createSequentialGroup()
+                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lF1)
+                            .addComponent(spWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lF2)
+                            .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chCenter))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chCloudCov)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lCc1)
+                            .addComponent(spCldCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lCc2)
+                            .addComponent(spCldCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pProdLayout.createSequentialGroup()
+                        .addComponent(chSnowCov)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lSc2)
+                            .addComponent(spSnwCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lSc1)
+                            .addComponent(spSnwCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chPolarztn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bPlrztnVals)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOProduct", pProd);
@@ -422,14 +544,14 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(pArchLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jCheckBox2)
-                .addContainerGap(559, Short.MAX_VALUE))
+                .addContainerGap(526, Short.MAX_VALUE))
         );
         pArchLayout.setVerticalGroup(
             pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pArchLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jCheckBox2)
-                .addContainerGap(407, Short.MAX_VALUE))
+                .addContainerGap(458, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOArchivingInfo", pArch);
@@ -443,14 +565,14 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(pAcqLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jCheckBox1)
-                .addContainerGap(559, Short.MAX_VALUE))
+                .addContainerGap(526, Short.MAX_VALUE))
         );
         pAcqLayout.setVerticalGroup(
             pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pAcqLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jCheckBox1)
-                .addContainerGap(407, Short.MAX_VALUE))
+                .addContainerGap(458, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOAcquisitionPlat", pAcq);
@@ -473,7 +595,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(456, Short.MAX_VALUE))
+                .addContainerGap(410, Short.MAX_VALUE))
         );
         pBrowsLayout.setVerticalGroup(
             pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,7 +605,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jCheckBox3)
                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addContainerGap(399, Short.MAX_VALUE))
+                .addContainerGap(454, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOBrowseInfo", pBrows);
@@ -546,7 +668,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabPane)
+                .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -633,21 +755,49 @@ public class MainFrame extends javax.swing.JFrame {
         lF2.setEnabled(chFootprint.isSelected());
     }//GEN-LAST:event_chFootprintActionPerformed
 
+    private void chCloudCovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chCloudCovActionPerformed
+        spCldCovFrom.setEnabled(chCloudCov.isSelected());
+        spCldCovTo.setEnabled(chCloudCov.isSelected());
+        lCc1.setEnabled(chCloudCov.isSelected());
+        lCc2.setEnabled(chCloudCov.isSelected());
+    }//GEN-LAST:event_chCloudCovActionPerformed
+
+    private void chSnowCovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSnowCovActionPerformed
+        spSnwCovFrom.setEnabled(chSnowCov.isSelected());
+        spSnwCovTo.setEnabled(chSnowCov.isSelected());
+        lSc1.setEnabled(chSnowCov.isSelected());
+        lSc2.setEnabled(chSnowCov.isSelected());
+    }//GEN-LAST:event_chSnowCovActionPerformed
+
+    private void bPlrztnValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPlrztnValsActionPerformed
+        SetOfValsDialog pid = new SetOfValsDialog(this, polarizations);
+        pid.setLocationRelativeTo(this);
+        pid.setVisible(true);
+        polarizations = pid.getValList();
+    }//GEN-LAST:event_bPlrztnValsActionPerformed
+
+    private void chPolarztnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chPolarztnActionPerformed
+        bPlrztnVals.setEnabled(chPolarztn.isSelected());
+    }//GEN-LAST:event_chPolarztnActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bGenerate;
     private javax.swing.JButton bParentIdVals;
+    private javax.swing.JButton bPlrztnVals;
     private javax.swing.JButton bPrdTypeVals;
     private javax.swing.JButton bStatusVals;
     private javax.swing.JComboBox cbClassification;
     private javax.swing.JComboBox cbDurationUnit;
     private javax.swing.JCheckBox chCenter;
     private javax.swing.JCheckBox chClassification;
+    private javax.swing.JCheckBox chCloudCov;
     private javax.swing.JCheckBox chFootprint;
     private javax.swing.JCheckBox chLastOrbitOfs;
     private javax.swing.JCheckBox chOrbitNum;
     private javax.swing.JCheckBox chParentId;
+    private javax.swing.JCheckBox chPolarztn;
     private javax.swing.JCheckBox chPrdType;
     private javax.swing.JCheckBox chSensing;
+    private javax.swing.JCheckBox chSnowCov;
     private javax.swing.JCheckBox chStatus;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
@@ -658,11 +808,15 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JLabel lCc1;
+    private javax.swing.JLabel lCc2;
     private javax.swing.JLabel lF1;
     private javax.swing.JLabel lF2;
     private javax.swing.JLabel lOf1;
     private javax.swing.JLabel lOn1;
     private javax.swing.JLabel lOn2;
+    private javax.swing.JLabel lSc1;
+    private javax.swing.JLabel lSc2;
     private javax.swing.JLabel lSt1;
     private javax.swing.JLabel lSt2;
     private javax.swing.JLabel lSt3;
@@ -670,6 +824,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pArch;
     private javax.swing.JPanel pBrows;
     private javax.swing.JPanel pProd;
+    private javax.swing.JSpinner spCldCovFrom;
+    private javax.swing.JSpinner spCldCovTo;
     private javax.swing.JSpinner spDuration;
     private javax.swing.JSpinner spHeight;
     private javax.swing.JSpinner spLstOrbitOfs;
@@ -678,6 +834,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSpinner spOrbitTo;
     private javax.swing.JSpinner spSensFrom;
     private javax.swing.JSpinner spSensTo;
+    private javax.swing.JSpinner spSnwCovFrom;
+    private javax.swing.JSpinner spSnwCovTo;
     private javax.swing.JSpinner spWidth;
     private javax.swing.JTabbedPane tabPane;
     private javax.swing.JTextField tfPrefix;
@@ -685,10 +843,9 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void generate(File selectedFile) {
         try {
-            Template temp = cfg.getTemplate("getrecords-response.ftl");
             Map model = calcModel();
             try (Writer out = new BufferedWriter(new FileWriter(selectedFile))) {
-                temp.process(model, out);
+                template.process(model, out);
             }
         } catch (IOException | TemplateException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
@@ -708,6 +865,10 @@ public class MainFrame extends javax.swing.JFrame {
         final long stopTime = ((Date) spSensTo.getValue()).getTime();
         final long timeDelta = stopTime - startTime;
         Integer durationDelta = (Integer) spDuration.getValue();
+        final Integer cldCovFrom = (Integer) spCldCovFrom.getValue();
+        final Integer cldCovDelta = (Integer) spCldCovTo.getValue() - cldCovFrom;
+        final Integer snwCovFrom = (Integer) spCldCovFrom.getValue();
+        final Integer snwCovDelta = (Integer) spCldCovTo.getValue() - snwCovFrom;
         switch (cbDurationUnit.getSelectedItem().toString()) {
             case "minutes":
                 durationDelta *= 60000;
@@ -743,6 +904,9 @@ public class MainFrame extends javax.swing.JFrame {
             if (chStatus.isSelected() && statuses != null) {
                 rec.put("status", statuses.get(rng.nextInt(statuses.size())));
             }
+            if (chPolarztn.isSelected()) {
+                rec.put("polarisation", polarizations.get(rng.nextInt(polarizations.size())));
+            }
             if (chSensing.isSelected()) {
                 long time = startTime + rng.nextInt((int) timeDelta);
                 Date d = new Date(time);
@@ -764,6 +928,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
             if (chFootprint.isSelected()) {
                 genFootprintAndCenter(rec);
+            }
+            if (chCloudCov.isSelected()) {
+                Integer cover = cldCovFrom + rng.nextInt(cldCovDelta);
+                rec.put("cloudCover", cover.toString());
+            }
+            if (chSnowCov.isSelected()) {
+                Integer cover = snwCovFrom + rng.nextInt(snwCovDelta);
+                rec.put("snowCover", cover.toString());
             }
             records.add(rec);
         }

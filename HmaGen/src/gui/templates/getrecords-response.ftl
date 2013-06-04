@@ -130,6 +130,13 @@
                         </rim:ValueList>
                     </rim:Slot>
 </#if>
+<#if rec.polarisation??>
+                    <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::polarisationChannels" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                        <rim:ValueList>
+                            <rim:Value>${rec.polarisation}</rim:Value>
+                        </rim:ValueList>
+                    </rim:Slot>
+</#if>
                 </rim:ExtrinsicObject>
 <#--
                 <rim:ExtrinsicObject id="${rec.prodId}:ARCH" objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOArchivingInformation">
