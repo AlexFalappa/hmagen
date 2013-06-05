@@ -138,21 +138,32 @@
                     </rim:Slot>
 </#if>
                 </rim:ExtrinsicObject>
-<#--
+<#if rec.archCenter??>
                 <rim:ExtrinsicObject id="${rec.prodId}:ARCH" objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOArchivingInformation">
+<#if rec.archDate??>
                     <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::archivingDate" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:DateTime">
                         <rim:ValueList>
-                            <rim:Value>2007-01-10T01:04:01Z</rim:Value>
+                            <rim:Value>${rec.archDate}</rim:Value>
                         </rim:ValueList>
                     </rim:Slot>
+</#if>
+<#if rec.archId??>
+                    <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::archivingIdentifier" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                        <rim:ValueList>
+                            <rim:Value>${rec.archId}</rim:Value>
+                        </rim:ValueList>
+                    </rim:Slot>
+</#if>
                     <rim:Name>
-                        <rim:LocalizedString xml:lang="en-US" charset="UTF-8" value="AB"/>
+                        <rim:LocalizedString xml:lang="en-US" charset="UTF-8" value="${rec.archCenter}"/>
                     </rim:Name>
                 </rim:ExtrinsicObject>
                 <rim:Association id="${rec.prodId}:ARCH_ASSOC"
                                  associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::ArchivedIn"
                                  sourceObject="${rec.prodId}"
                                  targetObject="${rec.prodId}:ARCH"/>
+</#if>
+<#--
                 <rim:ExtrinsicObject id="${rec.prodId}:BRWS" objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOBrowseInformation">
                     <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::fileName" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
                         <rim:ValueList>

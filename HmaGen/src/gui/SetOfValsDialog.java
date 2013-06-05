@@ -15,10 +15,16 @@
  */
 package gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JComponent;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -32,19 +38,19 @@ public class SetOfValsDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form ParentIdsDialog
+     *
      * @param parent
      * @param vals
      */
-    public SetOfValsDialog(java.awt.Frame parent, List<String> vals) {
-        super(parent, true);
-        if (vals!=null) {
+    public SetOfValsDialog(java.awt.Frame parent, String title, List<String> vals) {
+        super(parent, title, true);
+        if (vals != null) {
             for (String c : vals) {
                 lmIds.addElement(c);
             }
         }
         initComponents();
         tfItem.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 bAdd.setEnabled(e.getDocument().getLength() > 0);
@@ -60,6 +66,19 @@ public class SetOfValsDialog extends javax.swing.JDialog {
                 bAdd.setEnabled(e.getDocument().getLength() > 0);
             }
         });
+    }
+
+    @Override
+    protected JRootPane createRootPane() {
+        KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
+        JRootPane rp = new JRootPane();
+        rp.registerKeyboardAction(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                setVisible(false);
+            }
+        }, stroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
+        return rp;
     }
 
     /**
@@ -79,7 +98,6 @@ public class SetOfValsDialog extends javax.swing.JDialog {
         bDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Parent identifiers");
 
         bOk.setText("OK");
         bOk.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +107,11 @@ public class SetOfValsDialog extends javax.swing.JDialog {
         });
 
         tfItem.setColumns(10);
+        tfItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfItemActionPerformed(evt);
+            }
+        });
 
         bAdd.setText("+");
         bAdd.setEnabled(false);
@@ -172,14 +195,17 @@ public class SetOfValsDialog extends javax.swing.JDialog {
         this.setVisible(false);
     }//GEN-LAST:event_bOkActionPerformed
 
+    private void tfItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfItemActionPerformed
+        bAddActionPerformed(evt);
+    }//GEN-LAST:event_tfItemActionPerformed
+
     public ArrayList<String> getValList() {
-        ArrayList<String> ret=new ArrayList<>();
-        for (Enumeration<String> e=lmIds.elements(); e.hasMoreElements();) {
+        ArrayList<String> ret = new ArrayList<>();
+        for (Enumeration<String> e = lmIds.elements(); e.hasMoreElements();) {
             ret.add(e.nextElement());
         }
         return ret;
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAdd;
     private javax.swing.JButton bDelete;

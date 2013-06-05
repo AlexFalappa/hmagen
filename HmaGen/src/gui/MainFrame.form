@@ -68,7 +68,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tabPane" pref="531" max="32767" attributes="0"/>
+              <Component id="tabPane" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -106,10 +106,6 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                              <Component id="bPlrztnVals" min="-2" max="-2" attributes="0"/>
-                          </Group>
                           <Component id="chSensing" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="chParentId" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -144,9 +140,11 @@
                                   <Component id="chSnowCov" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <Component id="chPolarztn" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="bPlrztnVals" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -219,7 +217,6 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <Component id="chPolarztn" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -673,8 +670,31 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="526" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="chGenArchInfo" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="chArchDate" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lAr1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="chArchId" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="lAd1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="spArdtFrom" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lAd2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="spArdtTo" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="bArCntVals" min="-2" max="-2" attributes="0"/>
+                                      <Component id="bArchIdVals" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="126" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -682,17 +702,113 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="458" max="32767" attributes="0"/>
+                      <Component id="chGenArchInfo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lAr1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="bArCntVals" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="chArchId" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="bArchIdVals" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="chArchDate" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lAd1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spArdtFrom" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lAd2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spArdtTo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="227" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+            <Component class="javax.swing.JCheckBox" name="chGenArchInfo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Generate"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chGenArchInfoActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="chArchDate">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Archiving date"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chArchDateActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lAd1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="from"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSpinner" name="spArdtFrom">
+              <Properties>
+                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                  <SpinnerModel initial="now" stepSize="13" type="date"/>
+                </Property>
+                <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
+                  <SpinnerEditor format="yyyy-MM-dd HH:mm:ss" type="1"/>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lAd2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="to"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSpinner" name="spArdtTo">
+              <Properties>
+                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                  <SpinnerModel initial="now" stepSize="13" type="date"/>
+                </Property>
+                <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
+                  <SpinnerEditor format="yyyy-MM-dd HH:mm:ss" type="1"/>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lAr1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Archiving Center"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="bArCntVals">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Allowed values..."/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bArCntValsActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="chArchId">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Archiving identifier"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chArchIdActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="bArchIdVals">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Allowed values..."/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bArchIdValsActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -708,10 +824,19 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="526" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="chGenAcqPlat" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox4" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox5" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox6" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox7" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="354" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -719,16 +844,73 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="458" max="32767" attributes="0"/>
+                      <Component id="chGenAcqPlat" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jCheckBox4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jCheckBox5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jCheckBox6" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jCheckBox7" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="157" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+            <Component class="javax.swing.JCheckBox" name="chGenAcqPlat">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Generate"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Platform name"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Serial identifier"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sensor name"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sensor type"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox5">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sensor operational mode"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox6">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Resolution"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox7">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Swath identifier"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -747,12 +929,12 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSpinner1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="410" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="chGenBrwsInfo" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox8" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="392" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -760,33 +942,33 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jCheckBox3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jSpinner1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="454" max="32767" attributes="0"/>
+                      <Component id="chGenBrwsInfo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jCheckBox8" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="337" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JCheckBox" name="jCheckBox3">
+            <Component class="javax.swing.JCheckBox" name="chGenBrwsInfo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Generate"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JSpinner" name="jSpinner1">
-              <Properties>
-                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                  <SpinnerModel initial="1" maximum="10" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
-                </Property>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel2">
+            <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
-                <Property name="text" type="java.lang.String" value="max"/>
+                <Property name="text" type="java.lang.String" value="Thumbnail file name"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox8">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Quicklook file name"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>

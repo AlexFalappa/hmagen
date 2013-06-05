@@ -47,6 +47,8 @@ public class MainFrame extends javax.swing.JFrame {
     private ArrayList<String> prdTypes = new ArrayList<>();
     private ArrayList<String> statuses = new ArrayList<>();
     private ArrayList<String> polarizations = new ArrayList<>();
+    private ArrayList<String> archCenters = new ArrayList<>();
+    private ArrayList<String> archIds = new ArrayList<>();
     private final Configuration cfg = new Configuration();
     private Template template = null;
     private final Random rng = new Random();
@@ -77,6 +79,13 @@ public class MainFrame extends javax.swing.JFrame {
         polarizations.add("HV");
         polarizations.add("VH");
         initComponents();
+    }
+
+    private ArrayList<String> showValsDialog(String title, ArrayList<String> valArray) {
+        SetOfValsDialog pid = new SetOfValsDialog(this, title, valArray);
+        pid.setLocationRelativeTo(this);
+        pid.setVisible(true);
+        return pid.getValList();
     }
 
     /**
@@ -136,13 +145,29 @@ public class MainFrame extends javax.swing.JFrame {
         chPolarztn = new javax.swing.JCheckBox();
         bPlrztnVals = new javax.swing.JButton();
         pArch = new javax.swing.JPanel();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        chGenArchInfo = new javax.swing.JCheckBox();
+        chArchDate = new javax.swing.JCheckBox();
+        lAd1 = new javax.swing.JLabel();
+        spArdtFrom = new javax.swing.JSpinner();
+        lAd2 = new javax.swing.JLabel();
+        spArdtTo = new javax.swing.JSpinner();
+        lAr1 = new javax.swing.JLabel();
+        bArCntVals = new javax.swing.JButton();
+        chArchId = new javax.swing.JCheckBox();
+        bArchIdVals = new javax.swing.JButton();
         pAcq = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        pBrows = new javax.swing.JPanel();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jSpinner1 = new javax.swing.JSpinner();
+        chGenAcqPlat = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox5 = new javax.swing.JCheckBox();
+        jCheckBox6 = new javax.swing.JCheckBox();
+        jCheckBox7 = new javax.swing.JCheckBox();
+        pBrows = new javax.swing.JPanel();
+        chGenBrwsInfo = new javax.swing.JCheckBox();
+        jLabel4 = new javax.swing.JLabel();
+        jCheckBox8 = new javax.swing.JCheckBox();
         bGenerate = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         chClassification = new javax.swing.JCheckBox();
@@ -355,9 +380,6 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(pProdLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pProdLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(bPlrztnVals))
                     .addComponent(chSensing)
                     .addComponent(chParentId)
                     .addComponent(jLabel8)
@@ -387,9 +409,11 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(spSnwCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(chSnowCov)))
+                    .addComponent(chPolarztn)
                     .addGroup(pProdLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bPlrztnVals)
                             .addGroup(pProdLayout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -447,8 +471,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(chCenter))))
-                    .addComponent(chPolarztn))
+                                .addComponent(chCenter)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pProdLayout.setVerticalGroup(
@@ -535,7 +558,61 @@ public class MainFrame extends javax.swing.JFrame {
 
         tabPane.addTab("EOProduct", pProd);
 
-        jCheckBox2.setText("Generate");
+        chGenArchInfo.setText("Generate");
+        chGenArchInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chGenArchInfoActionPerformed(evt);
+            }
+        });
+
+        chArchDate.setText("Archiving date");
+        chArchDate.setEnabled(false);
+        chArchDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chArchDateActionPerformed(evt);
+            }
+        });
+
+        lAd1.setText("from");
+        lAd1.setEnabled(false);
+
+        spArdtFrom.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.SECOND));
+        spArdtFrom.setEditor(new javax.swing.JSpinner.DateEditor(spArdtFrom, "yyyy-MM-dd HH:mm:ss"));
+        spArdtFrom.setEnabled(false);
+
+        lAd2.setText("to");
+        lAd2.setEnabled(false);
+
+        spArdtTo.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.SECOND));
+        spArdtTo.setEditor(new javax.swing.JSpinner.DateEditor(spArdtTo, "yyyy-MM-dd HH:mm:ss"));
+        spArdtTo.setEnabled(false);
+
+        lAr1.setText("Archiving Center");
+        lAr1.setEnabled(false);
+
+        bArCntVals.setText("Allowed values...");
+        bArCntVals.setEnabled(false);
+        bArCntVals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bArCntValsActionPerformed(evt);
+            }
+        });
+
+        chArchId.setText("Archiving identifier");
+        chArchId.setEnabled(false);
+        chArchId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chArchIdActionPerformed(evt);
+            }
+        });
+
+        bArchIdVals.setText("Allowed values...");
+        bArchIdVals.setEnabled(false);
+        bArchIdVals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bArchIdValsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pArchLayout = new javax.swing.GroupLayout(pArch);
         pArch.setLayout(pArchLayout);
@@ -543,20 +620,76 @@ public class MainFrame extends javax.swing.JFrame {
             pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pArchLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox2)
-                .addContainerGap(526, Short.MAX_VALUE))
+                .addGroup(pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chGenArchInfo)
+                    .addComponent(chArchDate)
+                    .addComponent(lAr1)
+                    .addComponent(chArchId)
+                    .addGroup(pArchLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pArchLayout.createSequentialGroup()
+                                .addComponent(lAd1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spArdtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lAd2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spArdtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(bArCntVals)
+                                .addComponent(bArchIdVals)))))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         pArchLayout.setVerticalGroup(
             pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pArchLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox2)
-                .addContainerGap(458, Short.MAX_VALUE))
+                .addComponent(chGenArchInfo)
+                .addGap(18, 18, 18)
+                .addComponent(lAr1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bArCntVals)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chArchId)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bArchIdVals)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chArchDate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lAd1)
+                    .addComponent(spArdtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lAd2)
+                    .addComponent(spArdtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(227, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOArchivingInfo", pArch);
 
-        jCheckBox1.setText("Generate");
+        chGenAcqPlat.setText("Generate");
+        chGenAcqPlat.setEnabled(false);
+
+        jLabel2.setText("Platform name");
+        jLabel2.setEnabled(false);
+
+        jCheckBox2.setText("Serial identifier");
+        jCheckBox2.setEnabled(false);
+
+        jCheckBox3.setText("Sensor name");
+        jCheckBox3.setEnabled(false);
+
+        jCheckBox4.setText("Sensor type");
+        jCheckBox4.setEnabled(false);
+
+        jCheckBox5.setText("Sensor operational mode");
+        jCheckBox5.setEnabled(false);
+
+        jCheckBox6.setText("Resolution");
+        jCheckBox6.setEnabled(false);
+
+        jCheckBox7.setText("Swath identifier");
+        jCheckBox7.setEnabled(false);
 
         javax.swing.GroupLayout pAcqLayout = new javax.swing.GroupLayout(pAcq);
         pAcq.setLayout(pAcqLayout);
@@ -564,25 +697,49 @@ public class MainFrame extends javax.swing.JFrame {
             pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pAcqLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox1)
-                .addContainerGap(526, Short.MAX_VALUE))
+                .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chGenAcqPlat)
+                    .addComponent(jLabel2)
+                    .addComponent(jCheckBox2)
+                    .addComponent(jCheckBox3)
+                    .addComponent(jCheckBox4)
+                    .addComponent(jCheckBox5)
+                    .addComponent(jCheckBox6)
+                    .addComponent(jCheckBox7))
+                .addContainerGap(354, Short.MAX_VALUE))
         );
         pAcqLayout.setVerticalGroup(
             pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pAcqLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox1)
-                .addContainerGap(458, Short.MAX_VALUE))
+                .addComponent(chGenAcqPlat)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox2)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox3)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox4)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox5)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox6)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox7)
+                .addContainerGap(157, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOAcquisitionPlat", pAcq);
 
-        jCheckBox3.setText("Generate");
+        chGenBrwsInfo.setText("Generate");
+        chGenBrwsInfo.setEnabled(false);
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 0, 10, 1));
-        jSpinner1.setEnabled(false);
+        jLabel4.setText("Thumbnail file name");
+        jLabel4.setEnabled(false);
 
-        jLabel2.setText("max");
+        jCheckBox8.setText("Quicklook file name");
+        jCheckBox8.setEnabled(false);
 
         javax.swing.GroupLayout pBrowsLayout = new javax.swing.GroupLayout(pBrows);
         pBrows.setLayout(pBrowsLayout);
@@ -590,22 +747,22 @@ public class MainFrame extends javax.swing.JFrame {
             pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pBrowsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox3)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(410, Short.MAX_VALUE))
+                .addGroup(pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chGenBrwsInfo)
+                    .addComponent(jLabel4)
+                    .addComponent(jCheckBox8))
+                .addContainerGap(392, Short.MAX_VALUE))
         );
         pBrowsLayout.setVerticalGroup(
             pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pBrowsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addContainerGap(454, Short.MAX_VALUE))
+                .addComponent(chGenBrwsInfo)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox8)
+                .addContainerGap(337, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOBrowseInfo", pBrows);
@@ -668,7 +825,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+                .addComponent(tabPane)
                 .addContainerGap())
         );
 
@@ -695,10 +852,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chLastOrbitOfsActionPerformed
 
     private void bStatusValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bStatusValsActionPerformed
-        SetOfValsDialog pid = new SetOfValsDialog(this, statuses);
-        pid.setLocationRelativeTo(this);
-        pid.setVisible(true);
-        statuses = pid.getValList();
+        statuses = showValsDialog("Statuses", statuses);
     }//GEN-LAST:event_bStatusValsActionPerformed
 
     private void chStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chStatusActionPerformed
@@ -706,10 +860,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chStatusActionPerformed
 
     private void bPrdTypeValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPrdTypeValsActionPerformed
-        SetOfValsDialog pid = new SetOfValsDialog(this, prdTypes);
-        pid.setLocationRelativeTo(this);
-        pid.setVisible(true);
-        prdTypes = pid.getValList();
+        prdTypes = showValsDialog("Product Types", prdTypes);
     }//GEN-LAST:event_bPrdTypeValsActionPerformed
 
     private void chPrdTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chPrdTypeActionPerformed
@@ -727,10 +878,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chOrbitNumActionPerformed
 
     private void bParentIdValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bParentIdValsActionPerformed
-        SetOfValsDialog pid = new SetOfValsDialog(this, parentIds);
-        pid.setLocationRelativeTo(this);
-        pid.setVisible(true);
-        parentIds = pid.getValList();
+        parentIds = showValsDialog("Parent Identifiers", parentIds);
     }//GEN-LAST:event_bParentIdValsActionPerformed
 
     private void chParentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chParentIdActionPerformed
@@ -770,16 +918,43 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chSnowCovActionPerformed
 
     private void bPlrztnValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPlrztnValsActionPerformed
-        SetOfValsDialog pid = new SetOfValsDialog(this, polarizations);
-        pid.setLocationRelativeTo(this);
-        pid.setVisible(true);
-        polarizations = pid.getValList();
+        polarizations = showValsDialog("Polarizations", polarizations);
     }//GEN-LAST:event_bPlrztnValsActionPerformed
 
     private void chPolarztnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chPolarztnActionPerformed
         bPlrztnVals.setEnabled(chPolarztn.isSelected());
     }//GEN-LAST:event_chPolarztnActionPerformed
+
+    private void chArchDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chArchDateActionPerformed
+        spArdtFrom.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
+        spArdtTo.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
+        lAd1.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
+        lAd2.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
+    }//GEN-LAST:event_chArchDateActionPerformed
+
+    private void chGenArchInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chGenArchInfoActionPerformed
+        lAr1.setEnabled(chGenArchInfo.isSelected());
+        bArCntVals.setEnabled(chGenArchInfo.isSelected());
+        chArchDate.setEnabled(chGenArchInfo.isSelected());
+        chArchId.setEnabled(chGenArchInfo.isSelected());
+        chArchDateActionPerformed(evt);
+        chArchIdActionPerformed(evt);
+    }//GEN-LAST:event_chGenArchInfoActionPerformed
+
+    private void bArCntValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bArCntValsActionPerformed
+        archCenters = showValsDialog("Archiving Centers", archCenters);
+    }//GEN-LAST:event_bArCntValsActionPerformed
+
+    private void bArchIdValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bArchIdValsActionPerformed
+        archIds = showValsDialog("Archiving Ids", archIds);
+    }//GEN-LAST:event_bArchIdValsActionPerformed
+
+    private void chArchIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chArchIdActionPerformed
+        bArchIdVals.setEnabled(chGenArchInfo.isSelected() && chArchId.isSelected());
+    }//GEN-LAST:event_chArchIdActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bArCntVals;
+    private javax.swing.JButton bArchIdVals;
     private javax.swing.JButton bGenerate;
     private javax.swing.JButton bParentIdVals;
     private javax.swing.JButton bPlrztnVals;
@@ -787,10 +962,15 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton bStatusVals;
     private javax.swing.JComboBox cbClassification;
     private javax.swing.JComboBox cbDurationUnit;
+    private javax.swing.JCheckBox chArchDate;
+    private javax.swing.JCheckBox chArchId;
     private javax.swing.JCheckBox chCenter;
     private javax.swing.JCheckBox chClassification;
     private javax.swing.JCheckBox chCloudCov;
     private javax.swing.JCheckBox chFootprint;
+    private javax.swing.JCheckBox chGenAcqPlat;
+    private javax.swing.JCheckBox chGenArchInfo;
+    private javax.swing.JCheckBox chGenBrwsInfo;
     private javax.swing.JCheckBox chLastOrbitOfs;
     private javax.swing.JCheckBox chOrbitNum;
     private javax.swing.JCheckBox chParentId;
@@ -799,15 +979,22 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox chSensing;
     private javax.swing.JCheckBox chSnowCov;
     private javax.swing.JCheckBox chStatus;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JCheckBox jCheckBox7;
+    private javax.swing.JCheckBox jCheckBox8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JLabel lAd1;
+    private javax.swing.JLabel lAd2;
+    private javax.swing.JLabel lAr1;
     private javax.swing.JLabel lCc1;
     private javax.swing.JLabel lCc2;
     private javax.swing.JLabel lF1;
@@ -824,6 +1011,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pArch;
     private javax.swing.JPanel pBrows;
     private javax.swing.JPanel pProd;
+    private javax.swing.JSpinner spArdtFrom;
+    private javax.swing.JSpinner spArdtTo;
     private javax.swing.JSpinner spCldCovFrom;
     private javax.swing.JSpinner spCldCovTo;
     private javax.swing.JSpinner spDuration;
@@ -864,11 +1053,14 @@ public class MainFrame extends javax.swing.JFrame {
         final long startTime = ((Date) spSensFrom.getValue()).getTime();
         final long stopTime = ((Date) spSensTo.getValue()).getTime();
         final long timeDelta = stopTime - startTime;
-        Integer durationDelta = (Integer) spDuration.getValue();
+        final long acqStartTime = ((Date) spArdtFrom.getValue()).getTime();
+        final long acqStopTime = ((Date) spArdtTo.getValue()).getTime();
+        final long acqDelta = acqStopTime - acqStartTime;
         final Integer cldCovFrom = (Integer) spCldCovFrom.getValue();
         final Integer cldCovDelta = (Integer) spCldCovTo.getValue() - cldCovFrom;
         final Integer snwCovFrom = (Integer) spCldCovFrom.getValue();
         final Integer snwCovDelta = (Integer) spCldCovTo.getValue() - snwCovFrom;
+        Integer durationDelta = (Integer) spDuration.getValue();
         switch (cbDurationUnit.getSelectedItem().toString()) {
             case "minutes":
                 durationDelta *= 60000;
@@ -895,47 +1087,9 @@ public class MainFrame extends javax.swing.JFrame {
         for (int i = 1; i <= (Integer) spNumRecs.getValue(); i++) {
             Map rec = new HashMap();
             rec.put("prodId", String.format("%s-%d", tfPrefix.getText(), i));
-            if (chParentId.isSelected() && parentIds != null) {
-                rec.put("parentId", parentIds.get(rng.nextInt(parentIds.size())));
-            }
-            if (chPrdType.isSelected() && prdTypes != null) {
-                rec.put("prdType", prdTypes.get(rng.nextInt(prdTypes.size())));
-            }
-            if (chStatus.isSelected() && statuses != null) {
-                rec.put("status", statuses.get(rng.nextInt(statuses.size())));
-            }
-            if (chPolarztn.isSelected()) {
-                rec.put("polarisation", polarizations.get(rng.nextInt(polarizations.size())));
-            }
-            if (chSensing.isSelected()) {
-                long time = startTime + rng.nextInt((int) timeDelta);
-                Date d = new Date(time);
-                rec.put("startSensing", df.format(d));
-                time += rng.nextInt(durationDelta);
-                d = new Date(time);
-                rec.put("stopSensing", df.format(d));
-            }
-            if (chOrbitNum.isSelected()) {
-                Integer orb = orbFrom + rng.nextInt(orbDelta);
-                rec.put("orbitNumber", orb.toString());
-                if (chLastOrbitOfs.isSelected()) {
-                    orb += rng.nextInt(lstOrbOfs);
-                    rec.put("lastOrbit", orb.toString());
-                }
-            }
-            if (chClassification.isSelected()) {
-                rec.put("classif", classification);
-            }
-            if (chFootprint.isSelected()) {
-                genFootprintAndCenter(rec);
-            }
-            if (chCloudCov.isSelected()) {
-                Integer cover = cldCovFrom + rng.nextInt(cldCovDelta);
-                rec.put("cloudCover", cover.toString());
-            }
-            if (chSnowCov.isSelected()) {
-                Integer cover = snwCovFrom + rng.nextInt(snwCovDelta);
-                rec.put("snowCover", cover.toString());
+            genEOProduct(rec, startTime, timeDelta, durationDelta, orbFrom, orbDelta, lstOrbOfs, classification, cldCovFrom, cldCovDelta, snwCovFrom, snwCovDelta);
+            if (chGenArchInfo.isSelected()) {
+                genEOArchInfo(rec, acqStartTime, acqDelta);
             }
             records.add(rec);
         }
@@ -958,6 +1112,60 @@ public class MainFrame extends javax.swing.JFrame {
             sb.setLength(0);
             sb.append(String.valueOf(left + w / 2)).append(' ').append(String.valueOf(top - h / 2));
             rec.put("center", sb.toString());
+        }
+    }
+
+    private void genEOProduct(Map rec, final long startTime, final long timeDelta, Integer durationDelta, final Integer orbFrom, final Integer orbDelta, final Integer lstOrbOfs, String classification, final Integer cldCovFrom, final Integer cldCovDelta, final Integer snwCovFrom, final Integer snwCovDelta) {
+        if (chParentId.isSelected() && parentIds != null) {
+            rec.put("parentId", parentIds.get(rng.nextInt(parentIds.size())));
+        }
+        if (chPrdType.isSelected() && prdTypes != null) {
+            rec.put("prdType", prdTypes.get(rng.nextInt(prdTypes.size())));
+        }
+        if (chStatus.isSelected() && statuses != null) {
+            rec.put("status", statuses.get(rng.nextInt(statuses.size())));
+        }
+        if (chPolarztn.isSelected()) {
+            rec.put("polarisation", polarizations.get(rng.nextInt(polarizations.size())));
+        }
+        if (chSensing.isSelected()) {
+            long time = startTime + rng.nextInt((int) timeDelta);
+            rec.put("startSensing", df.format(new Date(time)));
+            time += rng.nextInt(durationDelta);
+            rec.put("stopSensing", df.format(new Date(time)));
+        }
+        if (chOrbitNum.isSelected()) {
+            Integer orb = orbFrom + rng.nextInt(orbDelta);
+            rec.put("orbitNumber", orb.toString());
+            if (chLastOrbitOfs.isSelected()) {
+                orb += rng.nextInt(lstOrbOfs);
+                rec.put("lastOrbit", orb.toString());
+            }
+        }
+        if (chClassification.isSelected()) {
+            rec.put("classif", classification);
+        }
+        if (chFootprint.isSelected()) {
+            genFootprintAndCenter(rec);
+        }
+        if (chCloudCov.isSelected()) {
+            Integer cover = cldCovFrom + rng.nextInt(cldCovDelta);
+            rec.put("cloudCover", cover.toString());
+        }
+        if (chSnowCov.isSelected()) {
+            Integer cover = snwCovFrom + rng.nextInt(snwCovDelta);
+            rec.put("snowCover", cover.toString());
+        }
+    }
+
+    private void genEOArchInfo(Map rec, long acqStartTime, long acqDelta) {
+        rec.put("archCenter", archCenters.get(rng.nextInt(archCenters.size())));
+        if (chArchId.isSelected()) {
+            rec.put("archId", archIds.get(rng.nextInt(archIds.size())));
+        }
+        if (chArchDate.isSelected()) {
+            long time = acqStartTime + rng.nextInt((int) acqDelta);
+            rec.put("archDate", df.format(new Date(time)));
         }
     }
 }
