@@ -43,12 +43,21 @@ import javax.swing.JOptionPane;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    private ArrayList<String> parentIds = null;
-    private ArrayList<String> prdTypes = new ArrayList<>();
-    private ArrayList<String> statuses = new ArrayList<>();
-    private ArrayList<String> polarizations = new ArrayList<>();
-    private ArrayList<String> archCenters = new ArrayList<>();
-    private ArrayList<String> archIds = new ArrayList<>();
+    private static final String STATUSES = "Statuses";
+    private static final String PRODUCT_TYPES = "Product Types";
+    private static final String PARENT_IDENTIFIERS = "Parent Ids.";
+    private static final String POLARIZATIONS = "Polarizations";
+    private static final String ARCHIVING_CENTERS = "Archiving Centers";
+    private static final String ARCHIVING_IDS = "Archiving Ids";
+    private static final String THUMB_URLS = "Thumbnail Urls";
+    private static final String QLOOK_URLS = "Quicklook Urls";
+    private static final String PLATFORMS = "Platform Names";
+    private static final String SENS_MODES = "Sensor Modes";
+    private static final String SENS_TYPES = "Sensor Types";
+    private static final String SENS_NAMES = "Sensor Names";
+    private static final String SER_IDS = "Plat. Serial Ids.";
+    private static final String SWATH_IDS = "Swath Ids.";
+    private HashMap<String, ArrayList<String>> valMap = new HashMap<>();
     private final Configuration cfg = new Configuration();
     private Template template = null;
     private final Random rng = new Random();
@@ -65,27 +74,44 @@ public class MainFrame extends javax.swing.JFrame {
             template = cfg.getTemplate("getrecords-response.ftl");
         } catch (IOException | URISyntaxException ex) {
         }
+        ArrayList<String> statuses = new ArrayList<>();
         statuses.add("NEW");
         statuses.add("PLANNED");
         statuses.add("AQUIRED");
         statuses.add("PRODUCED");
+        valMap.put(STATUSES, statuses);
+        ArrayList<String> prdTypes = new ArrayList<>();
         prdTypes.add("RAW");
         prdTypes.add("L0");
         prdTypes.add("L1");
         prdTypes.add("L1B");
         prdTypes.add("ORTHO");
+        valMap.put(PRODUCT_TYPES, prdTypes);
+        ArrayList<String> polarizations = new ArrayList<>();
         polarizations.add("HH");
         polarizations.add("VV");
         polarizations.add("HV");
         polarizations.add("VH");
+        valMap.put(POLARIZATIONS, polarizations);
+        valMap.put(ARCHIVING_CENTERS, new ArrayList<String>());
+        valMap.put(ARCHIVING_IDS, new ArrayList<String>());
+        valMap.put(PARENT_IDENTIFIERS, new ArrayList<String>());
+        valMap.put(THUMB_URLS, new ArrayList<String>());
+        valMap.put(QLOOK_URLS, new ArrayList<String>());
+        valMap.put(PLATFORMS, new ArrayList<String>());
+        valMap.put(SENS_MODES, new ArrayList<String>());
+        valMap.put(SENS_TYPES, new ArrayList<String>());
+        valMap.put(SENS_NAMES, new ArrayList<String>());
+        valMap.put(SER_IDS, new ArrayList<String>());
+        valMap.put(SWATH_IDS, new ArrayList<String>());
         initComponents();
     }
 
-    private ArrayList<String> showValsDialog(String title, ArrayList<String> valArray) {
-        SetOfValsDialog pid = new SetOfValsDialog(this, title, valArray);
+    private void showValsDialog(String title) {
+        SetOfValsDialog pid = new SetOfValsDialog(this, title, valMap.get(title));
         pid.setLocationRelativeTo(this);
         pid.setVisible(true);
-        return pid.getValList();
+        valMap.put(title, pid.getValList());
     }
 
     /**
@@ -155,19 +181,31 @@ public class MainFrame extends javax.swing.JFrame {
         bArCntVals = new javax.swing.JButton();
         chArchId = new javax.swing.JCheckBox();
         bArchIdVals = new javax.swing.JButton();
-        pAcq = new javax.swing.JPanel();
-        chGenAcqPlat = new javax.swing.JCheckBox();
-        jLabel2 = new javax.swing.JLabel();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jCheckBox7 = new javax.swing.JCheckBox();
         pBrows = new javax.swing.JPanel();
         chGenBrwsInfo = new javax.swing.JCheckBox();
-        jLabel4 = new javax.swing.JLabel();
-        jCheckBox8 = new javax.swing.JCheckBox();
+        lBr1 = new javax.swing.JLabel();
+        chQlkUrl = new javax.swing.JCheckBox();
+        bThmbUrlsVals = new javax.swing.JButton();
+        bQlkUrlsVals = new javax.swing.JButton();
+        pAcq = new javax.swing.JPanel();
+        chGenAcqPlat = new javax.swing.JCheckBox();
+        lAq1 = new javax.swing.JLabel();
+        chSerId = new javax.swing.JCheckBox();
+        chSensName = new javax.swing.JCheckBox();
+        chSensType = new javax.swing.JCheckBox();
+        chSensMode = new javax.swing.JCheckBox();
+        chRes = new javax.swing.JCheckBox();
+        chSwthId = new javax.swing.JCheckBox();
+        bPlatnVals = new javax.swing.JButton();
+        bSerIdVals = new javax.swing.JButton();
+        bSensNameVals = new javax.swing.JButton();
+        bSensTypVals = new javax.swing.JButton();
+        bSensModeVals = new javax.swing.JButton();
+        bSwthVals = new javax.swing.JButton();
+        lRs1 = new javax.swing.JLabel();
+        spResFrom = new javax.swing.JSpinner();
+        lRs2 = new javax.swing.JLabel();
+        spResTo = new javax.swing.JSpinner();
         bGenerate = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         chClassification = new javax.swing.JCheckBox();
@@ -553,7 +591,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chPolarztn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bPlrztnVals)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOProduct", pProd);
@@ -621,32 +659,35 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(pArchLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chGenArchInfo)
-                    .addComponent(chArchDate)
-                    .addComponent(lAr1)
-                    .addComponent(chArchId)
                     .addGroup(pArchLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chArchDate)
+                            .addComponent(lAr1)
+                            .addComponent(chArchId)
                             .addGroup(pArchLayout.createSequentialGroup()
-                                .addComponent(lAd1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spArdtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lAd2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spArdtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(bArCntVals)
-                                .addComponent(bArchIdVals)))))
-                .addContainerGap(126, Short.MAX_VALUE))
+                                .addGap(22, 22, 22)
+                                .addGroup(pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pArchLayout.createSequentialGroup()
+                                        .addComponent(lAd1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spArdtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lAd2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spArdtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(bArCntVals)
+                                        .addComponent(bArchIdVals))))))
+                    .addComponent(chGenArchInfo))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         pArchLayout.setVerticalGroup(
             pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pArchLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(chGenArchInfo)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lAr1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bArCntVals)
@@ -662,34 +703,201 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spArdtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lAd2)
                     .addComponent(spArdtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(227, Short.MAX_VALUE))
+                .addContainerGap(244, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOArchivingInfo", pArch);
 
+        chGenBrwsInfo.setText("Generate");
+        chGenBrwsInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chGenBrwsInfoActionPerformed(evt);
+            }
+        });
+
+        lBr1.setText("Thumbnail URL");
+        lBr1.setEnabled(false);
+
+        chQlkUrl.setText("Quicklook URL");
+        chQlkUrl.setEnabled(false);
+        chQlkUrl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chQlkUrlActionPerformed(evt);
+            }
+        });
+
+        bThmbUrlsVals.setText("Allowed values...");
+        bThmbUrlsVals.setEnabled(false);
+        bThmbUrlsVals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bThmbUrlsValsActionPerformed(evt);
+            }
+        });
+
+        bQlkUrlsVals.setText("Allowed values...");
+        bQlkUrlsVals.setEnabled(false);
+        bQlkUrlsVals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bQlkUrlsValsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pBrowsLayout = new javax.swing.GroupLayout(pBrows);
+        pBrows.setLayout(pBrowsLayout);
+        pBrowsLayout.setHorizontalGroup(
+            pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pBrowsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pBrowsLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pBrowsLayout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(bQlkUrlsVals))
+                            .addGroup(pBrowsLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(bThmbUrlsVals))
+                            .addComponent(lBr1)
+                            .addComponent(chQlkUrl)))
+                    .addComponent(chGenBrwsInfo))
+                .addContainerGap(360, Short.MAX_VALUE))
+        );
+        pBrowsLayout.setVerticalGroup(
+            pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pBrowsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(chGenBrwsInfo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lBr1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bThmbUrlsVals)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chQlkUrl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bQlkUrlsVals)
+                .addContainerGap(300, Short.MAX_VALUE))
+        );
+
+        tabPane.addTab("EOBrowseInfo", pBrows);
+
         chGenAcqPlat.setText("Generate");
-        chGenAcqPlat.setEnabled(false);
+        chGenAcqPlat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chGenAcqPlatActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setText("Platform name");
-        jLabel2.setEnabled(false);
+        lAq1.setText("Platform name");
+        lAq1.setEnabled(false);
 
-        jCheckBox2.setText("Serial identifier");
-        jCheckBox2.setEnabled(false);
+        chSerId.setText("Serial identifier");
+        chSerId.setEnabled(false);
+        chSerId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chSerIdActionPerformed(evt);
+            }
+        });
 
-        jCheckBox3.setText("Sensor name");
-        jCheckBox3.setEnabled(false);
+        chSensName.setText("Sensor name");
+        chSensName.setEnabled(false);
+        chSensName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chSensNameActionPerformed(evt);
+            }
+        });
 
-        jCheckBox4.setText("Sensor type");
-        jCheckBox4.setEnabled(false);
+        chSensType.setText("Sensor type");
+        chSensType.setEnabled(false);
+        chSensType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chSensTypeActionPerformed(evt);
+            }
+        });
 
-        jCheckBox5.setText("Sensor operational mode");
-        jCheckBox5.setEnabled(false);
+        chSensMode.setText("Sensor mode");
+        chSensMode.setEnabled(false);
+        chSensMode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chSensModeActionPerformed(evt);
+            }
+        });
 
-        jCheckBox6.setText("Resolution");
-        jCheckBox6.setEnabled(false);
+        chRes.setText("Resolution");
+        chRes.setEnabled(false);
+        chRes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chResActionPerformed(evt);
+            }
+        });
 
-        jCheckBox7.setText("Swath identifier");
-        jCheckBox7.setEnabled(false);
+        chSwthId.setText("Swath identifier");
+        chSwthId.setEnabled(false);
+        chSwthId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chSwthIdActionPerformed(evt);
+            }
+        });
+
+        bPlatnVals.setText("Allowed values...");
+        bPlatnVals.setEnabled(false);
+        bPlatnVals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPlatnValsActionPerformed(evt);
+            }
+        });
+
+        bSerIdVals.setText("Allowed values...");
+        bSerIdVals.setEnabled(false);
+        bSerIdVals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSerIdValsActionPerformed(evt);
+            }
+        });
+
+        bSensNameVals.setText("Allowed values...");
+        bSensNameVals.setEnabled(false);
+        bSensNameVals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSensNameValsActionPerformed(evt);
+            }
+        });
+
+        bSensTypVals.setText("Allowed values...");
+        bSensTypVals.setEnabled(false);
+        bSensTypVals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSensTypValsActionPerformed(evt);
+            }
+        });
+
+        bSensModeVals.setText("Allowed values...");
+        bSensModeVals.setEnabled(false);
+        bSensModeVals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSensModeValsActionPerformed(evt);
+            }
+        });
+
+        bSwthVals.setText("Allowed values...");
+        bSwthVals.setEnabled(false);
+        bSwthVals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSwthValsActionPerformed(evt);
+            }
+        });
+
+        lRs1.setText("from");
+        lRs1.setEnabled(false);
+
+        spResFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spResFrom.setEnabled(false);
+
+        lRs2.setText("to");
+        lRs2.setEnabled(false);
+
+        spResTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spResTo.setEnabled(false);
 
         javax.swing.GroupLayout pAcqLayout = new javax.swing.GroupLayout(pAcq);
         pAcq.setLayout(pAcqLayout);
@@ -699,73 +907,88 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chGenAcqPlat)
-                    .addComponent(jLabel2)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jCheckBox4)
-                    .addComponent(jCheckBox5)
-                    .addComponent(jCheckBox6)
-                    .addComponent(jCheckBox7))
-                .addContainerGap(354, Short.MAX_VALUE))
+                    .addGroup(pAcqLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pAcqLayout.createSequentialGroup()
+                                .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pAcqLayout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(bPlatnVals))
+                                    .addComponent(chSensName)
+                                    .addGroup(pAcqLayout.createSequentialGroup()
+                                        .addGap(22, 22, 22)
+                                        .addComponent(bSensNameVals))
+                                    .addComponent(lAq1)
+                                    .addComponent(chSensMode)
+                                    .addGroup(pAcqLayout.createSequentialGroup()
+                                        .addGap(22, 22, 22)
+                                        .addComponent(bSensModeVals))
+                                    .addComponent(chRes))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                                .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(chSensType)
+                                    .addComponent(chSerId)
+                                    .addComponent(chSwthId)
+                                    .addGroup(pAcqLayout.createSequentialGroup()
+                                        .addGap(22, 22, 22)
+                                        .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(bSensTypVals)
+                                            .addComponent(bSerIdVals)
+                                            .addComponent(bSwthVals))))
+                                .addGap(183, 183, 183))
+                            .addGroup(pAcqLayout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(lRs1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spResFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lRs2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spResTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         pAcqLayout.setVerticalGroup(
             pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pAcqLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(chGenAcqPlat)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox2)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox3)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox4)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox5)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox6)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox7)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lAq1)
+                    .addComponent(chSerId))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bPlatnVals)
+                    .addComponent(bSerIdVals))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chSensName)
+                    .addComponent(chSensType))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bSensNameVals)
+                    .addComponent(bSensTypVals))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chSensMode)
+                    .addComponent(chSwthId))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bSensModeVals)
+                    .addComponent(bSwthVals))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chRes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lRs1)
+                    .addComponent(spResFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lRs2)
+                    .addComponent(spResTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOAcquisitionPlat", pAcq);
-
-        chGenBrwsInfo.setText("Generate");
-        chGenBrwsInfo.setEnabled(false);
-
-        jLabel4.setText("Thumbnail file name");
-        jLabel4.setEnabled(false);
-
-        jCheckBox8.setText("Quicklook file name");
-        jCheckBox8.setEnabled(false);
-
-        javax.swing.GroupLayout pBrowsLayout = new javax.swing.GroupLayout(pBrows);
-        pBrows.setLayout(pBrowsLayout);
-        pBrowsLayout.setHorizontalGroup(
-            pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pBrowsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chGenBrwsInfo)
-                    .addComponent(jLabel4)
-                    .addComponent(jCheckBox8))
-                .addContainerGap(392, Short.MAX_VALUE))
-        );
-        pBrowsLayout.setVerticalGroup(
-            pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pBrowsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(chGenBrwsInfo)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox8)
-                .addContainerGap(337, Short.MAX_VALUE))
-        );
-
-        tabPane.addTab("EOBrowseInfo", pBrows);
 
         bGenerate.setText("Generate...");
         bGenerate.addActionListener(new java.awt.event.ActionListener() {
@@ -852,7 +1075,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chLastOrbitOfsActionPerformed
 
     private void bStatusValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bStatusValsActionPerformed
-        statuses = showValsDialog("Statuses", statuses);
+        showValsDialog(STATUSES);
     }//GEN-LAST:event_bStatusValsActionPerformed
 
     private void chStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chStatusActionPerformed
@@ -860,7 +1083,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chStatusActionPerformed
 
     private void bPrdTypeValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPrdTypeValsActionPerformed
-        prdTypes = showValsDialog("Product Types", prdTypes);
+        showValsDialog(PRODUCT_TYPES);
     }//GEN-LAST:event_bPrdTypeValsActionPerformed
 
     private void chPrdTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chPrdTypeActionPerformed
@@ -878,7 +1101,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chOrbitNumActionPerformed
 
     private void bParentIdValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bParentIdValsActionPerformed
-        parentIds = showValsDialog("Parent Identifiers", parentIds);
+        showValsDialog(PARENT_IDENTIFIERS);
     }//GEN-LAST:event_bParentIdValsActionPerformed
 
     private void chParentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chParentIdActionPerformed
@@ -918,7 +1141,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chSnowCovActionPerformed
 
     private void bPlrztnValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPlrztnValsActionPerformed
-        polarizations = showValsDialog("Polarizations", polarizations);
+        showValsDialog(POLARIZATIONS);
     }//GEN-LAST:event_bPlrztnValsActionPerformed
 
     private void chPolarztnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chPolarztnActionPerformed
@@ -942,24 +1165,119 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chGenArchInfoActionPerformed
 
     private void bArCntValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bArCntValsActionPerformed
-        archCenters = showValsDialog("Archiving Centers", archCenters);
+        showValsDialog(ARCHIVING_CENTERS);
     }//GEN-LAST:event_bArCntValsActionPerformed
 
     private void bArchIdValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bArchIdValsActionPerformed
-        archIds = showValsDialog("Archiving Ids", archIds);
+        showValsDialog(ARCHIVING_IDS);
     }//GEN-LAST:event_bArchIdValsActionPerformed
 
     private void chArchIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chArchIdActionPerformed
         bArchIdVals.setEnabled(chGenArchInfo.isSelected() && chArchId.isSelected());
     }//GEN-LAST:event_chArchIdActionPerformed
+
+    private void chGenBrwsInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chGenBrwsInfoActionPerformed
+        lBr1.setEnabled(chGenBrwsInfo.isSelected());
+        bThmbUrlsVals.setEnabled(chGenBrwsInfo.isSelected());
+        chQlkUrl.setEnabled(chGenBrwsInfo.isSelected());
+        chQlkUrlActionPerformed(evt);
+    }//GEN-LAST:event_chGenBrwsInfoActionPerformed
+
+    private void chQlkUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chQlkUrlActionPerformed
+        bQlkUrlsVals.setEnabled(chGenBrwsInfo.isSelected() && chQlkUrl.isSelected());
+    }//GEN-LAST:event_chQlkUrlActionPerformed
+
+    private void bThmbUrlsValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bThmbUrlsValsActionPerformed
+        showValsDialog(THUMB_URLS);
+    }//GEN-LAST:event_bThmbUrlsValsActionPerformed
+
+    private void bQlkUrlsValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bQlkUrlsValsActionPerformed
+        showValsDialog(QLOOK_URLS);
+    }//GEN-LAST:event_bQlkUrlsValsActionPerformed
+
+    private void bPlatnValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPlatnValsActionPerformed
+        showValsDialog(PLATFORMS);
+    }//GEN-LAST:event_bPlatnValsActionPerformed
+
+    private void bSerIdValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSerIdValsActionPerformed
+        showValsDialog(SER_IDS);
+    }//GEN-LAST:event_bSerIdValsActionPerformed
+
+    private void bSensNameValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSensNameValsActionPerformed
+        showValsDialog(SENS_NAMES);
+    }//GEN-LAST:event_bSensNameValsActionPerformed
+
+    private void bSensTypValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSensTypValsActionPerformed
+        showValsDialog(SENS_TYPES);
+    }//GEN-LAST:event_bSensTypValsActionPerformed
+
+    private void bSensModeValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSensModeValsActionPerformed
+        showValsDialog(SENS_MODES);
+    }//GEN-LAST:event_bSensModeValsActionPerformed
+
+    private void bSwthValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSwthValsActionPerformed
+        showValsDialog(SWATH_IDS);
+    }//GEN-LAST:event_bSwthValsActionPerformed
+
+    private void chSerIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSerIdActionPerformed
+        bSerIdVals.setEnabled(chSerId.isSelected());
+    }//GEN-LAST:event_chSerIdActionPerformed
+
+    private void chSensNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSensNameActionPerformed
+        bSensNameVals.setEnabled(chSensName.isSelected());
+    }//GEN-LAST:event_chSensNameActionPerformed
+
+    private void chSensTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSensTypeActionPerformed
+        bSensTypVals.setEnabled(chSensType.isSelected());
+    }//GEN-LAST:event_chSensTypeActionPerformed
+
+    private void chSensModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSensModeActionPerformed
+        bSensModeVals.setEnabled(chSensMode.isSelected());
+    }//GEN-LAST:event_chSensModeActionPerformed
+
+    private void chSwthIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSwthIdActionPerformed
+        bSwthVals.setEnabled(chSwthId.isSelected());
+    }//GEN-LAST:event_chSwthIdActionPerformed
+
+    private void chResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chResActionPerformed
+        lRs1.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
+        lRs2.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
+        spResFrom.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
+        spResTo.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
+    }//GEN-LAST:event_chResActionPerformed
+
+    private void chGenAcqPlatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chGenAcqPlatActionPerformed
+        lAq1.setEnabled(chGenAcqPlat.isSelected());
+        bPlatnVals.setEnabled(chGenAcqPlat.isSelected());
+        chSerId.setEnabled(chGenAcqPlat.isSelected());
+        chSensName.setEnabled(chGenAcqPlat.isSelected());
+        chSensMode.setEnabled(chGenAcqPlat.isSelected());
+        chSensType.setEnabled(chGenAcqPlat.isSelected());
+        chSwthId.setEnabled(chGenAcqPlat.isSelected());
+        chRes.setEnabled(chGenAcqPlat.isSelected());
+        chSerIdActionPerformed(evt);
+        chSensNameActionPerformed(evt);
+        chSensTypeActionPerformed(evt);
+        chSensModeActionPerformed(evt);
+        chSwthIdActionPerformed(evt);
+        chResActionPerformed(evt);
+    }//GEN-LAST:event_chGenAcqPlatActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bArCntVals;
     private javax.swing.JButton bArchIdVals;
     private javax.swing.JButton bGenerate;
     private javax.swing.JButton bParentIdVals;
+    private javax.swing.JButton bPlatnVals;
     private javax.swing.JButton bPlrztnVals;
     private javax.swing.JButton bPrdTypeVals;
+    private javax.swing.JButton bQlkUrlsVals;
+    private javax.swing.JButton bSensModeVals;
+    private javax.swing.JButton bSensNameVals;
+    private javax.swing.JButton bSensTypVals;
+    private javax.swing.JButton bSerIdVals;
     private javax.swing.JButton bStatusVals;
+    private javax.swing.JButton bSwthVals;
+    private javax.swing.JButton bThmbUrlsVals;
     private javax.swing.JComboBox cbClassification;
     private javax.swing.JComboBox cbDurationUnit;
     private javax.swing.JCheckBox chArchDate;
@@ -976,25 +1294,25 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox chParentId;
     private javax.swing.JCheckBox chPolarztn;
     private javax.swing.JCheckBox chPrdType;
+    private javax.swing.JCheckBox chQlkUrl;
+    private javax.swing.JCheckBox chRes;
+    private javax.swing.JCheckBox chSensMode;
+    private javax.swing.JCheckBox chSensName;
+    private javax.swing.JCheckBox chSensType;
     private javax.swing.JCheckBox chSensing;
+    private javax.swing.JCheckBox chSerId;
     private javax.swing.JCheckBox chSnowCov;
     private javax.swing.JCheckBox chStatus;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
+    private javax.swing.JCheckBox chSwthId;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lAd1;
     private javax.swing.JLabel lAd2;
+    private javax.swing.JLabel lAq1;
     private javax.swing.JLabel lAr1;
+    private javax.swing.JLabel lBr1;
     private javax.swing.JLabel lCc1;
     private javax.swing.JLabel lCc2;
     private javax.swing.JLabel lF1;
@@ -1002,6 +1320,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lOf1;
     private javax.swing.JLabel lOn1;
     private javax.swing.JLabel lOn2;
+    private javax.swing.JLabel lRs1;
+    private javax.swing.JLabel lRs2;
     private javax.swing.JLabel lSc1;
     private javax.swing.JLabel lSc2;
     private javax.swing.JLabel lSt1;
@@ -1021,6 +1341,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSpinner spNumRecs;
     private javax.swing.JSpinner spOrbitFrom;
     private javax.swing.JSpinner spOrbitTo;
+    private javax.swing.JSpinner spResFrom;
+    private javax.swing.JSpinner spResTo;
     private javax.swing.JSpinner spSensFrom;
     private javax.swing.JSpinner spSensTo;
     private javax.swing.JSpinner spSnwCovFrom;
@@ -1060,6 +1382,8 @@ public class MainFrame extends javax.swing.JFrame {
         final Integer cldCovDelta = (Integer) spCldCovTo.getValue() - cldCovFrom;
         final Integer snwCovFrom = (Integer) spCldCovFrom.getValue();
         final Integer snwCovDelta = (Integer) spCldCovTo.getValue() - snwCovFrom;
+        final Integer resFrom = (Integer) spResFrom.getValue();
+        final Integer resDelta = (Integer) spResTo.getValue() - snwCovFrom;
         Integer durationDelta = (Integer) spDuration.getValue();
         switch (cbDurationUnit.getSelectedItem().toString()) {
             case "minutes":
@@ -1088,8 +1412,14 @@ public class MainFrame extends javax.swing.JFrame {
             Map rec = new HashMap();
             rec.put("prodId", String.format("%s-%d", tfPrefix.getText(), i));
             genEOProduct(rec, startTime, timeDelta, durationDelta, orbFrom, orbDelta, lstOrbOfs, classification, cldCovFrom, cldCovDelta, snwCovFrom, snwCovDelta);
+            if (chGenAcqPlat.isSelected()) {
+                genEOAcqInfo(rec, resFrom, resDelta);
+            }
             if (chGenArchInfo.isSelected()) {
                 genEOArchInfo(rec, acqStartTime, acqDelta);
+            }
+            if (chGenBrwsInfo.isSelected()) {
+                genEOBrwsInfo(rec);
             }
             records.add(rec);
         }
@@ -1116,20 +1446,24 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void genEOProduct(Map rec, final long startTime, final long timeDelta, Integer durationDelta, final Integer orbFrom, final Integer orbDelta, final Integer lstOrbOfs, String classification, final Integer cldCovFrom, final Integer cldCovDelta, final Integer snwCovFrom, final Integer snwCovDelta) {
-        if (chParentId.isSelected() && parentIds != null) {
-            rec.put("parentId", parentIds.get(rng.nextInt(parentIds.size())));
+        ArrayList<String> vals = valMap.get(PARENT_IDENTIFIERS);
+        if (chParentId.isSelected() && vals != null) {
+            rec.put("parentId", vals.get(rng.nextInt(vals.size())));
         }
-        if (chPrdType.isSelected() && prdTypes != null) {
-            rec.put("prdType", prdTypes.get(rng.nextInt(prdTypes.size())));
+        vals = valMap.get(PRODUCT_TYPES);
+        if (chPrdType.isSelected() && vals != null) {
+            rec.put("prdType", vals.get(rng.nextInt(vals.size())));
         }
-        if (chStatus.isSelected() && statuses != null) {
-            rec.put("status", statuses.get(rng.nextInt(statuses.size())));
+        vals = valMap.get(STATUSES);
+        if (chStatus.isSelected() && vals != null) {
+            rec.put("status", vals.get(rng.nextInt(vals.size())));
         }
+        vals = valMap.get(POLARIZATIONS);
         if (chPolarztn.isSelected()) {
-            rec.put("polarisation", polarizations.get(rng.nextInt(polarizations.size())));
+            rec.put("polarisation", vals.get(rng.nextInt(vals.size())));
         }
         if (chSensing.isSelected()) {
-            long time = startTime + rng.nextInt((int) timeDelta);
+            long time = startTime + (long) (Math.floor(rng.nextDouble() * timeDelta));
             rec.put("startSensing", df.format(new Date(time)));
             time += rng.nextInt(durationDelta);
             rec.put("stopSensing", df.format(new Date(time)));
@@ -1159,13 +1493,53 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void genEOArchInfo(Map rec, long acqStartTime, long acqDelta) {
-        rec.put("archCenter", archCenters.get(rng.nextInt(archCenters.size())));
+        ArrayList<String> vals = valMap.get(ARCHIVING_CENTERS);
+        rec.put("archCenter", vals.get(rng.nextInt(vals.size())));
         if (chArchId.isSelected()) {
-            rec.put("archId", archIds.get(rng.nextInt(archIds.size())));
+            vals = valMap.get(ARCHIVING_IDS);
+            rec.put("archId", vals.get(rng.nextInt(vals.size())));
         }
         if (chArchDate.isSelected()) {
-            long time = acqStartTime + rng.nextInt((int) acqDelta);
+            long time = acqStartTime + (long) (Math.floor(rng.nextDouble() * acqDelta));
             rec.put("archDate", df.format(new Date(time)));
+        }
+    }
+
+    private void genEOAcqInfo(Map rec, Integer resFrom, Integer resDelta) {
+        ArrayList<String> vals = valMap.get(PLATFORMS);
+        rec.put("platName", vals.get(rng.nextInt(vals.size())));
+        if (chSerId.isSelected()) {
+            vals = valMap.get(SER_IDS);
+            rec.put("platSer", vals.get(rng.nextInt(vals.size())));
+        }
+        if (chSensName.isSelected()) {
+            vals = valMap.get(SENS_NAMES);
+            rec.put("sensName", vals.get(rng.nextInt(vals.size())));
+        }
+        if (chSensMode.isSelected()) {
+            vals = valMap.get(SENS_MODES);
+            rec.put("sensMode", vals.get(rng.nextInt(vals.size())));
+        }
+        if (chSensType.isSelected()) {
+            vals = valMap.get(SENS_TYPES);
+            rec.put("sensType", vals.get(rng.nextInt(vals.size())));
+        }
+        if (chSwthId.isSelected()) {
+            vals = valMap.get(SWATH_IDS);
+            rec.put("swathId", vals.get(rng.nextInt(vals.size())));
+        }
+        if (chRes.isSelected()) {
+            Integer res = resFrom + rng.nextInt(resDelta);
+            rec.put("resolution", res.toString());
+        }
+    }
+
+    private void genEOBrwsInfo(Map rec) {
+        ArrayList<String> vals = valMap.get(THUMB_URLS);
+        rec.put("thmbUrl", vals.get(rng.nextInt(vals.size())));
+        if (chQlkUrl.isSelected()) {
+            vals = valMap.get(QLOOK_URLS);
+            rec.put("qlkUrl", vals.get(rng.nextInt(vals.size())));
         }
     }
 }

@@ -163,43 +163,91 @@
                                  sourceObject="${rec.prodId}"
                                  targetObject="${rec.prodId}:ARCH"/>
 </#if>
-<#--
-                <rim:ExtrinsicObject id="${rec.prodId}:BRWS" objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOBrowseInformation">
+<#if rec.thmbUrl??>
+                <rim:ExtrinsicObject id="${rec.prodId}:THMB" objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOBrowseInformation">
                     <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::fileName" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
                         <rim:ValueList>
-                            <rim:Value>http://dev.ionicsoft.com:80/daliproxy/wrs/DALIPROXYLAZY?REQUEST=GetRepositoryItem&amp;Id=urn%3Ax-dali%3Asat%3AShift0%3Aa21%3A43733800701100016312I%3Adn%3A4377990%3A4</rim:Value>
-                        </rim:ValueList>
-                    </rim:Slot>
-                </rim:ExtrinsicObject>
-                <rim:Association id="${rec.prodId}:BRWS_ASSOC"
-                                 associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::HasBrowseInformation"
-                                 sourceObject="${rec.prodId}"
-                                 targetObject="${rec.prodId}:BRWS"/>
-                <rim:ExtrinsicObject id="${rec.prodId}:ACQ" objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOAcquisitionPlatform">
-                    <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::sensorType" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
-                        <rim:ValueList>
-                            <rim:Value>OPTICAL</rim:Value>
-                        </rim:ValueList>
-                    </rim:Slot>
-                    <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::instrumentShortName" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
-                        <rim:ValueList>
-                            <rim:Value>HRVIR-Nb2</rim:Value>
-                        </rim:ValueList>
-                    </rim:Slot>
-                    <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::platformSerialIdentifier" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
-                        <rim:ValueList>
-                            <rim:Value>I</rim:Value>
+                            <rim:Value>${rec.thmbUrl}</rim:Value>
                         </rim:ValueList>
                     </rim:Slot>
                     <rim:Name>
-                        <rim:LocalizedString xml:lang="en-US" charset="UTF-8" value="Spot4"/>
+                        <rim:LocalizedString xml:lang="en-US" charset="UTF-8" value="THUMBNAIL"/>
+                    </rim:Name>
+                </rim:ExtrinsicObject>
+                <rim:Association id="${rec.prodId}:THMB_ASSOC"
+                                 associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::HasBrowseInformation"
+                                 sourceObject="${rec.prodId}"
+                                 targetObject="${rec.prodId}:THMB"/>
+</#if>
+<#if rec.qlkUrl??>
+                <rim:ExtrinsicObject id="${rec.prodId}:QLK" objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOBrowseInformation">
+                    <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::fileName" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                        <rim:ValueList>
+                            <rim:Value>${rec.qlkUrl}</rim:Value>
+                        </rim:ValueList>
+                    </rim:Slot>
+                    <rim:Name>
+                        <rim:LocalizedString xml:lang="en-US" charset="UTF-8" value="QUICKLOOK"/>
+                    </rim:Name>
+                </rim:ExtrinsicObject>
+                <rim:Association id="${rec.prodId}:QLK_ASSOC"
+                                 associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::HasBrowseInformation"
+                                 sourceObject="${rec.prodId}"
+                                 targetObject="${rec.prodId}:QLK"/>
+</#if>
+<#if rec.platName??>
+                <rim:ExtrinsicObject id="${rec.prodId}:ACQ" objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOAcquisitionPlatform">
+<#if rec.resolution??>
+                    <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::sensorResolution" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
+                        <rim:ValueList>
+                            <rim:Value>${rec.resolution}</rim:Value>
+                        </rim:ValueList>
+                    </rim:Slot>
+</#if>
+<#if rec.swathId??>
+                    <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::swathIdentifier" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                        <rim:ValueList>
+                            <rim:Value>${rec.swathId}</rim:Value>
+                        </rim:ValueList>
+                    </rim:Slot>
+</#if>
+<#if rec.sensMode??>
+                    <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::sensorOperationalMode" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                        <rim:ValueList>
+                            <rim:Value>${rec.sensMode}</rim:Value>
+                        </rim:ValueList>
+                    </rim:Slot>
+</#if>
+<#if rec.sensType??>
+                    <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::sensorType" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                        <rim:ValueList>
+                            <rim:Value>${rec.sensType}</rim:Value>
+                        </rim:ValueList>
+                    </rim:Slot>
+</#if>
+<#if rec.sensName??>
+                    <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::instrumentShortName" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                        <rim:ValueList>
+                            <rim:Value>${rec.sensName}</rim:Value>
+                        </rim:ValueList>
+                    </rim:Slot>
+</#if>
+<#if rec.platSer??>
+                    <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::platformSerialIdentifier" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                        <rim:ValueList>
+                            <rim:Value>${rec.platSer}</rim:Value>
+                        </rim:ValueList>
+                    </rim:Slot>
+</#if>
+                    <rim:Name>
+                        <rim:LocalizedString xml:lang="en-US" charset="UTF-8" value="${rec.platName}"/>
                     </rim:Name>
                 </rim:ExtrinsicObject>
                 <rim:Association id="${rec.prodId}:ACQ_ASSOC"
                                  associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::AcquiredBy"
                                  sourceObject="${rec.prodId}"
                                  targetObject="${rec.prodId}:ACQ"/>
--->
+</#if>
 <#if rec.classif??>
                 <rim:Classification id="${rec.prodId}:CLAS"
                                     classifiedObject="${rec.prodId}"
