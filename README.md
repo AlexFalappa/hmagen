@@ -12,16 +12,15 @@ Features
 * Up to two `EOBrowseInformation` objects can be generated: thumbnail and quicklook
 * You can choose in detail which attributes (_Slots_) are to be generated
 * A classification can be generated too
+* Import/Export of generation settings
+* Dialog for successful generation
 
 Todo
 ----
+* Check correctness of values before generation (e.g. intervals with end greater than beginning, allowed vals not empty, etc.)
+* Better error reporting
 * More `EOProduct` metadata attributes
 * Reduce `EOProduct` tab cluttering separating optical, radar and atmospheric attributes in different tabs
-* Better error reporting
-* Check correctness of values before generation (e.g. intervals with end greater than beginning, allowed vals not empty, etc.)
 * Generation in worker thread with progress notification
 * Multithreaded generation
-* Dialog for successful generation
-* Reset/Clear all values function
-* Import/Export of generation settings
-* Persistence of current generation settings between runs
+* Automatic persistence of generation settings between runs (Java Preferences API)
