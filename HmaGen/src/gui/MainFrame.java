@@ -355,7 +355,7 @@ public class MainFrame extends javax.swing.JFrame {
         lSc1.setText("to");
         lSc1.setEnabled(false);
 
-        spSnwCovTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spSnwCovTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(10), Integer.valueOf(0), null, Integer.valueOf(5)));
         spSnwCovTo.setEnabled(false);
 
         lSc2.setText("from");
@@ -1043,6 +1043,7 @@ public class MainFrame extends javax.swing.JFrame {
             File selectedFile = jfc.getSelectedFile();
             if (selectedFile != null) {
                 generate(selectedFile);
+                JOptionPane.showMessageDialog(this, "Generated " + spNumRecs.getValue().toString() + " products into:\n" + selectedFile.getAbsolutePath(), "Success", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_bGenerateActionPerformed

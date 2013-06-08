@@ -20,11 +20,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 /**
+ * Settings data object.
  *
  * @author sasha
  */
-//@XmlType(propOrder = { "valMap", "name", "publisher", "isbn" })
-//@XmlRootElement(name = "hmagensettings", namespace = "com.telespazio.hma")
 public class HmaGenSettings {
 
     public static final String STATUSES = "Statuses";
