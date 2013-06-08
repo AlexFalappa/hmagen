@@ -107,7 +107,6 @@ public class MainFrame extends javax.swing.JFrame {
         lOn2 = new javax.swing.JLabel();
         spOrbitTo = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         tfPrefix = new javax.swing.JTextField();
         lSt3 = new javax.swing.JLabel();
         spSensTo = new javax.swing.JSpinner();
@@ -182,14 +181,14 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HmaGen");
 
-        jLabel1.setText("Number of records:");
+        jLabel1.setText("records");
 
         spNumRecs.setModel(new javax.swing.SpinnerNumberModel(5, 1, 9999, 1));
 
         chSensing.setText("Sensing times");
-        chSensing.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chSensingActionPerformed(evt);
+        chSensing.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chSensingItemStateChanged(evt);
             }
         });
 
@@ -216,11 +215,6 @@ public class MainFrame extends javax.swing.JFrame {
                 chParentIdItemStateChanged(evt);
             }
         });
-        chParentId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chParentIdActionPerformed(evt);
-            }
-        });
 
         bParentIdVals.setText("Allowed values...");
         bParentIdVals.setEnabled(false);
@@ -231,9 +225,9 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         chOrbitNum.setText("Orbit number");
-        chOrbitNum.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chOrbitNumActionPerformed(evt);
+        chOrbitNum.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chOrbitNumItemStateChanged(evt);
             }
         });
 
@@ -249,9 +243,7 @@ public class MainFrame extends javax.swing.JFrame {
         spOrbitTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
         spOrbitTo.setEnabled(false);
 
-        jLabel8.setText("Product identifier");
-
-        jLabel9.setText("Prefix:");
+        jLabel8.setText("Product identifier Prefix");
 
         tfPrefix.setColumns(30);
         tfPrefix.setText("prod");
@@ -264,9 +256,9 @@ public class MainFrame extends javax.swing.JFrame {
         spSensTo.setEnabled(false);
 
         chPrdType.setText("Product Type");
-        chPrdType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chPrdTypeActionPerformed(evt);
+        chPrdType.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chPrdTypeItemStateChanged(evt);
             }
         });
 
@@ -279,9 +271,9 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         chStatus.setText("Status");
-        chStatus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chStatusActionPerformed(evt);
+        chStatus.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chStatusItemStateChanged(evt);
             }
         });
 
@@ -295,9 +287,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         chLastOrbitOfs.setText("Last orbit number");
         chLastOrbitOfs.setEnabled(false);
-        chLastOrbitOfs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chLastOrbitOfsActionPerformed(evt);
+        chLastOrbitOfs.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chLastOrbitOfsItemStateChanged(evt);
             }
         });
 
@@ -308,9 +300,9 @@ public class MainFrame extends javax.swing.JFrame {
         spLstOrbitOfs.setEnabled(false);
 
         chFootprint.setText("Footprint");
-        chFootprint.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chFootprintActionPerformed(evt);
+        chFootprint.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chFootprintItemStateChanged(evt);
             }
         });
 
@@ -332,9 +324,9 @@ public class MainFrame extends javax.swing.JFrame {
         chCenter.setEnabled(false);
 
         chCloudCov.setText("Cloud coverage");
-        chCloudCov.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chCloudCovActionPerformed(evt);
+        chCloudCov.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chCloudCovItemStateChanged(evt);
             }
         });
 
@@ -351,9 +343,9 @@ public class MainFrame extends javax.swing.JFrame {
         spCldCovTo.setEnabled(false);
 
         chSnowCov.setText("Snow coverage");
-        chSnowCov.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chSnowCovActionPerformed(evt);
+        chSnowCov.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chSnowCovItemStateChanged(evt);
             }
         });
 
@@ -370,9 +362,9 @@ public class MainFrame extends javax.swing.JFrame {
         lSc2.setEnabled(false);
 
         chPolarztn.setText("Polarization");
-        chPolarztn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chPolarztnActionPerformed(evt);
+        chPolarztn.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chPolarztnItemStateChanged(evt);
             }
         });
 
@@ -390,10 +382,15 @@ public class MainFrame extends javax.swing.JFrame {
             pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pProdLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pProdLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chSensing)
                     .addComponent(chParentId)
-                    .addComponent(jLabel8)
                     .addComponent(chOrbitNum)
                     .addComponent(chFootprint)
                     .addGroup(pProdLayout.createSequentialGroup()
@@ -425,10 +422,6 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(bPlrztnVals)
-                            .addGroup(pProdLayout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tfPrefix, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pProdLayout.createSequentialGroup()
                                 .addComponent(lSt2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -483,20 +476,18 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(chCenter)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         pProdLayout.setVerticalGroup(
             pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pProdLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8)
+                .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(tfPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pProdLayout.createSequentialGroup()
-                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(tfPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chParentId)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bParentIdVals))
@@ -564,23 +555,23 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chPolarztn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bPlrztnVals)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOProduct", pProd);
 
         chGenArchInfo.setText("Generate");
-        chGenArchInfo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chGenArchInfoActionPerformed(evt);
+        chGenArchInfo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chGenArchInfoItemStateChanged(evt);
             }
         });
 
         chArchDate.setText("Archiving date");
         chArchDate.setEnabled(false);
-        chArchDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chArchDateActionPerformed(evt);
+        chArchDate.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chArchDateItemStateChanged(evt);
             }
         });
 
@@ -611,9 +602,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         chArchId.setText("Archiving identifier");
         chArchId.setEnabled(false);
-        chArchId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chArchIdActionPerformed(evt);
+        chArchId.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chArchIdItemStateChanged(evt);
             }
         });
 
@@ -676,15 +667,15 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spArdtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lAd2)
                     .addComponent(spArdtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(267, Short.MAX_VALUE))
+                .addContainerGap(212, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOArchivingInfo", pArch);
 
         chGenBrwsInfo.setText("Generate");
-        chGenBrwsInfo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chGenBrwsInfoActionPerformed(evt);
+        chGenBrwsInfo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chGenBrwsInfoItemStateChanged(evt);
             }
         });
 
@@ -693,9 +684,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         chQlkUrl.setText("Quicklook URL");
         chQlkUrl.setEnabled(false);
-        chQlkUrl.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chQlkUrlActionPerformed(evt);
+        chQlkUrl.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chQlkUrlItemStateChanged(evt);
             }
         });
 
@@ -749,15 +740,15 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chQlkUrl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bQlkUrlsVals)
-                .addContainerGap(323, Short.MAX_VALUE))
+                .addContainerGap(268, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOBrowseInfo", pBrows);
 
         chGenAcqPlat.setText("Generate");
-        chGenAcqPlat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chGenAcqPlatActionPerformed(evt);
+        chGenAcqPlat.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chGenAcqPlatItemStateChanged(evt);
             }
         });
 
@@ -766,49 +757,49 @@ public class MainFrame extends javax.swing.JFrame {
 
         chSerId.setText("Serial identifier");
         chSerId.setEnabled(false);
-        chSerId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chSerIdActionPerformed(evt);
+        chSerId.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chSerIdItemStateChanged(evt);
             }
         });
 
         chSensName.setText("Sensor name");
         chSensName.setEnabled(false);
-        chSensName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chSensNameActionPerformed(evt);
+        chSensName.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chSensNameItemStateChanged(evt);
             }
         });
 
         chSensType.setText("Sensor type");
         chSensType.setEnabled(false);
-        chSensType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chSensTypeActionPerformed(evt);
+        chSensType.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chSensTypeItemStateChanged(evt);
             }
         });
 
         chSensMode.setText("Sensor mode");
         chSensMode.setEnabled(false);
-        chSensMode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chSensModeActionPerformed(evt);
+        chSensMode.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chSensModeItemStateChanged(evt);
             }
         });
 
         chRes.setText("Resolution");
         chRes.setEnabled(false);
-        chRes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chResActionPerformed(evt);
+        chRes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chResItemStateChanged(evt);
             }
         });
 
         chSwthId.setText("Swath identifier");
         chSwthId.setEnabled(false);
-        chSwthId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chSwthIdActionPerformed(evt);
+        chSwthId.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chSwthIdItemStateChanged(evt);
             }
         });
 
@@ -958,7 +949,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spResFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lRs2)
                     .addComponent(spResTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOAcquisitionPlat", pAcq);
@@ -977,11 +968,6 @@ public class MainFrame extends javax.swing.JFrame {
         chClassification.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 chClassificationItemStateChanged(evt);
-            }
-        });
-        chClassification.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chClassificationActionPerformed(evt);
             }
         });
 
@@ -1011,19 +997,17 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tabPane)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(chClassification)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chClassification)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(bGenerate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bGenerate)
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bLoad)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1040,12 +1024,11 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(bGenerate)
                     .addComponent(bSave)
                     .addComponent(bLoad))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
                     .addComponent(chClassification)
                     .addComponent(cbClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabPane)
                 .addContainerGap())
@@ -1053,10 +1036,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void chClassificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chClassificationActionPerformed
-        cbClassification.setEnabled(chClassification.isSelected());
-    }//GEN-LAST:event_chClassificationActionPerformed
 
     private void bGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGenerateActionPerformed
         JFileChooser jfc = new JFileChooser();
@@ -1068,100 +1047,21 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bGenerateActionPerformed
 
-    private void chLastOrbitOfsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chLastOrbitOfsActionPerformed
-        spLstOrbitOfs.setEnabled(chLastOrbitOfs.isSelected());
-        lOf1.setEnabled(chLastOrbitOfs.isSelected());
-    }//GEN-LAST:event_chLastOrbitOfsActionPerformed
-
     private void bStatusValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bStatusValsActionPerformed
         showValsDialog(HmaGenSettings.STATUSES);
     }//GEN-LAST:event_bStatusValsActionPerformed
-
-    private void chStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chStatusActionPerformed
-        bStatusVals.setEnabled(chStatus.isSelected());
-    }//GEN-LAST:event_chStatusActionPerformed
 
     private void bPrdTypeValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPrdTypeValsActionPerformed
         showValsDialog(HmaGenSettings.PRODUCT_TYPES);
     }//GEN-LAST:event_bPrdTypeValsActionPerformed
 
-    private void chPrdTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chPrdTypeActionPerformed
-        bPrdTypeVals.setEnabled(chPrdType.isSelected());
-    }//GEN-LAST:event_chPrdTypeActionPerformed
-
-    private void chOrbitNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chOrbitNumActionPerformed
-        spOrbitFrom.setEnabled(chOrbitNum.isSelected());
-        spOrbitTo.setEnabled(chOrbitNum.isSelected());
-        lOn1.setEnabled(chOrbitNum.isSelected());
-        lOn2.setEnabled(chOrbitNum.isSelected());
-        chLastOrbitOfs.setEnabled(chOrbitNum.isSelected());
-        spLstOrbitOfs.setEnabled(chOrbitNum.isSelected() && chLastOrbitOfs.isSelected());
-        lOf1.setEnabled(chOrbitNum.isSelected() && chLastOrbitOfs.isSelected());
-    }//GEN-LAST:event_chOrbitNumActionPerformed
-
     private void bParentIdValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bParentIdValsActionPerformed
         showValsDialog(HmaGenSettings.PARENT_IDENTIFIERS);
     }//GEN-LAST:event_bParentIdValsActionPerformed
 
-    private void chParentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chParentIdActionPerformed
-        bParentIdVals.setEnabled(chParentId.isSelected());
-    }//GEN-LAST:event_chParentIdActionPerformed
-
-    private void chSensingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSensingActionPerformed
-        spSensFrom.setEnabled(chSensing.isSelected());
-        spSensTo.setEnabled(chSensing.isSelected());
-        spDuration.setEnabled(chSensing.isSelected());
-        cbDurationUnit.setEnabled(chSensing.isSelected());
-        lSt1.setEnabled(chSensing.isSelected());
-        lSt2.setEnabled(chSensing.isSelected());
-        lSt3.setEnabled(chSensing.isSelected());
-    }//GEN-LAST:event_chSensingActionPerformed
-
-    private void chFootprintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chFootprintActionPerformed
-        spWidth.setEnabled(chFootprint.isSelected());
-        spHeight.setEnabled(chFootprint.isSelected());
-        chCenter.setEnabled(chFootprint.isSelected());
-        lF1.setEnabled(chFootprint.isSelected());
-        lF2.setEnabled(chFootprint.isSelected());
-    }//GEN-LAST:event_chFootprintActionPerformed
-
-    private void chCloudCovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chCloudCovActionPerformed
-        spCldCovFrom.setEnabled(chCloudCov.isSelected());
-        spCldCovTo.setEnabled(chCloudCov.isSelected());
-        lCc1.setEnabled(chCloudCov.isSelected());
-        lCc2.setEnabled(chCloudCov.isSelected());
-    }//GEN-LAST:event_chCloudCovActionPerformed
-
-    private void chSnowCovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSnowCovActionPerformed
-        spSnwCovFrom.setEnabled(chSnowCov.isSelected());
-        spSnwCovTo.setEnabled(chSnowCov.isSelected());
-        lSc1.setEnabled(chSnowCov.isSelected());
-        lSc2.setEnabled(chSnowCov.isSelected());
-    }//GEN-LAST:event_chSnowCovActionPerformed
-
     private void bPlrztnValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPlrztnValsActionPerformed
         showValsDialog(HmaGenSettings.POLARIZATIONS);
     }//GEN-LAST:event_bPlrztnValsActionPerformed
-
-    private void chPolarztnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chPolarztnActionPerformed
-        bPlrztnVals.setEnabled(chPolarztn.isSelected());
-    }//GEN-LAST:event_chPolarztnActionPerformed
-
-    private void chArchDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chArchDateActionPerformed
-        spArdtFrom.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
-        spArdtTo.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
-        lAd1.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
-        lAd2.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
-    }//GEN-LAST:event_chArchDateActionPerformed
-
-    private void chGenArchInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chGenArchInfoActionPerformed
-        lAr1.setEnabled(chGenArchInfo.isSelected());
-        bArCntVals.setEnabled(chGenArchInfo.isSelected());
-        chArchDate.setEnabled(chGenArchInfo.isSelected());
-        chArchId.setEnabled(chGenArchInfo.isSelected());
-        chArchDateActionPerformed(evt);
-        chArchIdActionPerformed(evt);
-    }//GEN-LAST:event_chGenArchInfoActionPerformed
 
     private void bArCntValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bArCntValsActionPerformed
         showValsDialog(HmaGenSettings.ARCHIVING_CENTERS);
@@ -1170,21 +1070,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void bArchIdValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bArchIdValsActionPerformed
         showValsDialog(HmaGenSettings.ARCHIVING_IDS);
     }//GEN-LAST:event_bArchIdValsActionPerformed
-
-    private void chArchIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chArchIdActionPerformed
-        bArchIdVals.setEnabled(chGenArchInfo.isSelected() && chArchId.isSelected());
-    }//GEN-LAST:event_chArchIdActionPerformed
-
-    private void chGenBrwsInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chGenBrwsInfoActionPerformed
-        lBr1.setEnabled(chGenBrwsInfo.isSelected());
-        bThmbUrlsVals.setEnabled(chGenBrwsInfo.isSelected());
-        chQlkUrl.setEnabled(chGenBrwsInfo.isSelected());
-        chQlkUrlActionPerformed(evt);
-    }//GEN-LAST:event_chGenBrwsInfoActionPerformed
-
-    private void chQlkUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chQlkUrlActionPerformed
-        bQlkUrlsVals.setEnabled(chGenBrwsInfo.isSelected() && chQlkUrl.isSelected());
-    }//GEN-LAST:event_chQlkUrlActionPerformed
 
     private void bThmbUrlsValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bThmbUrlsValsActionPerformed
         showValsDialog(HmaGenSettings.THUMB_URLS);
@@ -1218,50 +1103,6 @@ public class MainFrame extends javax.swing.JFrame {
         showValsDialog(HmaGenSettings.SWATH_IDS);
     }//GEN-LAST:event_bSwthValsActionPerformed
 
-    private void chSerIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSerIdActionPerformed
-        bSerIdVals.setEnabled(chSerId.isSelected());
-    }//GEN-LAST:event_chSerIdActionPerformed
-
-    private void chSensNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSensNameActionPerformed
-        bSensNameVals.setEnabled(chSensName.isSelected());
-    }//GEN-LAST:event_chSensNameActionPerformed
-
-    private void chSensTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSensTypeActionPerformed
-        bSensTypVals.setEnabled(chSensType.isSelected());
-    }//GEN-LAST:event_chSensTypeActionPerformed
-
-    private void chSensModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSensModeActionPerformed
-        bSensModeVals.setEnabled(chSensMode.isSelected());
-    }//GEN-LAST:event_chSensModeActionPerformed
-
-    private void chSwthIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSwthIdActionPerformed
-        bSwthVals.setEnabled(chSwthId.isSelected());
-    }//GEN-LAST:event_chSwthIdActionPerformed
-
-    private void chResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chResActionPerformed
-        lRs1.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
-        lRs2.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
-        spResFrom.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
-        spResTo.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
-    }//GEN-LAST:event_chResActionPerformed
-
-    private void chGenAcqPlatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chGenAcqPlatActionPerformed
-        lAq1.setEnabled(chGenAcqPlat.isSelected());
-        bPlatnVals.setEnabled(chGenAcqPlat.isSelected());
-        chSerId.setEnabled(chGenAcqPlat.isSelected());
-        chSensName.setEnabled(chGenAcqPlat.isSelected());
-        chSensMode.setEnabled(chGenAcqPlat.isSelected());
-        chSensType.setEnabled(chGenAcqPlat.isSelected());
-        chSwthId.setEnabled(chGenAcqPlat.isSelected());
-        chRes.setEnabled(chGenAcqPlat.isSelected());
-        chSerIdActionPerformed(evt);
-        chSensNameActionPerformed(evt);
-        chSensTypeActionPerformed(evt);
-        chSensModeActionPerformed(evt);
-        chSwthIdActionPerformed(evt);
-        chResActionPerformed(evt);
-    }//GEN-LAST:event_chGenAcqPlatActionPerformed
-
     private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
         JFileChooser jfc = new JFileChooser();
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -1283,13 +1124,146 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_bLoadActionPerformed
 
     private void chClassificationItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chClassificationItemStateChanged
-        System.out.println("item state change");
-        System.out.println(evt.toString());
+        cbClassification.setEnabled(chClassification.isSelected());
     }//GEN-LAST:event_chClassificationItemStateChanged
 
     private void chParentIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chParentIdItemStateChanged
-        // TODO add your handling code here:
+        bParentIdVals.setEnabled(chParentId.isSelected());
     }//GEN-LAST:event_chParentIdItemStateChanged
+
+    private void chPrdTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chPrdTypeItemStateChanged
+        bPrdTypeVals.setEnabled(chPrdType.isSelected());
+    }//GEN-LAST:event_chPrdTypeItemStateChanged
+
+    private void chPolarztnItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chPolarztnItemStateChanged
+        bPlrztnVals.setEnabled(chPolarztn.isSelected());
+    }//GEN-LAST:event_chPolarztnItemStateChanged
+
+    private void chStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chStatusItemStateChanged
+        bStatusVals.setEnabled(chStatus.isSelected());
+    }//GEN-LAST:event_chStatusItemStateChanged
+
+    private void chSensingItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chSensingItemStateChanged
+        spSensFrom.setEnabled(chSensing.isSelected());
+        spSensTo.setEnabled(chSensing.isSelected());
+        spDuration.setEnabled(chSensing.isSelected());
+        cbDurationUnit.setEnabled(chSensing.isSelected());
+        lSt1.setEnabled(chSensing.isSelected());
+        lSt2.setEnabled(chSensing.isSelected());
+        lSt3.setEnabled(chSensing.isSelected());
+    }//GEN-LAST:event_chSensingItemStateChanged
+
+    private void chOrbitNumItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chOrbitNumItemStateChanged
+        spOrbitFrom.setEnabled(chOrbitNum.isSelected());
+        spOrbitTo.setEnabled(chOrbitNum.isSelected());
+        lOn1.setEnabled(chOrbitNum.isSelected());
+        lOn2.setEnabled(chOrbitNum.isSelected());
+        chLastOrbitOfs.setEnabled(chOrbitNum.isSelected());
+        spLstOrbitOfs.setEnabled(chOrbitNum.isSelected() && chLastOrbitOfs.isSelected());
+        lOf1.setEnabled(chOrbitNum.isSelected() && chLastOrbitOfs.isSelected());
+    }//GEN-LAST:event_chOrbitNumItemStateChanged
+
+    private void chFootprintItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chFootprintItemStateChanged
+        spWidth.setEnabled(chFootprint.isSelected());
+        spHeight.setEnabled(chFootprint.isSelected());
+        chCenter.setEnabled(chFootprint.isSelected());
+        lF1.setEnabled(chFootprint.isSelected());
+        lF2.setEnabled(chFootprint.isSelected());
+    }//GEN-LAST:event_chFootprintItemStateChanged
+
+    private void chCloudCovItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chCloudCovItemStateChanged
+        spCldCovFrom.setEnabled(chCloudCov.isSelected());
+        spCldCovTo.setEnabled(chCloudCov.isSelected());
+        lCc1.setEnabled(chCloudCov.isSelected());
+        lCc2.setEnabled(chCloudCov.isSelected());
+    }//GEN-LAST:event_chCloudCovItemStateChanged
+
+    private void chSnowCovItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chSnowCovItemStateChanged
+        spSnwCovFrom.setEnabled(chSnowCov.isSelected());
+        spSnwCovTo.setEnabled(chSnowCov.isSelected());
+        lSc1.setEnabled(chSnowCov.isSelected());
+        lSc2.setEnabled(chSnowCov.isSelected());
+    }//GEN-LAST:event_chSnowCovItemStateChanged
+
+    private void chGenArchInfoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chGenArchInfoItemStateChanged
+        lAr1.setEnabled(chGenArchInfo.isSelected());
+        bArCntVals.setEnabled(chGenArchInfo.isSelected());
+        chArchDate.setEnabled(chGenArchInfo.isSelected());
+        chArchId.setEnabled(chGenArchInfo.isSelected());
+        chArchDateItemStateChanged(evt);
+        chArchIdItemStateChanged(evt);
+    }//GEN-LAST:event_chGenArchInfoItemStateChanged
+
+    private void chArchIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chArchIdItemStateChanged
+        bArchIdVals.setEnabled(chGenArchInfo.isSelected() && chArchId.isSelected());
+    }//GEN-LAST:event_chArchIdItemStateChanged
+
+    private void chArchDateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chArchDateItemStateChanged
+        spArdtFrom.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
+        spArdtTo.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
+        lAd1.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
+        lAd2.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
+    }//GEN-LAST:event_chArchDateItemStateChanged
+
+    private void chGenBrwsInfoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chGenBrwsInfoItemStateChanged
+        lBr1.setEnabled(chGenBrwsInfo.isSelected());
+        bThmbUrlsVals.setEnabled(chGenBrwsInfo.isSelected());
+        chQlkUrl.setEnabled(chGenBrwsInfo.isSelected());
+        chQlkUrlItemStateChanged(evt);
+    }//GEN-LAST:event_chGenBrwsInfoItemStateChanged
+
+    private void chQlkUrlItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chQlkUrlItemStateChanged
+        bQlkUrlsVals.setEnabled(chGenBrwsInfo.isSelected() && chQlkUrl.isSelected());
+    }//GEN-LAST:event_chQlkUrlItemStateChanged
+
+    private void chGenAcqPlatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chGenAcqPlatItemStateChanged
+        lAq1.setEnabled(chGenAcqPlat.isSelected());
+        bPlatnVals.setEnabled(chGenAcqPlat.isSelected());
+        chSerId.setEnabled(chGenAcqPlat.isSelected());
+        chSensName.setEnabled(chGenAcqPlat.isSelected());
+        chSensMode.setEnabled(chGenAcqPlat.isSelected());
+        chSensType.setEnabled(chGenAcqPlat.isSelected());
+        chSwthId.setEnabled(chGenAcqPlat.isSelected());
+        chRes.setEnabled(chGenAcqPlat.isSelected());
+        chSerIdItemStateChanged(evt);
+        chSensNameItemStateChanged(evt);
+        chSensTypeItemStateChanged(evt);
+        chSensModeItemStateChanged(evt);
+        chSwthIdItemStateChanged(evt);
+        chResItemStateChanged(evt);
+    }//GEN-LAST:event_chGenAcqPlatItemStateChanged
+
+    private void chSerIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chSerIdItemStateChanged
+        bSerIdVals.setEnabled(chSerId.isSelected());
+    }//GEN-LAST:event_chSerIdItemStateChanged
+
+    private void chSensNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chSensNameItemStateChanged
+        bSensNameVals.setEnabled(chSensName.isSelected());
+    }//GEN-LAST:event_chSensNameItemStateChanged
+
+    private void chSensTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chSensTypeItemStateChanged
+        bSensTypVals.setEnabled(chSensType.isSelected());
+    }//GEN-LAST:event_chSensTypeItemStateChanged
+
+    private void chSensModeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chSensModeItemStateChanged
+        bSensModeVals.setEnabled(chSensMode.isSelected());
+    }//GEN-LAST:event_chSensModeItemStateChanged
+
+    private void chSwthIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chSwthIdItemStateChanged
+        bSwthVals.setEnabled(chSwthId.isSelected());
+    }//GEN-LAST:event_chSwthIdItemStateChanged
+
+    private void chResItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chResItemStateChanged
+        lRs1.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
+        lRs2.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
+        spResFrom.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
+        spResTo.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
+    }//GEN-LAST:event_chResItemStateChanged
+
+    private void chLastOrbitOfsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chLastOrbitOfsItemStateChanged
+        spLstOrbitOfs.setEnabled(chLastOrbitOfs.isSelected());
+        lOf1.setEnabled(chLastOrbitOfs.isSelected());
+    }//GEN-LAST:event_chLastOrbitOfsItemStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bArCntVals;
     private javax.swing.JButton bArchIdVals;
@@ -1337,7 +1311,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lAd1;
     private javax.swing.JLabel lAd2;
     private javax.swing.JLabel lAq1;
