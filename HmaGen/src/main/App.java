@@ -35,7 +35,6 @@ public class App {
             //ignored
         }
         SwingUtilities.invokeLater(new Runnable() {
-
             @Override
             public void run() {
                 MainFrame mf = new MainFrame();

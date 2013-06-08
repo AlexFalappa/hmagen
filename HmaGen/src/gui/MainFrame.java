@@ -15,6 +15,8 @@
  */
 package gui;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -24,6 +26,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.Field;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,8 +36,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import main.HmaGenSettings;
 
 /**
  * Main application window.
@@ -43,30 +51,18 @@ import javax.swing.JOptionPane;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    private static final String STATUSES = "Statuses";
-    private static final String PRODUCT_TYPES = "Product Types";
-    private static final String PARENT_IDENTIFIERS = "Parent Ids.";
-    private static final String POLARIZATIONS = "Polarizations";
-    private static final String ARCHIVING_CENTERS = "Archiving Centers";
-    private static final String ARCHIVING_IDS = "Archiving Ids";
-    private static final String THUMB_URLS = "Thumbnail Urls";
-    private static final String QLOOK_URLS = "Quicklook Urls";
-    private static final String PLATFORMS = "Platform Names";
-    private static final String SENS_MODES = "Sensor Modes";
-    private static final String SENS_TYPES = "Sensor Types";
-    private static final String SENS_NAMES = "Sensor Names";
-    private static final String SER_IDS = "Plat. Serial Ids.";
-    private static final String SWATH_IDS = "Swath Ids.";
-    private HashMap<String, ArrayList<String>> valMap = new HashMap<>();
-    private final Configuration cfg = new Configuration();
     private Template template = null;
+    private HmaGenSettings settings = new HmaGenSettings();
+    private final Configuration cfg = new Configuration();
     private final Random rng = new Random();
     private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+    private XStream xstream = new XStream(new StaxDriver());
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
+        xstream.alias("hmagensettings", HmaGenSettings.class);
         try {
             cfg.setDirectoryForTemplateLoading(
                     new File(getClass().getResource("templates").toURI()));
@@ -74,44 +70,14 @@ public class MainFrame extends javax.swing.JFrame {
             template = cfg.getTemplate("getrecords-response.ftl");
         } catch (IOException | URISyntaxException ex) {
         }
-        ArrayList<String> statuses = new ArrayList<>();
-        statuses.add("NEW");
-        statuses.add("PLANNED");
-        statuses.add("AQUIRED");
-        statuses.add("PRODUCED");
-        valMap.put(STATUSES, statuses);
-        ArrayList<String> prdTypes = new ArrayList<>();
-        prdTypes.add("RAW");
-        prdTypes.add("L0");
-        prdTypes.add("L1");
-        prdTypes.add("L1B");
-        prdTypes.add("ORTHO");
-        valMap.put(PRODUCT_TYPES, prdTypes);
-        ArrayList<String> polarizations = new ArrayList<>();
-        polarizations.add("HH");
-        polarizations.add("VV");
-        polarizations.add("HV");
-        polarizations.add("VH");
-        valMap.put(POLARIZATIONS, polarizations);
-        valMap.put(ARCHIVING_CENTERS, new ArrayList<String>());
-        valMap.put(ARCHIVING_IDS, new ArrayList<String>());
-        valMap.put(PARENT_IDENTIFIERS, new ArrayList<String>());
-        valMap.put(THUMB_URLS, new ArrayList<String>());
-        valMap.put(QLOOK_URLS, new ArrayList<String>());
-        valMap.put(PLATFORMS, new ArrayList<String>());
-        valMap.put(SENS_MODES, new ArrayList<String>());
-        valMap.put(SENS_TYPES, new ArrayList<String>());
-        valMap.put(SENS_NAMES, new ArrayList<String>());
-        valMap.put(SER_IDS, new ArrayList<String>());
-        valMap.put(SWATH_IDS, new ArrayList<String>());
         initComponents();
     }
 
     private void showValsDialog(String title) {
-        SetOfValsDialog pid = new SetOfValsDialog(this, title, valMap.get(title));
+        SetOfValsDialog pid = new SetOfValsDialog(this, title, settings.valMap.get(title));
         pid.setLocationRelativeTo(this);
         pid.setVisible(true);
-        valMap.put(title, pid.getValList());
+        settings.valMap.put(title, pid.getValList());
     }
 
     /**
@@ -210,6 +176,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         chClassification = new javax.swing.JCheckBox();
         cbClassification = new javax.swing.JComboBox();
+        bSave = new javax.swing.JButton();
+        bLoad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HmaGen");
@@ -243,6 +211,11 @@ public class MainFrame extends javax.swing.JFrame {
         cbDurationUnit.setEnabled(false);
 
         chParentId.setText("Parent identifier");
+        chParentId.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chParentIdItemStateChanged(evt);
+            }
+        });
         chParentId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chParentIdActionPerformed(evt);
@@ -591,7 +564,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chPolarztn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bPlrztnVals)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOProduct", pProd);
@@ -703,7 +676,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spArdtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lAd2)
                     .addComponent(spArdtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(244, Short.MAX_VALUE))
+                .addContainerGap(267, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOArchivingInfo", pArch);
@@ -776,7 +749,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chQlkUrl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bQlkUrlsVals)
-                .addContainerGap(300, Short.MAX_VALUE))
+                .addContainerGap(323, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOBrowseInfo", pBrows);
@@ -985,7 +958,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spResFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lRs2)
                     .addComponent(spResTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addContainerGap(207, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOAcquisitionPlat", pAcq);
@@ -1000,6 +973,12 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel3.setText("Extrinsic Objects:");
 
         chClassification.setText("Add classification");
+        chClassification.setName("chClassification"); // NOI18N
+        chClassification.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chClassificationItemStateChanged(evt);
+            }
+        });
         chClassification.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chClassificationActionPerformed(evt);
@@ -1008,6 +987,20 @@ public class MainFrame extends javax.swing.JFrame {
 
         cbClassification.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Optical", "Radar", "Atmospheric" }));
         cbClassification.setEnabled(false);
+
+        bSave.setText("Save..");
+        bSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSaveActionPerformed(evt);
+            }
+        });
+
+        bLoad.setText("Load...");
+        bLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLoadActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1018,19 +1011,23 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tabPane)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bGenerate))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(chClassification)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cbClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bGenerate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bLoad)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bSave)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -1040,7 +1037,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bGenerate))
+                    .addComponent(bGenerate)
+                    .addComponent(bSave)
+                    .addComponent(bLoad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chClassification)
@@ -1075,7 +1074,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chLastOrbitOfsActionPerformed
 
     private void bStatusValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bStatusValsActionPerformed
-        showValsDialog(STATUSES);
+        showValsDialog(HmaGenSettings.STATUSES);
     }//GEN-LAST:event_bStatusValsActionPerformed
 
     private void chStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chStatusActionPerformed
@@ -1083,7 +1082,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chStatusActionPerformed
 
     private void bPrdTypeValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPrdTypeValsActionPerformed
-        showValsDialog(PRODUCT_TYPES);
+        showValsDialog(HmaGenSettings.PRODUCT_TYPES);
     }//GEN-LAST:event_bPrdTypeValsActionPerformed
 
     private void chPrdTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chPrdTypeActionPerformed
@@ -1101,7 +1100,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chOrbitNumActionPerformed
 
     private void bParentIdValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bParentIdValsActionPerformed
-        showValsDialog(PARENT_IDENTIFIERS);
+        showValsDialog(HmaGenSettings.PARENT_IDENTIFIERS);
     }//GEN-LAST:event_bParentIdValsActionPerformed
 
     private void chParentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chParentIdActionPerformed
@@ -1141,7 +1140,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chSnowCovActionPerformed
 
     private void bPlrztnValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPlrztnValsActionPerformed
-        showValsDialog(POLARIZATIONS);
+        showValsDialog(HmaGenSettings.POLARIZATIONS);
     }//GEN-LAST:event_bPlrztnValsActionPerformed
 
     private void chPolarztnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chPolarztnActionPerformed
@@ -1165,11 +1164,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chGenArchInfoActionPerformed
 
     private void bArCntValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bArCntValsActionPerformed
-        showValsDialog(ARCHIVING_CENTERS);
+        showValsDialog(HmaGenSettings.ARCHIVING_CENTERS);
     }//GEN-LAST:event_bArCntValsActionPerformed
 
     private void bArchIdValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bArchIdValsActionPerformed
-        showValsDialog(ARCHIVING_IDS);
+        showValsDialog(HmaGenSettings.ARCHIVING_IDS);
     }//GEN-LAST:event_bArchIdValsActionPerformed
 
     private void chArchIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chArchIdActionPerformed
@@ -1188,35 +1187,35 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chQlkUrlActionPerformed
 
     private void bThmbUrlsValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bThmbUrlsValsActionPerformed
-        showValsDialog(THUMB_URLS);
+        showValsDialog(HmaGenSettings.THUMB_URLS);
     }//GEN-LAST:event_bThmbUrlsValsActionPerformed
 
     private void bQlkUrlsValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bQlkUrlsValsActionPerformed
-        showValsDialog(QLOOK_URLS);
+        showValsDialog(HmaGenSettings.QLOOK_URLS);
     }//GEN-LAST:event_bQlkUrlsValsActionPerformed
 
     private void bPlatnValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPlatnValsActionPerformed
-        showValsDialog(PLATFORMS);
+        showValsDialog(HmaGenSettings.PLATFORMS);
     }//GEN-LAST:event_bPlatnValsActionPerformed
 
     private void bSerIdValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSerIdValsActionPerformed
-        showValsDialog(SER_IDS);
+        showValsDialog(HmaGenSettings.SER_IDS);
     }//GEN-LAST:event_bSerIdValsActionPerformed
 
     private void bSensNameValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSensNameValsActionPerformed
-        showValsDialog(SENS_NAMES);
+        showValsDialog(HmaGenSettings.SENS_NAMES);
     }//GEN-LAST:event_bSensNameValsActionPerformed
 
     private void bSensTypValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSensTypValsActionPerformed
-        showValsDialog(SENS_TYPES);
+        showValsDialog(HmaGenSettings.SENS_TYPES);
     }//GEN-LAST:event_bSensTypValsActionPerformed
 
     private void bSensModeValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSensModeValsActionPerformed
-        showValsDialog(SENS_MODES);
+        showValsDialog(HmaGenSettings.SENS_MODES);
     }//GEN-LAST:event_bSensModeValsActionPerformed
 
     private void bSwthValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSwthValsActionPerformed
-        showValsDialog(SWATH_IDS);
+        showValsDialog(HmaGenSettings.SWATH_IDS);
     }//GEN-LAST:event_bSwthValsActionPerformed
 
     private void chSerIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chSerIdActionPerformed
@@ -1262,15 +1261,46 @@ public class MainFrame extends javax.swing.JFrame {
         chSwthIdActionPerformed(evt);
         chResActionPerformed(evt);
     }//GEN-LAST:event_chGenAcqPlatActionPerformed
+
+    private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            try {
+                fillSettings();
+                xstream.toXML(settings, new FileWriter(jfc.getSelectedFile()));
+            } catch (IOException | SecurityException | IllegalAccessException | IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Save error!", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_bSaveActionPerformed
+
+    private void bLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoadActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            settings = (HmaGenSettings) xstream.fromXML(jfc.getSelectedFile());
+            applySettings();
+        }
+    }//GEN-LAST:event_bLoadActionPerformed
+
+    private void chClassificationItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chClassificationItemStateChanged
+        System.out.println("item state change");
+        System.out.println(evt.toString());
+    }//GEN-LAST:event_chClassificationItemStateChanged
+
+    private void chParentIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chParentIdItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chParentIdItemStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bArCntVals;
     private javax.swing.JButton bArchIdVals;
     private javax.swing.JButton bGenerate;
+    private javax.swing.JButton bLoad;
     private javax.swing.JButton bParentIdVals;
     private javax.swing.JButton bPlatnVals;
     private javax.swing.JButton bPlrztnVals;
     private javax.swing.JButton bPrdTypeVals;
     private javax.swing.JButton bQlkUrlsVals;
+    private javax.swing.JButton bSave;
     private javax.swing.JButton bSensModeVals;
     private javax.swing.JButton bSensNameVals;
     private javax.swing.JButton bSensTypVals;
@@ -1446,19 +1476,19 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void genEOProduct(Map rec, final long startTime, final long timeDelta, Integer durationDelta, final Integer orbFrom, final Integer orbDelta, final Integer lstOrbOfs, String classification, final Integer cldCovFrom, final Integer cldCovDelta, final Integer snwCovFrom, final Integer snwCovDelta) {
-        ArrayList<String> vals = valMap.get(PARENT_IDENTIFIERS);
+        ArrayList<String> vals = settings.valMap.get(HmaGenSettings.PARENT_IDENTIFIERS);
         if (chParentId.isSelected() && vals != null) {
             rec.put("parentId", vals.get(rng.nextInt(vals.size())));
         }
-        vals = valMap.get(PRODUCT_TYPES);
+        vals = settings.valMap.get(HmaGenSettings.PRODUCT_TYPES);
         if (chPrdType.isSelected() && vals != null) {
             rec.put("prdType", vals.get(rng.nextInt(vals.size())));
         }
-        vals = valMap.get(STATUSES);
+        vals = settings.valMap.get(HmaGenSettings.STATUSES);
         if (chStatus.isSelected() && vals != null) {
             rec.put("status", vals.get(rng.nextInt(vals.size())));
         }
-        vals = valMap.get(POLARIZATIONS);
+        vals = settings.valMap.get(HmaGenSettings.POLARIZATIONS);
         if (chPolarztn.isSelected()) {
             rec.put("polarisation", vals.get(rng.nextInt(vals.size())));
         }
@@ -1493,10 +1523,10 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void genEOArchInfo(Map rec, long acqStartTime, long acqDelta) {
-        ArrayList<String> vals = valMap.get(ARCHIVING_CENTERS);
+        ArrayList<String> vals = settings.valMap.get(HmaGenSettings.ARCHIVING_CENTERS);
         rec.put("archCenter", vals.get(rng.nextInt(vals.size())));
         if (chArchId.isSelected()) {
-            vals = valMap.get(ARCHIVING_IDS);
+            vals = settings.valMap.get(HmaGenSettings.ARCHIVING_IDS);
             rec.put("archId", vals.get(rng.nextInt(vals.size())));
         }
         if (chArchDate.isSelected()) {
@@ -1506,26 +1536,26 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void genEOAcqInfo(Map rec, Integer resFrom, Integer resDelta) {
-        ArrayList<String> vals = valMap.get(PLATFORMS);
+        ArrayList<String> vals = settings.valMap.get(HmaGenSettings.PLATFORMS);
         rec.put("platName", vals.get(rng.nextInt(vals.size())));
         if (chSerId.isSelected()) {
-            vals = valMap.get(SER_IDS);
+            vals = settings.valMap.get(HmaGenSettings.SER_IDS);
             rec.put("platSer", vals.get(rng.nextInt(vals.size())));
         }
         if (chSensName.isSelected()) {
-            vals = valMap.get(SENS_NAMES);
+            vals = settings.valMap.get(HmaGenSettings.SENS_NAMES);
             rec.put("sensName", vals.get(rng.nextInt(vals.size())));
         }
         if (chSensMode.isSelected()) {
-            vals = valMap.get(SENS_MODES);
+            vals = settings.valMap.get(HmaGenSettings.SENS_MODES);
             rec.put("sensMode", vals.get(rng.nextInt(vals.size())));
         }
         if (chSensType.isSelected()) {
-            vals = valMap.get(SENS_TYPES);
+            vals = settings.valMap.get(HmaGenSettings.SENS_TYPES);
             rec.put("sensType", vals.get(rng.nextInt(vals.size())));
         }
         if (chSwthId.isSelected()) {
-            vals = valMap.get(SWATH_IDS);
+            vals = settings.valMap.get(HmaGenSettings.SWATH_IDS);
             rec.put("swathId", vals.get(rng.nextInt(vals.size())));
         }
         if (chRes.isSelected()) {
@@ -1535,11 +1565,71 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void genEOBrwsInfo(Map rec) {
-        ArrayList<String> vals = valMap.get(THUMB_URLS);
+        ArrayList<String> vals = settings.valMap.get(HmaGenSettings.THUMB_URLS);
         rec.put("thmbUrl", vals.get(rng.nextInt(vals.size())));
         if (chQlkUrl.isSelected()) {
-            vals = valMap.get(QLOOK_URLS);
+            vals = settings.valMap.get(HmaGenSettings.QLOOK_URLS);
             rec.put("qlkUrl", vals.get(rng.nextInt(vals.size())));
+        }
+    }
+
+    private void fillSettings() throws SecurityException, IllegalAccessException, IllegalArgumentException {
+        Class c = this.getClass();
+        for (Field f : c.getDeclaredFields()) {
+            final String fName = f.getName();
+            if (f.getType().equals(JCheckBox.class)) {
+                JCheckBox ch = (JCheckBox) f.get(this);
+                if (ch.isSelected()) {
+                    settings.chkbEnabled.add(fName);
+                }
+            } else if (f.getType().equals(JSpinner.class)) {
+                JSpinner sp = (JSpinner) f.get(this);
+                settings.spinnersMap.put(fName, sp.getValue());
+            } else if (f.getType().equals(JComboBox.class)) {
+                JComboBox cb = (JComboBox) f.get(this);
+                settings.combosMap.put(fName, cb.getSelectedItem());
+            } else if (f.getType().equals(JTextField.class)) {
+                JTextField tf = (JTextField) f.get(this);
+                settings.textfieldsMap.put(fName, tf.getText());
+            }
+        }
+    }
+
+    private void applySettings() {
+        Class c = this.getClass();
+        for (String ch : settings.chkbEnabled) {
+            try {
+                ((JCheckBox) c.getDeclaredField(ch).get(this)).setSelected(true);
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        for (Map.Entry<String, Object> e : settings.combosMap.entrySet()) {
+            String cb = e.getKey();
+            Object val = e.getValue();
+            try {
+                ((JComboBox) c.getDeclaredField(cb).get(this)).setSelectedItem(val);
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        for (Map.Entry<String, Object> e : settings.spinnersMap.entrySet()) {
+            String sp = e.getKey();
+            Object val = e.getValue();
+            try {
+                ((JSpinner) c.getDeclaredField(sp).get(this)).setValue(val);
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        for (Map.Entry<String, String> e : settings.textfieldsMap.entrySet()) {
+            String tf = e.getKey();
+            String val = e.getValue();
+            try {
+                ((JTextField) c.getDeclaredField(tf).get(this)).setText(val);
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }
