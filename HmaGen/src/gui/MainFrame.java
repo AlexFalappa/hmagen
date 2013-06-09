@@ -20,22 +20,12 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.lang.reflect.Field;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -51,12 +41,11 @@ import main.HmaGenSettings;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    private Template template = null;
-    private HmaGenSettings settings = new HmaGenSettings();
     private final Configuration cfg = new Configuration();
-    private final Random rng = new Random();
-    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
     private XStream xstream = new XStream(new StaxDriver());
+    Template template = null;
+    HmaGenSettings settings = new HmaGenSettings();
+    CalcModelWorker cmWorker = null;
 
     /**
      * Creates new form MainFrame
@@ -177,9 +166,12 @@ public class MainFrame extends javax.swing.JFrame {
         cbClassification = new javax.swing.JComboBox();
         bSave = new javax.swing.JButton();
         bLoad = new javax.swing.JButton();
+        pProgress = new javax.swing.JProgressBar();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HmaGen");
+        setResizable(false);
 
         jLabel1.setText("records");
 
@@ -382,101 +374,102 @@ public class MainFrame extends javax.swing.JFrame {
             pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pProdLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pProdLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chSensing)
-                    .addComponent(chParentId)
-                    .addComponent(chOrbitNum)
-                    .addComponent(chFootprint)
                     .addGroup(pProdLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chSensing)
+                            .addComponent(chParentId)
+                            .addComponent(chOrbitNum)
+                            .addComponent(chFootprint)
                             .addGroup(pProdLayout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(lCc1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spCldCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lCc2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spCldCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(chCloudCov))
-                        .addGap(18, 18, 18)
-                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pProdLayout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(lSc2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spSnwCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lSc1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spSnwCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(chSnowCov)))
-                    .addComponent(chPolarztn)
-                    .addGroup(pProdLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(bPlrztnVals)
-                            .addGroup(pProdLayout.createSequentialGroup()
-                                .addComponent(lSt2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spDuration, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbDurationUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pProdLayout.createSequentialGroup()
-                                .addComponent(lSt1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spSensFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lSt3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spSensTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pProdLayout.createSequentialGroup()
-                                .addComponent(bParentIdVals)
-                                .addGap(18, 18, 18)
-                                .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(chPrdType)
-                                    .addGroup(pProdLayout.createSequentialGroup()
-                                        .addGap(22, 22, 22)
-                                        .addComponent(bPrdTypeVals)))
-                                .addGap(18, 18, 18)
-                                .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(chStatus)
-                                    .addGroup(pProdLayout.createSequentialGroup()
-                                        .addGap(22, 22, 22)
-                                        .addComponent(bStatusVals))))
-                            .addGroup(pProdLayout.createSequentialGroup()
-                                .addComponent(lOn1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spOrbitFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lOn2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spOrbitTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
                                 .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pProdLayout.createSequentialGroup()
                                         .addGap(22, 22, 22)
-                                        .addComponent(lOf1)
+                                        .addComponent(lCc1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(spLstOrbitOfs, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(chLastOrbitOfs)))
+                                        .addComponent(spCldCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lCc2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spCldCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(chCloudCov))
+                                .addGap(18, 18, 18)
+                                .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pProdLayout.createSequentialGroup()
+                                        .addGap(22, 22, 22)
+                                        .addComponent(lSc2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spSnwCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lSc1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spSnwCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(chSnowCov)))
+                            .addComponent(chPolarztn)
                             .addGroup(pProdLayout.createSequentialGroup()
-                                .addComponent(lF1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lF2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(chCenter)))))
-                .addContainerGap())
+                                .addGap(22, 22, 22)
+                                .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(bPlrztnVals)
+                                    .addGroup(pProdLayout.createSequentialGroup()
+                                        .addComponent(lSt2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spDuration, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cbDurationUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pProdLayout.createSequentialGroup()
+                                        .addComponent(lSt1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spSensFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lSt3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spSensTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pProdLayout.createSequentialGroup()
+                                        .addComponent(bParentIdVals)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(chPrdType)
+                                            .addGroup(pProdLayout.createSequentialGroup()
+                                                .addGap(22, 22, 22)
+                                                .addComponent(bPrdTypeVals)))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(chStatus)
+                                            .addGroup(pProdLayout.createSequentialGroup()
+                                                .addGap(22, 22, 22)
+                                                .addComponent(bStatusVals))))
+                                    .addGroup(pProdLayout.createSequentialGroup()
+                                        .addComponent(lOn1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spOrbitFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lOn2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spOrbitTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pProdLayout.createSequentialGroup()
+                                                .addGap(22, 22, 22)
+                                                .addComponent(lOf1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(spLstOrbitOfs, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(chLastOrbitOfs)))
+                                    .addGroup(pProdLayout.createSequentialGroup()
+                                        .addComponent(lF1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lF2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chCenter))))))
+                    .addGroup(pProdLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         pProdLayout.setVerticalGroup(
             pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -555,7 +548,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chPolarztn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bPlrztnVals)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOProduct", pProd);
@@ -644,7 +637,7 @@ public class MainFrame extends javax.swing.JFrame {
                                         .addComponent(bArCntVals)
                                         .addComponent(bArchIdVals))))))
                     .addComponent(chGenArchInfo))
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
         pArchLayout.setVerticalGroup(
             pArchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -667,7 +660,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spArdtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lAd2)
                     .addComponent(spArdtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(212, Short.MAX_VALUE))
+                .addContainerGap(245, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOArchivingInfo", pArch);
@@ -725,7 +718,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(lBr1)
                             .addComponent(chQlkUrl)))
                     .addComponent(chGenBrwsInfo))
-                .addContainerGap(360, Short.MAX_VALUE))
+                .addContainerGap(374, Short.MAX_VALUE))
         );
         pBrowsLayout.setVerticalGroup(
             pBrowsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -740,7 +733,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chQlkUrl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bQlkUrlsVals)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap(301, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOBrowseInfo", pBrows);
@@ -889,7 +882,7 @@ public class MainFrame extends javax.swing.JFrame {
                                         .addGap(22, 22, 22)
                                         .addComponent(bSensModeVals))
                                     .addComponent(chRes))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                                 .addGroup(pAcqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(chSensType)
                                     .addComponent(chSerId)
@@ -949,7 +942,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spResFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lRs2)
                     .addComponent(spResTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOAcquisitionPlat", pAcq);
@@ -988,6 +981,8 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        pProgress.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -995,6 +990,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
                     .addComponent(tabPane)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -1008,7 +1004,9 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pProgress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bLoad)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bSave)))
@@ -1018,13 +1016,17 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bGenerate)
-                    .addComponent(bSave)
-                    .addComponent(bLoad))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pProgress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bGenerate)
+                        .addComponent(bSave)
+                        .addComponent(bLoad)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(chClassification)
@@ -1038,12 +1040,18 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGenerateActionPerformed
-        JFileChooser jfc = new JFileChooser();
-        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = jfc.getSelectedFile();
-            if (selectedFile != null) {
-                generate(selectedFile);
-                JOptionPane.showMessageDialog(this, "Generated " + spNumRecs.getValue().toString() + " products into:\n" + selectedFile.getAbsolutePath(), "Success", JOptionPane.INFORMATION_MESSAGE);
+        if (cmWorker != null) {
+            cmWorker.cancel(false);
+        } else {
+            JFileChooser jfc = new JFileChooser();
+            if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = jfc.getSelectedFile();
+                if (selectedFile != null) {
+                    cmWorker = new CalcModelWorker(this, selectedFile);
+                    bGenerate.setText("Cancel");
+                    pProgress.setMaximum((int) spNumRecs.getValue());
+                    cmWorker.execute();
+                }
             }
         }
     }//GEN-LAST:event_bGenerateActionPerformed
@@ -1266,286 +1274,97 @@ public class MainFrame extends javax.swing.JFrame {
         lOf1.setEnabled(chLastOrbitOfs.isSelected());
     }//GEN-LAST:event_chLastOrbitOfsItemStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bArCntVals;
-    private javax.swing.JButton bArchIdVals;
-    private javax.swing.JButton bGenerate;
-    private javax.swing.JButton bLoad;
-    private javax.swing.JButton bParentIdVals;
-    private javax.swing.JButton bPlatnVals;
-    private javax.swing.JButton bPlrztnVals;
-    private javax.swing.JButton bPrdTypeVals;
-    private javax.swing.JButton bQlkUrlsVals;
-    private javax.swing.JButton bSave;
-    private javax.swing.JButton bSensModeVals;
-    private javax.swing.JButton bSensNameVals;
-    private javax.swing.JButton bSensTypVals;
-    private javax.swing.JButton bSerIdVals;
-    private javax.swing.JButton bStatusVals;
-    private javax.swing.JButton bSwthVals;
-    private javax.swing.JButton bThmbUrlsVals;
-    private javax.swing.JComboBox cbClassification;
-    private javax.swing.JComboBox cbDurationUnit;
-    private javax.swing.JCheckBox chArchDate;
-    private javax.swing.JCheckBox chArchId;
-    private javax.swing.JCheckBox chCenter;
-    private javax.swing.JCheckBox chClassification;
-    private javax.swing.JCheckBox chCloudCov;
-    private javax.swing.JCheckBox chFootprint;
-    private javax.swing.JCheckBox chGenAcqPlat;
-    private javax.swing.JCheckBox chGenArchInfo;
-    private javax.swing.JCheckBox chGenBrwsInfo;
-    private javax.swing.JCheckBox chLastOrbitOfs;
-    private javax.swing.JCheckBox chOrbitNum;
-    private javax.swing.JCheckBox chParentId;
-    private javax.swing.JCheckBox chPolarztn;
-    private javax.swing.JCheckBox chPrdType;
-    private javax.swing.JCheckBox chQlkUrl;
-    private javax.swing.JCheckBox chRes;
-    private javax.swing.JCheckBox chSensMode;
-    private javax.swing.JCheckBox chSensName;
-    private javax.swing.JCheckBox chSensType;
-    private javax.swing.JCheckBox chSensing;
-    private javax.swing.JCheckBox chSerId;
-    private javax.swing.JCheckBox chSnowCov;
-    private javax.swing.JCheckBox chStatus;
-    private javax.swing.JCheckBox chSwthId;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel lAd1;
-    private javax.swing.JLabel lAd2;
-    private javax.swing.JLabel lAq1;
-    private javax.swing.JLabel lAr1;
-    private javax.swing.JLabel lBr1;
-    private javax.swing.JLabel lCc1;
-    private javax.swing.JLabel lCc2;
-    private javax.swing.JLabel lF1;
-    private javax.swing.JLabel lF2;
-    private javax.swing.JLabel lOf1;
-    private javax.swing.JLabel lOn1;
-    private javax.swing.JLabel lOn2;
-    private javax.swing.JLabel lRs1;
-    private javax.swing.JLabel lRs2;
-    private javax.swing.JLabel lSc1;
-    private javax.swing.JLabel lSc2;
-    private javax.swing.JLabel lSt1;
-    private javax.swing.JLabel lSt2;
-    private javax.swing.JLabel lSt3;
-    private javax.swing.JPanel pAcq;
-    private javax.swing.JPanel pArch;
-    private javax.swing.JPanel pBrows;
-    private javax.swing.JPanel pProd;
-    private javax.swing.JSpinner spArdtFrom;
-    private javax.swing.JSpinner spArdtTo;
-    private javax.swing.JSpinner spCldCovFrom;
-    private javax.swing.JSpinner spCldCovTo;
-    private javax.swing.JSpinner spDuration;
-    private javax.swing.JSpinner spHeight;
-    private javax.swing.JSpinner spLstOrbitOfs;
-    private javax.swing.JSpinner spNumRecs;
-    private javax.swing.JSpinner spOrbitFrom;
-    private javax.swing.JSpinner spOrbitTo;
-    private javax.swing.JSpinner spResFrom;
-    private javax.swing.JSpinner spResTo;
-    private javax.swing.JSpinner spSensFrom;
-    private javax.swing.JSpinner spSensTo;
-    private javax.swing.JSpinner spSnwCovFrom;
-    private javax.swing.JSpinner spSnwCovTo;
-    private javax.swing.JSpinner spWidth;
-    private javax.swing.JTabbedPane tabPane;
-    private javax.swing.JTextField tfPrefix;
+    javax.swing.JButton bArCntVals;
+    javax.swing.JButton bArchIdVals;
+    javax.swing.JButton bGenerate;
+    javax.swing.JButton bLoad;
+    javax.swing.JButton bParentIdVals;
+    javax.swing.JButton bPlatnVals;
+    javax.swing.JButton bPlrztnVals;
+    javax.swing.JButton bPrdTypeVals;
+    javax.swing.JButton bQlkUrlsVals;
+    javax.swing.JButton bSave;
+    javax.swing.JButton bSensModeVals;
+    javax.swing.JButton bSensNameVals;
+    javax.swing.JButton bSensTypVals;
+    javax.swing.JButton bSerIdVals;
+    javax.swing.JButton bStatusVals;
+    javax.swing.JButton bSwthVals;
+    javax.swing.JButton bThmbUrlsVals;
+    javax.swing.JComboBox cbClassification;
+    javax.swing.JComboBox cbDurationUnit;
+    javax.swing.JCheckBox chArchDate;
+    javax.swing.JCheckBox chArchId;
+    javax.swing.JCheckBox chCenter;
+    javax.swing.JCheckBox chClassification;
+    javax.swing.JCheckBox chCloudCov;
+    javax.swing.JCheckBox chFootprint;
+    javax.swing.JCheckBox chGenAcqPlat;
+    javax.swing.JCheckBox chGenArchInfo;
+    javax.swing.JCheckBox chGenBrwsInfo;
+    javax.swing.JCheckBox chLastOrbitOfs;
+    javax.swing.JCheckBox chOrbitNum;
+    javax.swing.JCheckBox chParentId;
+    javax.swing.JCheckBox chPolarztn;
+    javax.swing.JCheckBox chPrdType;
+    javax.swing.JCheckBox chQlkUrl;
+    javax.swing.JCheckBox chRes;
+    javax.swing.JCheckBox chSensMode;
+    javax.swing.JCheckBox chSensName;
+    javax.swing.JCheckBox chSensType;
+    javax.swing.JCheckBox chSensing;
+    javax.swing.JCheckBox chSerId;
+    javax.swing.JCheckBox chSnowCov;
+    javax.swing.JCheckBox chStatus;
+    javax.swing.JCheckBox chSwthId;
+    javax.swing.JLabel jLabel1;
+    javax.swing.JLabel jLabel3;
+    javax.swing.JLabel jLabel8;
+    javax.swing.JSeparator jSeparator1;
+    javax.swing.JLabel lAd1;
+    javax.swing.JLabel lAd2;
+    javax.swing.JLabel lAq1;
+    javax.swing.JLabel lAr1;
+    javax.swing.JLabel lBr1;
+    javax.swing.JLabel lCc1;
+    javax.swing.JLabel lCc2;
+    javax.swing.JLabel lF1;
+    javax.swing.JLabel lF2;
+    javax.swing.JLabel lOf1;
+    javax.swing.JLabel lOn1;
+    javax.swing.JLabel lOn2;
+    javax.swing.JLabel lRs1;
+    javax.swing.JLabel lRs2;
+    javax.swing.JLabel lSc1;
+    javax.swing.JLabel lSc2;
+    javax.swing.JLabel lSt1;
+    javax.swing.JLabel lSt2;
+    javax.swing.JLabel lSt3;
+    javax.swing.JPanel pAcq;
+    javax.swing.JPanel pArch;
+    javax.swing.JPanel pBrows;
+    javax.swing.JPanel pProd;
+    javax.swing.JProgressBar pProgress;
+    javax.swing.JSpinner spArdtFrom;
+    javax.swing.JSpinner spArdtTo;
+    javax.swing.JSpinner spCldCovFrom;
+    javax.swing.JSpinner spCldCovTo;
+    javax.swing.JSpinner spDuration;
+    javax.swing.JSpinner spHeight;
+    javax.swing.JSpinner spLstOrbitOfs;
+    javax.swing.JSpinner spNumRecs;
+    javax.swing.JSpinner spOrbitFrom;
+    javax.swing.JSpinner spOrbitTo;
+    javax.swing.JSpinner spResFrom;
+    javax.swing.JSpinner spResTo;
+    javax.swing.JSpinner spSensFrom;
+    javax.swing.JSpinner spSensTo;
+    javax.swing.JSpinner spSnwCovFrom;
+    javax.swing.JSpinner spSnwCovTo;
+    javax.swing.JSpinner spWidth;
+    javax.swing.JTabbedPane tabPane;
+    javax.swing.JTextField tfPrefix;
     // End of variables declaration//GEN-END:variables
-
-    private void generate(File selectedFile) {
-        try {
-            Map model = calcModel();
-            try (Writer out = new BufferedWriter(new FileWriter(selectedFile))) {
-                template.process(model, out);
-            }
-        } catch (IOException | TemplateException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private Map calcModel() {
-        Map model = new HashMap();
-        model.put("numRecs", spNumRecs.getValue().toString());
-        List<Map<String, String>> records = new ArrayList<>();
-        model.put("records", records);
-        // precalculate some values
-        final Integer orbFrom = (Integer) spOrbitFrom.getValue();
-        final Integer orbDelta = (Integer) spOrbitTo.getValue() - orbFrom;
-        final Integer lstOrbOfs = (Integer) spLstOrbitOfs.getValue();
-        final long startTime = ((Date) spSensFrom.getValue()).getTime();
-        final long stopTime = ((Date) spSensTo.getValue()).getTime();
-        final long timeDelta = stopTime - startTime;
-        final long acqStartTime = ((Date) spArdtFrom.getValue()).getTime();
-        final long acqStopTime = ((Date) spArdtTo.getValue()).getTime();
-        final long acqDelta = acqStopTime - acqStartTime;
-        final Integer cldCovFrom = (Integer) spCldCovFrom.getValue();
-        final Integer cldCovDelta = (Integer) spCldCovTo.getValue() - cldCovFrom;
-        final Integer snwCovFrom = (Integer) spCldCovFrom.getValue();
-        final Integer snwCovDelta = (Integer) spCldCovTo.getValue() - snwCovFrom;
-        final Integer resFrom = (Integer) spResFrom.getValue();
-        final Integer resDelta = (Integer) spResTo.getValue() - snwCovFrom;
-        Integer durationDelta = (Integer) spDuration.getValue();
-        switch (cbDurationUnit.getSelectedItem().toString()) {
-            case "minutes":
-                durationDelta *= 60000;
-                break;
-            case "seconds":
-                durationDelta *= 1000;
-                break;
-            default:
-            // do nothing for milliseconds
-        }
-        String classification = "";
-        switch (cbClassification.getSelectedItem().toString()) {
-            case "Optical":
-                classification = "OPT";
-                break;
-            case "Radar":
-                classification = "SAR";
-                break;
-            case "Atmospheric":
-                classification = "ATM";
-                break;
-        }
-        // generate metadata values and fill model
-        for (int i = 1; i <= (Integer) spNumRecs.getValue(); i++) {
-            Map rec = new HashMap();
-            rec.put("prodId", String.format("%s-%d", tfPrefix.getText(), i));
-            genEOProduct(rec, startTime, timeDelta, durationDelta, orbFrom, orbDelta, lstOrbOfs, classification, cldCovFrom, cldCovDelta, snwCovFrom, snwCovDelta);
-            if (chGenAcqPlat.isSelected()) {
-                genEOAcqInfo(rec, resFrom, resDelta);
-            }
-            if (chGenArchInfo.isSelected()) {
-                genEOArchInfo(rec, acqStartTime, acqDelta);
-            }
-            if (chGenBrwsInfo.isSelected()) {
-                genEOBrwsInfo(rec);
-            }
-            records.add(rec);
-        }
-        return model;
-    }
-
-    private void genFootprintAndCenter(Map rec) {
-        double top = -90.0 + rng.nextDouble() * 180.0;
-        double left = -180.0 + rng.nextDouble() * 360.0;
-        double h = rng.nextDouble() * (double) spHeight.getValue();
-        double w = rng.nextDouble() * (double) spWidth.getValue();
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.valueOf(left)).append(' ').append(String.valueOf(top)).append(' ');
-        sb.append(String.valueOf(left + w)).append(' ').append(String.valueOf(top)).append(' ');
-        sb.append(String.valueOf(left + w)).append(' ').append(String.valueOf(top - h)).append(' ');
-        sb.append(String.valueOf(left)).append(' ').append(String.valueOf(top - h)).append(' ');
-        sb.append(String.valueOf(left)).append(' ').append(String.valueOf(top));
-        rec.put("footprint", sb.toString());
-        if (chCenter.isSelected()) {
-            sb.setLength(0);
-            sb.append(String.valueOf(left + w / 2)).append(' ').append(String.valueOf(top - h / 2));
-            rec.put("center", sb.toString());
-        }
-    }
-
-    private void genEOProduct(Map rec, final long startTime, final long timeDelta, Integer durationDelta, final Integer orbFrom, final Integer orbDelta, final Integer lstOrbOfs, String classification, final Integer cldCovFrom, final Integer cldCovDelta, final Integer snwCovFrom, final Integer snwCovDelta) {
-        ArrayList<String> vals = settings.valMap.get(HmaGenSettings.PARENT_IDENTIFIERS);
-        if (chParentId.isSelected() && vals != null) {
-            rec.put("parentId", vals.get(rng.nextInt(vals.size())));
-        }
-        vals = settings.valMap.get(HmaGenSettings.PRODUCT_TYPES);
-        if (chPrdType.isSelected() && vals != null) {
-            rec.put("prdType", vals.get(rng.nextInt(vals.size())));
-        }
-        vals = settings.valMap.get(HmaGenSettings.STATUSES);
-        if (chStatus.isSelected() && vals != null) {
-            rec.put("status", vals.get(rng.nextInt(vals.size())));
-        }
-        vals = settings.valMap.get(HmaGenSettings.POLARIZATIONS);
-        if (chPolarztn.isSelected()) {
-            rec.put("polarisation", vals.get(rng.nextInt(vals.size())));
-        }
-        if (chSensing.isSelected()) {
-            long time = startTime + (long) (Math.floor(rng.nextDouble() * timeDelta));
-            rec.put("startSensing", df.format(new Date(time)));
-            time += rng.nextInt(durationDelta);
-            rec.put("stopSensing", df.format(new Date(time)));
-        }
-        if (chOrbitNum.isSelected()) {
-            Integer orb = orbFrom + rng.nextInt(orbDelta);
-            rec.put("orbitNumber", orb.toString());
-            if (chLastOrbitOfs.isSelected()) {
-                orb += rng.nextInt(lstOrbOfs);
-                rec.put("lastOrbit", orb.toString());
-            }
-        }
-        if (chClassification.isSelected()) {
-            rec.put("classif", classification);
-        }
-        if (chFootprint.isSelected()) {
-            genFootprintAndCenter(rec);
-        }
-        if (chCloudCov.isSelected()) {
-            Integer cover = cldCovFrom + rng.nextInt(cldCovDelta);
-            rec.put("cloudCover", cover.toString());
-        }
-        if (chSnowCov.isSelected()) {
-            Integer cover = snwCovFrom + rng.nextInt(snwCovDelta);
-            rec.put("snowCover", cover.toString());
-        }
-    }
-
-    private void genEOArchInfo(Map rec, long acqStartTime, long acqDelta) {
-        ArrayList<String> vals = settings.valMap.get(HmaGenSettings.ARCHIVING_CENTERS);
-        rec.put("archCenter", vals.get(rng.nextInt(vals.size())));
-        if (chArchId.isSelected()) {
-            vals = settings.valMap.get(HmaGenSettings.ARCHIVING_IDS);
-            rec.put("archId", vals.get(rng.nextInt(vals.size())));
-        }
-        if (chArchDate.isSelected()) {
-            long time = acqStartTime + (long) (Math.floor(rng.nextDouble() * acqDelta));
-            rec.put("archDate", df.format(new Date(time)));
-        }
-    }
-
-    private void genEOAcqInfo(Map rec, Integer resFrom, Integer resDelta) {
-        ArrayList<String> vals = settings.valMap.get(HmaGenSettings.PLATFORMS);
-        rec.put("platName", vals.get(rng.nextInt(vals.size())));
-        if (chSerId.isSelected()) {
-            vals = settings.valMap.get(HmaGenSettings.SER_IDS);
-            rec.put("platSer", vals.get(rng.nextInt(vals.size())));
-        }
-        if (chSensName.isSelected()) {
-            vals = settings.valMap.get(HmaGenSettings.SENS_NAMES);
-            rec.put("sensName", vals.get(rng.nextInt(vals.size())));
-        }
-        if (chSensMode.isSelected()) {
-            vals = settings.valMap.get(HmaGenSettings.SENS_MODES);
-            rec.put("sensMode", vals.get(rng.nextInt(vals.size())));
-        }
-        if (chSensType.isSelected()) {
-            vals = settings.valMap.get(HmaGenSettings.SENS_TYPES);
-            rec.put("sensType", vals.get(rng.nextInt(vals.size())));
-        }
-        if (chSwthId.isSelected()) {
-            vals = settings.valMap.get(HmaGenSettings.SWATH_IDS);
-            rec.put("swathId", vals.get(rng.nextInt(vals.size())));
-        }
-        if (chRes.isSelected()) {
-            Integer res = resFrom + rng.nextInt(resDelta);
-            rec.put("resolution", res.toString());
-        }
-    }
-
-    private void genEOBrwsInfo(Map rec) {
-        ArrayList<String> vals = settings.valMap.get(HmaGenSettings.THUMB_URLS);
-        rec.put("thmbUrl", vals.get(rng.nextInt(vals.size())));
-        if (chQlkUrl.isSelected()) {
-            vals = settings.valMap.get(HmaGenSettings.QLOOK_URLS);
-            rec.put("qlkUrl", vals.get(rng.nextInt(vals.size())));
-        }
-    }
 
     private void fillSettings() throws SecurityException, IllegalAccessException, IllegalArgumentException {
         Class c = this.getClass();

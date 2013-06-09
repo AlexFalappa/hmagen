@@ -14,6 +14,7 @@ Features
 * A classification can be generated too
 * Import/Export of generation settings
 * Dialog for successful generation
+* Generation in worker thread with progress notification
 
 Todo
 ----
@@ -21,6 +22,5 @@ Todo
 * Better error reporting
 * More `EOProduct` metadata attributes
 * Reduce `EOProduct` tab cluttering separating optical, radar and atmospheric attributes in different tabs
-* Generation in worker thread with progress notification
 * Multithreaded generation
 * Automatic persistence of generation settings between runs (Java Preferences API)
