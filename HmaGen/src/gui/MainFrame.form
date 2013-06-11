@@ -328,7 +328,7 @@
                       <Component id="chPolarztn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bPlrztnVals" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="39" max="32767" attributes="0"/>
+                      <EmptySpace pref="50" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -732,7 +732,7 @@
                           <Component id="lAd2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="spArdtTo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="245" max="32767" attributes="0"/>
+                      <EmptySpace pref="256" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -873,7 +873,7 @@
                       <Component id="chQlkUrl" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bQlkUrlsVals" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="301" max="32767" attributes="0"/>
+                      <EmptySpace pref="312" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1037,7 +1037,7 @@
                           <Component id="lRs2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="spResTo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="185" max="32767" attributes="0"/>
+                      <EmptySpace pref="196" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

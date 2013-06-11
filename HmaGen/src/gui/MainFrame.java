@@ -25,6 +25,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URISyntaxException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -46,6 +48,7 @@ public class MainFrame extends javax.swing.JFrame {
     Template template = null;
     HmaGenSettings settings = new HmaGenSettings();
     CalcModelWorker cmWorker = null;
+    HashMap<String, JCheckBox> chk2vals = new HashMap<>();
 
     /**
      * Creates new form MainFrame
@@ -60,6 +63,20 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (IOException | URISyntaxException ex) {
         }
         initComponents();
+        chk2vals.put(HmaGenSettings.ARCHIVING_CENTERS, chGenArchInfo);
+        chk2vals.put(HmaGenSettings.ARCHIVING_IDS, chArchId);
+        chk2vals.put(HmaGenSettings.PARENT_IDENTIFIERS, chParentId);
+        chk2vals.put(HmaGenSettings.PLATFORMS, chGenAcqPlat);
+        chk2vals.put(HmaGenSettings.POLARIZATIONS, chPolarztn);
+        chk2vals.put(HmaGenSettings.PRODUCT_TYPES, chPrdType);
+        chk2vals.put(HmaGenSettings.QLOOK_URLS, chQlkUrl);
+        chk2vals.put(HmaGenSettings.SENS_MODES, chSensMode);
+        chk2vals.put(HmaGenSettings.SENS_NAMES, chSensName);
+        chk2vals.put(HmaGenSettings.SENS_TYPES, chSensType);
+        chk2vals.put(HmaGenSettings.SER_IDS, chSerId);
+        chk2vals.put(HmaGenSettings.STATUSES, chStatus);
+        chk2vals.put(HmaGenSettings.SWATH_IDS, chSwthId);
+        chk2vals.put(HmaGenSettings.THUMB_URLS, chGenBrwsInfo);
     }
 
     private void showValsDialog(String title) {
@@ -548,7 +565,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chPolarztn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bPlrztnVals)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOProduct", pProd);
@@ -660,7 +677,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spArdtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lAd2)
                     .addComponent(spArdtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(245, Short.MAX_VALUE))
+                .addContainerGap(256, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOArchivingInfo", pArch);
@@ -733,7 +750,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chQlkUrl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bQlkUrlsVals)
-                .addContainerGap(301, Short.MAX_VALUE))
+                .addContainerGap(312, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOBrowseInfo", pBrows);
@@ -942,7 +959,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spResFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lRs2)
                     .addComponent(spResTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOAcquisitionPlat", pAcq);
@@ -1043,14 +1060,16 @@ public class MainFrame extends javax.swing.JFrame {
         if (cmWorker != null) {
             cmWorker.cancel(false);
         } else {
-            JFileChooser jfc = new JFileChooser();
-            if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = jfc.getSelectedFile();
-                if (selectedFile != null) {
-                    cmWorker = new CalcModelWorker(this, selectedFile);
-                    bGenerate.setText("Cancel");
-                    pProgress.setMaximum((int) spNumRecs.getValue());
-                    cmWorker.execute();
+            if (checkAllValid()) {
+                JFileChooser jfc = new JFileChooser();
+                if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = jfc.getSelectedFile();
+                    if (selectedFile != null) {
+                        cmWorker = new CalcModelWorker(this, selectedFile);
+                        bGenerate.setText("Cancel");
+                        pProgress.setMaximum((int) spNumRecs.getValue());
+                        cmWorker.execute();
+                    }
                 }
             }
         }
@@ -1424,5 +1443,57 @@ public class MainFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    private boolean checkAllValid() {
+        for (String vals : settings.valMap.keySet()) {
+            if (chk2vals.get(vals).isSelected() && settings.valMap.get(vals).size() == 0) {
+                JOptionPane.showMessageDialog(this, "No " + vals + " values!", "Error!", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        Date from = (Date) spSensFrom.getValue();
+        Date to = (Date) spSensTo.getValue();
+        if (from.after(to)) {
+            tabPane.setSelectedComponent(pProd);
+            JOptionPane.showMessageDialog(this, "Bad sensing time generation interval!", "Error!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        from = (Date) spArdtFrom.getValue();
+        to = (Date) spArdtTo.getValue();
+        if (from.after(to)) {
+            tabPane.setSelectedComponent(pArch);
+            JOptionPane.showMessageDialog(this, "Bad archiving date generation interval!", "Error!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        Integer low = (Integer) spCldCovFrom.getValue();
+        Integer high = (Integer) spCldCovTo.getValue();
+        if (low > high) {
+            tabPane.setSelectedComponent(pProd);
+            JOptionPane.showMessageDialog(this, "Bad cloud coverage generation interval!", "Error!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        low = (Integer) spOrbitFrom.getValue();
+        high = (Integer) spOrbitTo.getValue();
+        if (low > high) {
+            tabPane.setSelectedComponent(pProd);
+            JOptionPane.showMessageDialog(this, "Bad orbit number generation interval!", "Error!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        low = (Integer) spResFrom.getValue();
+        high = (Integer) spResTo.getValue();
+        if (low > high) {
+            tabPane.setSelectedComponent(pAcq);
+            JOptionPane.showMessageDialog(this, "Bad sensor resolution generation interval!", "Error!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        low = (Integer) spSnwCovFrom.getValue();
+        high = (Integer) spSnwCovTo.getValue();
+        if (low > high) {
+            tabPane.setSelectedComponent(pProd);
+            JOptionPane.showMessageDialog(this, "Bad snow coverage generation interval!", "Error!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
     }
 }
