@@ -15,12 +15,12 @@ Features
 * Import/Export of generation settings
 * Dialog for successful generation
 * Generation in worker thread with progress notification
-
-Todo
-----
 * Check correctness of values before generation (e.g. intervals with end greater than beginning, allowed vals not empty, etc.)
-* Better error reporting
+
+Future enhancements
+----
 * More `EOProduct` metadata attributes
 * Reduce `EOProduct` tab cluttering separating optical, radar and atmospheric attributes in different tabs
+* Better error reporting
 * Multithreaded generation
 * Automatic persistence of generation settings between runs (Java Preferences API)
