@@ -15,7 +15,6 @@
  */
 package gui;
 
-import freemarker.template.TemplateException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -30,8 +29,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
+
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+
+import freemarker.template.TemplateException;
 import main.HmaGenSettings;
 
 /**
@@ -42,7 +44,8 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
 
     private final MainFrame mf;
     private final Random rng = new Random();
-    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+    private final DateFormat df = new SimpleDateFormat(
+            "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
     private Integer nRecs;
     private final File file;
 
@@ -105,7 +108,9 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         for (int i = 1; i <= nRecs && !isCancelled(); i++) {
             Map rec = new HashMap();
             rec.put("prodId", String.format("%s-%d", mf.tfPrefix.getText(), i));
-            genEOProduct(rec, startTime, timeDelta, durationDelta, orbFrom, orbDelta, lstOrbOfs, classification, cldCovFrom, cldCovDelta, snwCovFrom, snwCovDelta);
+            genEOProduct(rec, startTime, timeDelta, durationDelta, orbFrom,
+                    orbDelta, lstOrbOfs, classification, cldCovFrom, cldCovDelta,
+                    snwCovFrom, snwCovDelta);
             if (mf.chGenAcqPlat.isSelected()) {
                 genEOAcqInfo(rec, resFrom, resDelta);
             }
@@ -132,11 +137,14 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
                 mf.template.process(model, out);
             }
         } catch (ExecutionException | InterruptedException | IOException | TemplateException ex) {
-            JOptionPane.showMessageDialog(mf, ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(mf, ex.getMessage(), "Exception",
+                    JOptionPane.ERROR_MESSAGE);
         }
         mf.bGenerate.setText("Generate");
         mf.pProgress.setValue(0);
-        JOptionPane.showMessageDialog(mf, "Generated " + nRecs + " products to:\n" + file.getAbsolutePath(), "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(mf,
+                "Generated " + nRecs + " products to:\n" + file.
+                getAbsolutePath(), "Success", JOptionPane.INFORMATION_MESSAGE);
         mf.cmWorker = null;
     }
 
@@ -153,38 +161,45 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         double h = rng.nextDouble() * (double) mf.spHeight.getValue();
         double w = rng.nextDouble() * (double) mf.spWidth.getValue();
         StringBuilder sb = new StringBuilder();
-        sb.append(String.valueOf(left)).append(' ').append(String.valueOf(top)).append(' ');
-        sb.append(String.valueOf(left + w)).append(' ').append(String.valueOf(top)).append(' ');
-        sb.append(String.valueOf(left + w)).append(' ').append(String.valueOf(top - h)).append(' ');
-        sb.append(String.valueOf(left)).append(' ').append(String.valueOf(top - h)).append(' ');
+        sb.append(String.valueOf(left)).append(' ').append(String.valueOf(top)).
+                append(' ');
+        sb.append(String.valueOf(left + w)).append(' ').append(String.valueOf(
+                top)).append(' ');
+        sb.append(String.valueOf(left + w)).append(' ').append(String.valueOf(
+                top - h)).append(' ');
+        sb.append(String.valueOf(left)).append(' ').append(String.valueOf(
+                top - h)).append(' ');
         sb.append(String.valueOf(left)).append(' ').append(String.valueOf(top));
         rec.put("footprint", sb.toString());
         if (mf.chCenter.isSelected()) {
             sb.setLength(0);
-            sb.append(String.valueOf(left + w / 2)).append(' ').append(String.valueOf(top - h / 2));
+            sb.append(String.valueOf(left + w / 2)).append(' ').append(String.
+                    valueOf(top - h / 2));
             rec.put("center", sb.toString());
         }
     }
 
     private void genEOProduct(Map rec, final long startTime, final long timeDelta, Integer durationDelta, final Integer orbFrom, final Integer orbDelta, final Integer lstOrbOfs, String classification, final Integer cldCovFrom, final Integer cldCovDelta, final Integer snwCovFrom, final Integer snwCovDelta) {
-        ArrayList<String> vals = mf.settings.valMap.get(HmaGenSettings.PARENT_IDENTIFIERS);
+        ArrayList<String> vals = mf.settings.valMap.get(
+                HmaGenSettings.PARENT_IDENTIFIERS);
         if (mf.chParentId.isSelected() && vals != null) {
-            rec.put("parentId", vals.get(rng.nextInt(vals.size())));
+            genValue("parentId", rec, vals);
         }
         vals = mf.settings.valMap.get(HmaGenSettings.PRODUCT_TYPES);
         if (mf.chPrdType.isSelected() && vals != null) {
-            rec.put("prdType", vals.get(rng.nextInt(vals.size())));
+            genValue("prdType", rec, vals);
         }
         vals = mf.settings.valMap.get(HmaGenSettings.STATUSES);
         if (mf.chStatus.isSelected() && vals != null) {
-            rec.put("status", vals.get(rng.nextInt(vals.size())));
+            genValue("status", rec, vals);
         }
         vals = mf.settings.valMap.get(HmaGenSettings.POLARIZATIONS);
         if (mf.chPolarztn.isSelected()) {
-            rec.put("polarisation", vals.get(rng.nextInt(vals.size())));
+            genValue("polarisation", rec, vals);
         }
         if (mf.chSensing.isSelected()) {
-            long time = startTime + (long) (Math.floor(rng.nextDouble() * timeDelta));
+            long time = startTime + (long) (Math.floor(
+                    rng.nextDouble() * timeDelta));
             rec.put("startSensing", df.format(new Date(time)));
             time += rng.nextInt(durationDelta);
             rec.put("stopSensing", df.format(new Date(time)));
@@ -214,40 +229,43 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
     }
 
     private void genEOArchInfo(Map rec, long acqStartTime, long acqDelta) {
-        ArrayList<String> vals = mf.settings.valMap.get(HmaGenSettings.ARCHIVING_CENTERS);
-        rec.put("archCenter", vals.get(rng.nextInt(vals.size())));
+        ArrayList<String> vals = mf.settings.valMap.get(
+                HmaGenSettings.ARCHIVING_CENTERS);
+        genValue("archCenter", rec, vals);
         if (mf.chArchId.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.ARCHIVING_IDS);
-            rec.put("archId", vals.get(rng.nextInt(vals.size())));
+            genValue("archId", rec, vals);
         }
         if (mf.chArchDate.isSelected()) {
-            long time = acqStartTime + (long) (Math.floor(rng.nextDouble() * acqDelta));
+            long time = acqStartTime + (long) (Math.floor(
+                    rng.nextDouble() * acqDelta));
             rec.put("archDate", df.format(new Date(time)));
         }
     }
 
     private void genEOAcqInfo(Map rec, Integer resFrom, Integer resDelta) {
-        ArrayList<String> vals = mf.settings.valMap.get(HmaGenSettings.PLATFORMS);
-        rec.put("platName", vals.get(rng.nextInt(vals.size())));
+        ArrayList<String> vals = mf.settings.valMap.
+                get(HmaGenSettings.PLATFORMS);
+        genValue("platName", rec, vals);
         if (mf.chSerId.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.SER_IDS);
-            rec.put("platSer", vals.get(rng.nextInt(vals.size())));
+            genValue("platSer", rec, vals);
         }
         if (mf.chSensName.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.SENS_NAMES);
-            rec.put("sensName", vals.get(rng.nextInt(vals.size())));
+            genValue("sensName", rec, vals);
         }
         if (mf.chSensMode.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.SENS_MODES);
-            rec.put("sensMode", vals.get(rng.nextInt(vals.size())));
+            genValue("sensMode", rec, vals);
         }
         if (mf.chSensType.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.SENS_TYPES);
-            rec.put("sensType", vals.get(rng.nextInt(vals.size())));
+            genValue("sensType", rec, vals);
         }
         if (mf.chSwthId.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.SWATH_IDS);
-            rec.put("swathId", vals.get(rng.nextInt(vals.size())));
+            genValue("swathId", rec, vals);
         }
         if (mf.chRes.isSelected()) {
             Integer res = resFrom + rng.nextInt(resDelta);
@@ -256,11 +274,20 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
     }
 
     private void genEOBrwsInfo(Map rec) {
-        ArrayList<String> vals = mf.settings.valMap.get(HmaGenSettings.THUMB_URLS);
-        rec.put("thmbUrl", vals.get(rng.nextInt(vals.size())));
+        ArrayList<String> vals = mf.settings.valMap.get(
+                HmaGenSettings.THUMB_URLS);
+        genValue("thmbUrl", rec, vals);
         if (mf.chQlkUrl.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.QLOOK_URLS);
-            rec.put("qlkUrl", vals.get(rng.nextInt(vals.size())));
+            genValue("qlkUrl", rec, vals);
+        }
+    }
+
+    private void genValue(String key, Map rec, ArrayList<String> vals) {
+        if (vals.size() > 1) {
+            rec.put(key, vals.get(rng.nextInt(vals.size())));
+        } else {
+            rec.put(key, vals.get(0));
         }
     }
 }
