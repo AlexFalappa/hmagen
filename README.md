@@ -19,6 +19,9 @@ Features
 
 Future enhancements
 ----
+* Option to strip leading spaces from output lines
+* Remember last folder where files have been generated and config files loaded/saved
+* Automatically add `.hmagen` extension to config files and `.xml` extension to generated files
 * More `EOProduct` metadata attributes
 * Reduce `EOProduct` tab cluttering separating optical, radar and atmospheric attributes in different tabs
 * Better error reporting
