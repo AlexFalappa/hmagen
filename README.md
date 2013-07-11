@@ -17,11 +17,11 @@ Features
 * Dialog for successful generation
 * Generation in worker thread with progress notification
 * Check correctness of values before generation (e.g. intervals with end greater than beginning, allowed vals not empty, etc.)
+* Remember last folder where files have been generated and config files loaded/saved
 
 Future enhancements
 ----
 * Option to strip leading spaces from output lines
-* Remember last folder where files have been generated and config files loaded/saved
 * Automatically add `.hmagen` extension to config files and `.xml` extension to generated files
 * More `EOProduct` metadata attributes
 * Option to link thumbnail and quicklook attributes (same index in the list of values)
