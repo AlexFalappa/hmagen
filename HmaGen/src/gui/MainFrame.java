@@ -28,6 +28,8 @@ import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -202,10 +204,12 @@ public class MainFrame extends javax.swing.JFrame {
         bLoad = new javax.swing.JButton();
         pProgress = new javax.swing.JProgressBar();
         jSeparator1 = new javax.swing.JSeparator();
+        chStripSpace = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
+        cbEnvelope = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HmaGen");
-        setResizable(false);
 
         jLabel1.setText("records");
 
@@ -643,7 +647,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chPolarztn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bPlrztnVals)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOProduct", pProd);
@@ -755,7 +759,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spArdtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lAd2)
                     .addComponent(spArdtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(313, Short.MAX_VALUE))
+                .addContainerGap(276, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOArchivingInfo", pArch);
@@ -828,7 +832,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chQlkUrl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bQlkUrlsVals)
-                .addContainerGap(369, Short.MAX_VALUE))
+                .addContainerGap(332, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOBrowseInfo", pBrows);
@@ -1037,7 +1041,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spResFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lRs2)
                     .addComponent(spResTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addContainerGap(216, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOAcquisitionPlat", pAcq);
@@ -1078,6 +1082,22 @@ public class MainFrame extends javax.swing.JFrame {
 
         pProgress.setEnabled(false);
 
+        chStripSpace.setText("Strip leading whitespace");
+        chStripSpace.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chStripSpaceActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Envelope");
+
+        cbEnvelope.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "None", "SOAP V1.1", "SOAP v1.2" }));
+        cbEnvelope.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEnvelopeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1085,26 +1105,33 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
                     .addComponent(tabPane)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(chClassification)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bGenerate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pProgress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bLoad)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bSave)))
+                        .addComponent(bSave))
+                    .addComponent(jSeparator1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbEnvelope, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(chStripSpace)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chClassification)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -1119,15 +1146,20 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(bGenerate)
                         .addComponent(bSave)
                         .addComponent(bLoad)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(chClassification)
-                    .addComponent(cbClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(cbEnvelope, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chStripSpace))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabPane)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cbClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chClassification))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1407,6 +1439,21 @@ public class MainFrame extends javax.swing.JFrame {
         spLstOrbitOfs.setEnabled(chLastOrbitOfs.isSelected());
         lOf1.setEnabled(chLastOrbitOfs.isSelected());
     }//GEN-LAST:event_chLastOrbitOfsItemStateChanged
+
+    private void cbEnvelopeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEnvelopeActionPerformed
+    }//GEN-LAST:event_cbEnvelopeActionPerformed
+
+    private void chStripSpaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chStripSpaceActionPerformed
+        try {
+            if (chStripSpace.isSelected()) {
+                template = cfg.getTemplate("getrecords-response-compact.ftl");
+            } else {
+                template = cfg.getTemplate("getrecords-response.ftl");
+            }
+        } catch (IOException ex) {
+            //ignored
+        }
+    }//GEN-LAST:event_chStripSpaceActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JButton bArCntVals;
     javax.swing.JButton bArchIdVals;
@@ -1427,6 +1474,7 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JButton bThmbUrlsVals;
     javax.swing.JComboBox cbClassification;
     javax.swing.JComboBox cbDurationUnit;
+    javax.swing.JComboBox cbEnvelope;
     javax.swing.JCheckBox chArchDate;
     javax.swing.JCheckBox chArchId;
     javax.swing.JCheckBox chCenter;
@@ -1450,8 +1498,10 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JCheckBox chSerId;
     javax.swing.JCheckBox chSnowCov;
     javax.swing.JCheckBox chStatus;
+    javax.swing.JCheckBox chStripSpace;
     javax.swing.JCheckBox chSwthId;
     javax.swing.JLabel jLabel1;
+    javax.swing.JLabel jLabel2;
     javax.swing.JLabel jLabel3;
     javax.swing.JLabel jLabel8;
     javax.swing.JSeparator jSeparator1;
@@ -1633,6 +1683,26 @@ public class MainFrame extends javax.swing.JFrame {
             tabPane.setSelectedComponent(pProd);
             JOptionPane.showMessageDialog(this,
                     "Bad snow coverage generation interval!", "Error!",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        double min = (double) spFtMinLat.getValue();
+        double max = (double) spFtMaxLat.getValue();
+        if (min > max) {
+            tabPane.setSelectedComponent(pProd);
+            JOptionPane.showMessageDialog(this,
+                    "Bad latitude range for footprint generation region!",
+                    "Error!",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        min = (double) spFtMinLon.getValue();
+        max = (double) spFtMaxLon.getValue();
+        if (min > max) {
+            tabPane.setSelectedComponent(pProd);
+            JOptionPane.showMessageDialog(this,
+                    "Bad longitude range for footprint generation region!",
+                    "Error!",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
