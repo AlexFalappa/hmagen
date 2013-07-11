@@ -15,6 +15,7 @@
  */
 package gui;
 
+import freemarker.template.TemplateException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -29,11 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
-
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-
-import freemarker.template.TemplateException;
 import main.HmaGenSettings;
 
 /**
@@ -156,25 +154,34 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
     }
 
     private void genFootprintAndCenter(Map rec) {
+        double mxH = (double) mf.spHeight.getValue();
+        double mxW = (double) mf.spWidth.getValue();
+        double minLatCen = (double) mf.spFtMinLat.getValue() + mxH;
+        double maxLatCen = (double) mf.spFtMaxLat.getValue() - mxH;
+        double minLonCen = (double) mf.spFtMinLon.getValue() + mxW;
+        double maxLonCen = (double) mf.spFtMaxLon.getValue() - mxW;
+        double cenLat = minLatCen + rng.nextDouble() * (maxLatCen - minLatCen);
+        double cenLon = minLonCen + rng.nextDouble() * (maxLonCen - minLonCen);
+        double h2 = rng.nextDouble() * mxH / 2.0;
+        double w2 = rng.nextDouble() * mxW / 2.0;
         double top = -90.0 + rng.nextDouble() * 180.0;
         double left = -180.0 + rng.nextDouble() * 360.0;
-        double h = rng.nextDouble() * (double) mf.spHeight.getValue();
-        double w = rng.nextDouble() * (double) mf.spWidth.getValue();
         StringBuilder sb = new StringBuilder();
-        sb.append(String.valueOf(left)).append(' ').append(String.valueOf(top)).
-                append(' ');
-        sb.append(String.valueOf(left + w)).append(' ').append(String.valueOf(
-                top)).append(' ');
-        sb.append(String.valueOf(left + w)).append(' ').append(String.valueOf(
-                top - h)).append(' ');
-        sb.append(String.valueOf(left)).append(' ').append(String.valueOf(
-                top - h)).append(' ');
-        sb.append(String.valueOf(left)).append(' ').append(String.valueOf(top));
+        sb.append(String.valueOf(cenLat + h2)).append(' ').append(String
+                .valueOf(cenLon - w2)).append(' ');
+        sb.append(String.valueOf(cenLat + h2)).append(' ').append(String
+                .valueOf(cenLon + w2)).append(' ');
+        sb.append(String.valueOf(cenLat - h2)).append(' ').append(String
+                .valueOf(cenLon + w2)).append(' ');
+        sb.append(String.valueOf(cenLat - h2)).append(' ').append(String
+                .valueOf(cenLon - w2)).append(' ');
+        sb.append(String.valueOf(cenLat + h2)).append(' ').append(String
+                .valueOf(cenLon - w2));
         rec.put("footprint", sb.toString());
         if (mf.chCenter.isSelected()) {
             sb.setLength(0);
-            sb.append(String.valueOf(left + w / 2)).append(' ').append(String.
-                    valueOf(top - h / 2));
+            sb.append(String.valueOf(cenLat)).append(' ').append(String.valueOf(
+                    cenLon));
             rec.put("center", sb.toString());
         }
     }

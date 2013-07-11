@@ -38,7 +38,7 @@ import main.HmaGenSettings;
 
 /**
  * Main application window.
- *
+ * <p/>
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class MainFrame extends javax.swing.JFrame {
@@ -80,7 +80,8 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void showValsDialog(String title) {
-        SetOfValsDialog pid = new SetOfValsDialog(this, title, settings.valMap.get(title));
+        SetOfValsDialog pid = new SetOfValsDialog(this, title, settings.valMap
+                .get(title));
         pid.setLocationRelativeTo(this);
         pid.setVisible(true);
         settings.valMap.put(title, pid.getValList());
@@ -141,6 +142,14 @@ public class MainFrame extends javax.swing.JFrame {
         lSc2 = new javax.swing.JLabel();
         chPolarztn = new javax.swing.JCheckBox();
         bPlrztnVals = new javax.swing.JButton();
+        lF3 = new javax.swing.JLabel();
+        spFtMinLat = new javax.swing.JSpinner();
+        lF4 = new javax.swing.JLabel();
+        spFtMaxLat = new javax.swing.JSpinner();
+        spFtMinLon = new javax.swing.JSpinner();
+        lF6 = new javax.swing.JLabel();
+        spFtMaxLon = new javax.swing.JSpinner();
+        lF5 = new javax.swing.JLabel();
         pArch = new javax.swing.JPanel();
         chGenArchInfo = new javax.swing.JCheckBox();
         chArchDate = new javax.swing.JCheckBox();
@@ -318,14 +327,14 @@ public class MainFrame extends javax.swing.JFrame {
         lF1.setText("max width");
         lF1.setEnabled(false);
 
-        spWidth.setModel(new javax.swing.SpinnerNumberModel(4.0d, 1.0E-4d, 90.0d, 0.01d));
+        spWidth.setModel(new javax.swing.SpinnerNumberModel(2.0d, 1.0E-4d, 90.0d, 0.01d));
         spWidth.setEditor(new javax.swing.JSpinner.NumberEditor(spWidth, "##.######"));
         spWidth.setEnabled(false);
 
         lF2.setText("max height");
         lF2.setEnabled(false);
 
-        spHeight.setModel(new javax.swing.SpinnerNumberModel(5.0d, 1.0E-4d, 90.0d, 0.01d));
+        spHeight.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0E-4d, 90.0d, 0.01d));
         spHeight.setEditor(new javax.swing.JSpinner.NumberEditor(spHeight, "##.######"));
         spHeight.setEnabled(false);
 
@@ -385,6 +394,34 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        lF3.setText("within min lat");
+        lF3.setEnabled(false);
+
+        spFtMinLat.setModel(new javax.swing.SpinnerNumberModel(-90.0d, -90.0d, 90.0d, 0.01d));
+        spFtMinLat.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMinLat, "##.######"));
+        spFtMinLat.setEnabled(false);
+
+        lF4.setText("max lat");
+        lF4.setEnabled(false);
+
+        spFtMaxLat.setModel(new javax.swing.SpinnerNumberModel(90.0d, -90.0d, 90.0d, 0.01d));
+        spFtMaxLat.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMaxLat, "##.######"));
+        spFtMaxLat.setEnabled(false);
+
+        spFtMinLon.setModel(new javax.swing.SpinnerNumberModel(-180.0d, -180.0d, 180.0d, 0.01d));
+        spFtMinLon.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMinLon, "##.######"));
+        spFtMinLon.setEnabled(false);
+
+        lF6.setText("max lon");
+        lF6.setEnabled(false);
+
+        spFtMaxLon.setModel(new javax.swing.SpinnerNumberModel(180.0d, -180.0d, 180.0d, 0.01d));
+        spFtMaxLon.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMaxLon, "##.######"));
+        spFtMaxLon.setEnabled(false);
+
+        lF5.setText("min lon");
+        lF5.setEnabled(false);
+
         javax.swing.GroupLayout pProdLayout = new javax.swing.GroupLayout(pProd);
         pProd.setLayout(pProdLayout);
         pProdLayout.setHorizontalGroup(
@@ -427,7 +464,6 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(pProdLayout.createSequentialGroup()
                                 .addGap(22, 22, 22)
                                 .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(bPlrztnVals)
                                     .addGroup(pProdLayout.createSequentialGroup()
                                         .addComponent(lSt2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -481,13 +517,35 @@ public class MainFrame extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(chCenter))))))
+                                        .addComponent(chCenter))
+                                    .addGroup(pProdLayout.createSequentialGroup()
+                                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(lF3)
+                                            .addComponent(lF5))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(spFtMinLon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(spFtMinLat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lF4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(lF6, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(spFtMaxLon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(spFtMaxLat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(bPlrztnVals)))))
                     .addGroup(pProdLayout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
+
+        pProdLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {spFtMaxLat, spFtMaxLon, spHeight});
+
+        pProdLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {spFtMinLat, spFtMinLon, spWidth});
+
         pProdLayout.setVerticalGroup(
             pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pProdLayout.createSequentialGroup()
@@ -537,15 +595,27 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chFootprint)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lF1)
+                    .addComponent(spWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lF2)
+                    .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chCenter))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lF3)
+                    .addComponent(spFtMinLat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lF4)
+                    .addComponent(spFtMaxLat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(spFtMinLon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lF6)
+                    .addComponent(spFtMaxLon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lF5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pProdLayout.createSequentialGroup()
-                        .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lF1)
-                            .addComponent(spWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lF2)
-                            .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chCenter))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chCloudCov)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -565,7 +635,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chPolarztn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bPlrztnVals)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOProduct", pProd);
@@ -677,7 +747,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spArdtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lAd2)
                     .addComponent(spArdtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addContainerGap(313, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOArchivingInfo", pArch);
@@ -750,7 +820,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(chQlkUrl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bQlkUrlsVals)
-                .addContainerGap(312, Short.MAX_VALUE))
+                .addContainerGap(369, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOBrowseInfo", pBrows);
@@ -959,7 +1029,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(spResFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lRs2)
                     .addComponent(spResTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(196, Short.MAX_VALUE))
+                .addContainerGap(253, Short.MAX_VALUE))
         );
 
         tabPane.addTab("EOAcquisitionPlat", pAcq);
@@ -1138,7 +1208,8 @@ public class MainFrame extends javax.swing.JFrame {
                 fillSettings();
                 xstream.toXML(settings, new FileWriter(jfc.getSelectedFile()));
             } catch (IOException | SecurityException | IllegalAccessException | IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "Save error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(),
+                        "Save error!", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_bSaveActionPerformed
@@ -1187,16 +1258,25 @@ public class MainFrame extends javax.swing.JFrame {
         lOn1.setEnabled(chOrbitNum.isSelected());
         lOn2.setEnabled(chOrbitNum.isSelected());
         chLastOrbitOfs.setEnabled(chOrbitNum.isSelected());
-        spLstOrbitOfs.setEnabled(chOrbitNum.isSelected() && chLastOrbitOfs.isSelected());
+        spLstOrbitOfs.setEnabled(chOrbitNum.isSelected() && chLastOrbitOfs
+                .isSelected());
         lOf1.setEnabled(chOrbitNum.isSelected() && chLastOrbitOfs.isSelected());
     }//GEN-LAST:event_chOrbitNumItemStateChanged
 
     private void chFootprintItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chFootprintItemStateChanged
         spWidth.setEnabled(chFootprint.isSelected());
         spHeight.setEnabled(chFootprint.isSelected());
+        spFtMinLat.setEnabled(chFootprint.isSelected());
+        spFtMaxLat.setEnabled(chFootprint.isSelected());
+        spFtMinLon.setEnabled(chFootprint.isSelected());
+        spFtMaxLon.setEnabled(chFootprint.isSelected());
         chCenter.setEnabled(chFootprint.isSelected());
         lF1.setEnabled(chFootprint.isSelected());
         lF2.setEnabled(chFootprint.isSelected());
+        lF3.setEnabled(chFootprint.isSelected());
+        lF4.setEnabled(chFootprint.isSelected());
+        lF5.setEnabled(chFootprint.isSelected());
+        lF6.setEnabled(chFootprint.isSelected());
     }//GEN-LAST:event_chFootprintItemStateChanged
 
     private void chCloudCovItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chCloudCovItemStateChanged
@@ -1223,12 +1303,15 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chGenArchInfoItemStateChanged
 
     private void chArchIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chArchIdItemStateChanged
-        bArchIdVals.setEnabled(chGenArchInfo.isSelected() && chArchId.isSelected());
+        bArchIdVals.setEnabled(chGenArchInfo.isSelected() && chArchId
+                .isSelected());
     }//GEN-LAST:event_chArchIdItemStateChanged
 
     private void chArchDateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chArchDateItemStateChanged
-        spArdtFrom.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
-        spArdtTo.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
+        spArdtFrom.setEnabled(chGenArchInfo.isSelected() && chArchDate
+                .isSelected());
+        spArdtTo.setEnabled(chGenArchInfo.isSelected() && chArchDate
+                .isSelected());
         lAd1.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
         lAd2.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
     }//GEN-LAST:event_chArchDateItemStateChanged
@@ -1241,7 +1324,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chGenBrwsInfoItemStateChanged
 
     private void chQlkUrlItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chQlkUrlItemStateChanged
-        bQlkUrlsVals.setEnabled(chGenBrwsInfo.isSelected() && chQlkUrl.isSelected());
+        bQlkUrlsVals.setEnabled(chGenBrwsInfo.isSelected() && chQlkUrl
+                .isSelected());
     }//GEN-LAST:event_chQlkUrlItemStateChanged
 
     private void chGenAcqPlatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chGenAcqPlatItemStateChanged
@@ -1349,6 +1433,10 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JLabel lCc2;
     javax.swing.JLabel lF1;
     javax.swing.JLabel lF2;
+    javax.swing.JLabel lF3;
+    javax.swing.JLabel lF4;
+    javax.swing.JLabel lF5;
+    javax.swing.JLabel lF6;
     javax.swing.JLabel lOf1;
     javax.swing.JLabel lOn1;
     javax.swing.JLabel lOn2;
@@ -1369,6 +1457,10 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JSpinner spCldCovFrom;
     javax.swing.JSpinner spCldCovTo;
     javax.swing.JSpinner spDuration;
+    javax.swing.JSpinner spFtMaxLat;
+    javax.swing.JSpinner spFtMaxLon;
+    javax.swing.JSpinner spFtMinLat;
+    javax.swing.JSpinner spFtMinLon;
     javax.swing.JSpinner spHeight;
     javax.swing.JSpinner spLstOrbitOfs;
     javax.swing.JSpinner spNumRecs;
@@ -1413,16 +1505,19 @@ public class MainFrame extends javax.swing.JFrame {
             try {
                 ((JCheckBox) c.getDeclaredField(ch).get(this)).setSelected(true);
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(),
+                        "Load error!", JOptionPane.ERROR_MESSAGE);
             }
         }
         for (Map.Entry<String, Object> e : settings.combosMap.entrySet()) {
             String cb = e.getKey();
             Object val = e.getValue();
             try {
-                ((JComboBox) c.getDeclaredField(cb).get(this)).setSelectedItem(val);
+                ((JComboBox) c.getDeclaredField(cb).get(this)).setSelectedItem(
+                        val);
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(),
+                        "Load error!", JOptionPane.ERROR_MESSAGE);
             }
         }
         for (Map.Entry<String, Object> e : settings.spinnersMap.entrySet()) {
@@ -1431,7 +1526,8 @@ public class MainFrame extends javax.swing.JFrame {
             try {
                 ((JSpinner) c.getDeclaredField(sp).get(this)).setValue(val);
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(),
+                        "Load error!", JOptionPane.ERROR_MESSAGE);
             }
         }
         for (Map.Entry<String, String> e : settings.textfieldsMap.entrySet()) {
@@ -1440,15 +1536,18 @@ public class MainFrame extends javax.swing.JFrame {
             try {
                 ((JTextField) c.getDeclaredField(tf).get(this)).setText(val);
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(),
+                        "Load error!", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
     private boolean checkAllValid() {
         for (String vals : settings.valMap.keySet()) {
-            if (chk2vals.get(vals).isSelected() && settings.valMap.get(vals).size() == 0) {
-                JOptionPane.showMessageDialog(this, "No " + vals + " values!", "Error!", JOptionPane.ERROR_MESSAGE);
+            if (chk2vals.get(vals).isSelected() && settings.valMap.get(vals)
+                    .size() == 0) {
+                JOptionPane.showMessageDialog(this, "No " + vals + " values!",
+                        "Error!", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -1456,42 +1555,54 @@ public class MainFrame extends javax.swing.JFrame {
         Date to = (Date) spSensTo.getValue();
         if (from.after(to)) {
             tabPane.setSelectedComponent(pProd);
-            JOptionPane.showMessageDialog(this, "Bad sensing time generation interval!", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Bad sensing time generation interval!", "Error!",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         from = (Date) spArdtFrom.getValue();
         to = (Date) spArdtTo.getValue();
         if (from.after(to)) {
             tabPane.setSelectedComponent(pArch);
-            JOptionPane.showMessageDialog(this, "Bad archiving date generation interval!", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Bad archiving date generation interval!", "Error!",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         Integer low = (Integer) spCldCovFrom.getValue();
         Integer high = (Integer) spCldCovTo.getValue();
         if (low > high) {
             tabPane.setSelectedComponent(pProd);
-            JOptionPane.showMessageDialog(this, "Bad cloud coverage generation interval!", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Bad cloud coverage generation interval!", "Error!",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         low = (Integer) spOrbitFrom.getValue();
         high = (Integer) spOrbitTo.getValue();
         if (low > high) {
             tabPane.setSelectedComponent(pProd);
-            JOptionPane.showMessageDialog(this, "Bad orbit number generation interval!", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Bad orbit number generation interval!", "Error!",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         low = (Integer) spResFrom.getValue();
         high = (Integer) spResTo.getValue();
         if (low > high) {
             tabPane.setSelectedComponent(pAcq);
-            JOptionPane.showMessageDialog(this, "Bad sensor resolution generation interval!", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Bad sensor resolution generation interval!", "Error!",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         low = (Integer) spSnwCovFrom.getValue();
         high = (Integer) spSnwCovTo.getValue();
         if (low > high) {
             tabPane.setSelectedComponent(pProd);
-            JOptionPane.showMessageDialog(this, "Bad snow coverage generation interval!", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Bad snow coverage generation interval!", "Error!",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

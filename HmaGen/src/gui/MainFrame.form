@@ -153,10 +153,9 @@
                                       </Group>
                                   </Group>
                                   <Component id="chPolarztn" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="bPlrztnVals" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lSt2" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -214,14 +213,36 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lF1" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="spWidth" min="-2" max="-2" attributes="0"/>
+                                              <Component id="spWidth" linkSize="2" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="lF2" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="spHeight" min="-2" max="-2" attributes="0"/>
+                                              <Component id="spHeight" linkSize="1" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="chCenter" min="-2" max="-2" attributes="0"/>
                                           </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="lF3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lF5" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="spFtMinLon" linkSize="2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="spFtMinLat" linkSize="2" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="lF4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lF6" alignment="1" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="spFtMaxLon" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="spFtMaxLat" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Component id="bPlrztnVals" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -294,16 +315,30 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="chFootprint" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lF1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spWidth" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lF2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spHeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chCenter" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lF3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spFtMinLat" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lF4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spFtMaxLat" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="spFtMinLon" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lF6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spFtMaxLon" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lF5" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lF1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="spWidth" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lF2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="spHeight" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="chCenter" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="chCloudCov" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -328,7 +363,7 @@
                       <Component id="chPolarztn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bPlrztnVals" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="50" max="32767" attributes="0"/>
+                      <EmptySpace pref="43" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -541,7 +576,7 @@
             <Component class="javax.swing.JSpinner" name="spWidth">
               <Properties>
                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                  <SpinnerModel initial="4.0" maximum="90.0" minimum="1.0E-4" numberType="java.lang.Double" stepSize="0.01" type="number"/>
+                  <SpinnerModel initial="2.0" maximum="90.0" minimum="1.0E-4" numberType="java.lang.Double" stepSize="0.01" type="number"/>
                 </Property>
                 <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
                   <SpinnerEditor format="##.######" type="3"/>
@@ -558,7 +593,7 @@
             <Component class="javax.swing.JSpinner" name="spHeight">
               <Properties>
                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                  <SpinnerModel initial="5.0" maximum="90.0" minimum="1.0E-4" numberType="java.lang.Double" stepSize="0.01" type="number"/>
+                  <SpinnerModel initial="1.0" maximum="90.0" minimum="1.0E-4" numberType="java.lang.Double" stepSize="0.01" type="number"/>
                 </Property>
                 <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
                   <SpinnerEditor format="##.######" type="3"/>
@@ -661,6 +696,74 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bPlrztnValsActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JLabel" name="lF3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="within min lat"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSpinner" name="spFtMinLat">
+              <Properties>
+                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                  <SpinnerModel initial="-90.0" maximum="90.0" minimum="-90.0" numberType="java.lang.Double" stepSize="0.01" type="number"/>
+                </Property>
+                <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
+                  <SpinnerEditor format="##.######" type="3"/>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lF4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="max lat"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSpinner" name="spFtMaxLat">
+              <Properties>
+                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                  <SpinnerModel initial="90.0" maximum="90.0" minimum="-90.0" numberType="java.lang.Double" stepSize="0.01" type="number"/>
+                </Property>
+                <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
+                  <SpinnerEditor format="##.######" type="3"/>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSpinner" name="spFtMinLon">
+              <Properties>
+                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                  <SpinnerModel initial="-180.0" maximum="180.0" minimum="-180.0" numberType="java.lang.Double" stepSize="0.01" type="number"/>
+                </Property>
+                <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
+                  <SpinnerEditor format="##.######" type="3"/>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lF6">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="max lon"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSpinner" name="spFtMaxLon">
+              <Properties>
+                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                  <SpinnerModel initial="180.0" maximum="180.0" minimum="-180.0" numberType="java.lang.Double" stepSize="0.01" type="number"/>
+                </Property>
+                <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
+                  <SpinnerEditor format="##.######" type="3"/>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lF5">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="min lon"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pArch">
@@ -732,7 +835,7 @@
                           <Component id="lAd2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="spArdtTo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="256" max="32767" attributes="0"/>
+                      <EmptySpace pref="313" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -873,7 +976,7 @@
                       <Component id="chQlkUrl" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bQlkUrlsVals" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="312" max="32767" attributes="0"/>
+                      <EmptySpace pref="369" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1037,7 +1140,7 @@
                           <Component id="lRs2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="spResTo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="196" max="32767" attributes="0"/>
+                      <EmptySpace pref="253" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
