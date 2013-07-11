@@ -54,9 +54,9 @@ public class MainFrame extends javax.swing.JFrame {
     private File lastConfigLoadDir = null;
     private File lastConfigSaveDir = null;
     private final FileNameExtensionFilter hmagenFF = new FileNameExtensionFilter(
-            "HmaGen configuration files", "hmagen");
+            "HmaGen configuration files (*.hmagen)", "hmagen");
     private final FileNameExtensionFilter hmaFF = new FileNameExtensionFilter(
-            "HMA GetRecords files", "xml");
+            "HMA GetRecords files (*.xml)", "xml");
 
     /**
      * Creates new form MainFrame
@@ -1140,10 +1140,15 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             if (checkAllValid()) {
                 JFileChooser jfc = new JFileChooser();
+                jfc.setFileFilter(hmaFF);
                 if (lastGenerationDir != null)
                     jfc.setCurrentDirectory(lastGenerationDir);
                 if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = jfc.getSelectedFile();
+                    if (!selectedFile.getName().endsWith(".xml")) {
+                        selectedFile = new File(
+                                selectedFile.getAbsolutePath() + ".xml");
+                    }
                     if (selectedFile != null) {
                         cmWorker = new CalcModelWorker(this, selectedFile);
                         bGenerate.setText("Cancel");
@@ -1219,9 +1224,14 @@ public class MainFrame extends javax.swing.JFrame {
             jfc.setCurrentDirectory(lastConfigSaveDir);
         }
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            if (!selectedFile.getName().endsWith(".hmagen")) {
+                selectedFile = new File(
+                        selectedFile.getAbsolutePath() + ".hmagen");
+            }
             try {
                 fillSettings();
-                xstream.toXML(settings, new FileWriter(jfc.getSelectedFile()));
+                xstream.toXML(settings, new FileWriter(selectedFile));
             } catch (IOException | SecurityException | IllegalAccessException | IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(),
                         "Save error!", JOptionPane.ERROR_MESSAGE);
