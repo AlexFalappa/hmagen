@@ -20,6 +20,7 @@ Features
 
 Future enhancements
 ----
+* Upgrade Freemarker library (2.3.20)
 * Add correctness checks for footprint region
 * Option to strip leading spaces from output lines (xmlbeans indentation 0)
 * Option to wrap generated GetRecordsResponse in SOAPV1.1 or SOAPV1.2 envelopes (do not use xml binding but operate directly on text if possible)
