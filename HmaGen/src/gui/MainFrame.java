@@ -1092,11 +1092,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setText("Envelope");
 
         cbEnvelope.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "None", "SOAP V1.1", "SOAP v1.2" }));
-        cbEnvelope.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbEnvelopeActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1439,9 +1434,6 @@ public class MainFrame extends javax.swing.JFrame {
         spLstOrbitOfs.setEnabled(chLastOrbitOfs.isSelected());
         lOf1.setEnabled(chLastOrbitOfs.isSelected());
     }//GEN-LAST:event_chLastOrbitOfsItemStateChanged
-
-    private void cbEnvelopeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEnvelopeActionPerformed
-    }//GEN-LAST:event_cbEnvelopeActionPerformed
 
     private void chStripSpaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chStripSpaceActionPerformed
         try {

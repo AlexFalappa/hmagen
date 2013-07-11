@@ -1,4 +1,14 @@
 <#-- Freemarker template of an HMA GetRecords response -->
+<#if envelope=="soap11">
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+<soapenv:Header/>
+<soapenv:Body>
+</#if>
+<#if envelope=="soap12">
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+<soap:Header/>
+<soap:Body>
+</#if>
 <csw:GetRecordsResponse xmlns="http://www.opengis.net/cat/csw/2.0.2" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"  xmlns:gml="http://www.opengis.net/gml">
 <csw:SearchStatus/>
 <csw:SearchResults numberOfRecordsMatched="${numRecs}" numberOfRecordsReturned="${numRecs}">
@@ -154,10 +164,7 @@
 <rim:LocalizedString xml:lang="en-US" charset="UTF-8" value="${rec.archCenter}"/>
 </rim:Name>
 </rim:ExtrinsicObject>
-<rim:Association id="${rec.prodId}:ARCH_ASSOC"
-associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::ArchivedIn"
-sourceObject="${rec.prodId}"
-targetObject="${rec.prodId}:ARCH"/>
+<rim:Association id="${rec.prodId}:ARCH_ASSOC" associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::ArchivedIn" sourceObject="${rec.prodId}" targetObject="${rec.prodId}:ARCH"/>
 </#if>
 <#if rec.thmbUrl??>
 <rim:ExtrinsicObject id="${rec.prodId}:THMB" objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOBrowseInformation">
@@ -170,10 +177,7 @@ targetObject="${rec.prodId}:ARCH"/>
 <rim:LocalizedString xml:lang="en-US" charset="UTF-8" value="THUMBNAIL"/>
 </rim:Name>
 </rim:ExtrinsicObject>
-<rim:Association id="${rec.prodId}:THMB_ASSOC"
-associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::HasBrowseInformation"
-sourceObject="${rec.prodId}"
-targetObject="${rec.prodId}:THMB"/>
+<rim:Association id="${rec.prodId}:THMB_ASSOC" associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::HasBrowseInformation" sourceObject="${rec.prodId}" targetObject="${rec.prodId}:THMB"/>
 </#if>
 <#if rec.qlkUrl??>
 <rim:ExtrinsicObject id="${rec.prodId}:QLK" objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOBrowseInformation">
@@ -186,10 +190,7 @@ targetObject="${rec.prodId}:THMB"/>
 <rim:LocalizedString xml:lang="en-US" charset="UTF-8" value="QUICKLOOK"/>
 </rim:Name>
 </rim:ExtrinsicObject>
-<rim:Association id="${rec.prodId}:QLK_ASSOC"
-associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::HasBrowseInformation"
-sourceObject="${rec.prodId}"
-targetObject="${rec.prodId}:QLK"/>
+<rim:Association id="${rec.prodId}:QLK_ASSOC" associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::HasBrowseInformation" sourceObject="${rec.prodId}" targetObject="${rec.prodId}:QLK"/>
 </#if>
 <#if rec.platName??>
 <rim:ExtrinsicObject id="${rec.prodId}:ACQ" objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOAcquisitionPlatform">
@@ -239,19 +240,21 @@ targetObject="${rec.prodId}:QLK"/>
 <rim:LocalizedString xml:lang="en-US" charset="UTF-8" value="${rec.platName}"/>
 </rim:Name>
 </rim:ExtrinsicObject>
-<rim:Association id="${rec.prodId}:ACQ_ASSOC"
-associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::AcquiredBy"
-sourceObject="${rec.prodId}"
-targetObject="${rec.prodId}:ACQ"/>
+<rim:Association id="${rec.prodId}:ACQ_ASSOC" associationType="urn:ogc:def:associationType:OGC-CSW-ebRIM-EO::AcquiredBy" sourceObject="${rec.prodId}" targetObject="${rec.prodId}:ACQ"/>
 </#if>
 <#if rec.classif??>
-<rim:Classification id="${rec.prodId}:CLAS"
-classifiedObject="${rec.prodId}"
-classificationNode="urn:ogc:def:classificationScheme:OGC-CSW-ebRIM-EO::EOProductTypes:${rec.classif}"
-classificationScheme="urn:ogc:def:classificationScheme:OGC-CSW-ebRIM-EO::EOProductTypes"/>
+<rim:Classification id="${rec.prodId}:CLAS" classifiedObject="${rec.prodId}" classificationNode="urn:ogc:def:classificationScheme:OGC-CSW-ebRIM-EO::EOProductTypes:${rec.classif}" classificationScheme="urn:ogc:def:classificationScheme:OGC-CSW-ebRIM-EO::EOProductTypes"/>
 </#if>
 </rim:RegistryObjectList>
 </rim:RegistryPackage>
 </#list>
 </csw:SearchResults>
 </csw:GetRecordsResponse>
+<#if envelope=="soap11">
+</soapenv:Body>
+</soapenv:Envelope>
+</#if>
+<#if envelope=="soap12">
+</soap:Body>
+</soap:Envelope>
+</#if>

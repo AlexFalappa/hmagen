@@ -58,6 +58,17 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         model.put("numRecs", mf.spNumRecs.getValue().toString());
         List<Map<String, String>> records = new ArrayList<>();
         model.put("records", records);
+        // envelope
+        switch (mf.cbEnvelope.getSelectedIndex()) {
+            case 1:
+                model.put("envelope", "soap11");
+                break;
+            case 2:
+                model.put("envelope", "soap12");
+                break;
+            default:
+                model.put("envelope", "");
+        }
         // precalculate some values
         final Integer orbFrom = (Integer) mf.spOrbitFrom.getValue();
         final Integer orbDelta = (Integer) mf.spOrbitTo.getValue() - orbFrom;
