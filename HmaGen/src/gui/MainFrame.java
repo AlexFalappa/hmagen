@@ -34,6 +34,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import main.HmaGenSettings;
 
 /**
@@ -49,6 +50,13 @@ public class MainFrame extends javax.swing.JFrame {
     HmaGenSettings settings = new HmaGenSettings();
     CalcModelWorker cmWorker = null;
     HashMap<String, JCheckBox> chk2vals = new HashMap<>();
+    private File lastGenerationDir = null;
+    private File lastConfigLoadDir = null;
+    private File lastConfigSaveDir = null;
+    private final FileNameExtensionFilter hmagenFF = new FileNameExtensionFilter(
+            "HmaGen configuration files", "hmagen");
+    private final FileNameExtensionFilter hmaFF = new FileNameExtensionFilter(
+            "HMA GetRecords files", "xml");
 
     /**
      * Creates new form MainFrame
@@ -1132,6 +1140,8 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             if (checkAllValid()) {
                 JFileChooser jfc = new JFileChooser();
+                if (lastGenerationDir != null)
+                    jfc.setCurrentDirectory(lastGenerationDir);
                 if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = jfc.getSelectedFile();
                     if (selectedFile != null) {
@@ -1139,6 +1149,7 @@ public class MainFrame extends javax.swing.JFrame {
                         bGenerate.setText("Cancel");
                         pProgress.setMaximum((int) spNumRecs.getValue());
                         cmWorker.execute();
+                        lastGenerationDir = selectedFile.getParentFile();
                     }
                 }
             }
@@ -1203,6 +1214,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
         JFileChooser jfc = new JFileChooser();
+        jfc.setFileFilter(hmagenFF);
+        if (lastConfigSaveDir != null) {
+            jfc.setCurrentDirectory(lastConfigSaveDir);
+        }
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 fillSettings();
@@ -1211,14 +1226,20 @@ public class MainFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, ex.getMessage(),
                         "Save error!", JOptionPane.ERROR_MESSAGE);
             }
+            lastConfigSaveDir = jfc.getSelectedFile().getParentFile();
         }
     }//GEN-LAST:event_bSaveActionPerformed
 
     private void bLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoadActionPerformed
         JFileChooser jfc = new JFileChooser();
+        jfc.setFileFilter(hmagenFF);
+        if (lastConfigLoadDir != null) {
+            jfc.setCurrentDirectory(lastConfigLoadDir);
+        }
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             settings = (HmaGenSettings) xstream.fromXML(jfc.getSelectedFile());
             applySettings();
+            lastConfigLoadDir = jfc.getSelectedFile().getParentFile();
         }
     }//GEN-LAST:event_bLoadActionPerformed
 
