@@ -26,6 +26,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class App {
+    public static MainFrame mf = null;
 
     public static void main(String[] args) {
         try {
@@ -37,7 +38,7 @@ public class App {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MainFrame mf = new MainFrame();
+                mf=new MainFrame();
                 mf.setLocationRelativeTo(null);
                 mf.setVisible(true);
             }
