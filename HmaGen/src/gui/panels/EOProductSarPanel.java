@@ -91,7 +91,7 @@ public class EOProductSarPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_bPlrztnValsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bPlrztnVals;
-    private javax.swing.JCheckBox chPolarztn;
+    public javax.swing.JButton bPlrztnVals;
+    public javax.swing.JCheckBox chPolarztn;
     // End of variables declaration//GEN-END:variables
 }

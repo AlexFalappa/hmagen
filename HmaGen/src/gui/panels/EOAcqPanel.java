@@ -262,7 +262,7 @@ public class EOAcqPanel extends javax.swing.JPanel {
                     .addComponent(spResFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lRs2)
                     .addComponent(spResTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -335,23 +335,23 @@ public class EOAcqPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_bSensNameValsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bPlatnVals;
-    private javax.swing.JButton bSensModeVals;
-    private javax.swing.JButton bSensNameVals;
-    private javax.swing.JButton bSensTypVals;
-    private javax.swing.JButton bSerIdVals;
-    private javax.swing.JButton bSwthVals;
-    private javax.swing.JCheckBox chGenAcqPlat;
-    private javax.swing.JCheckBox chRes;
-    private javax.swing.JCheckBox chSensMode;
-    private javax.swing.JCheckBox chSensName;
-    private javax.swing.JCheckBox chSensType;
-    private javax.swing.JCheckBox chSerId;
-    private javax.swing.JCheckBox chSwthId;
-    private javax.swing.JLabel lAq1;
-    private javax.swing.JLabel lRs1;
-    private javax.swing.JLabel lRs2;
-    private javax.swing.JSpinner spResFrom;
-    private javax.swing.JSpinner spResTo;
+    public javax.swing.JButton bPlatnVals;
+    public javax.swing.JButton bSensModeVals;
+    public javax.swing.JButton bSensNameVals;
+    public javax.swing.JButton bSensTypVals;
+    public javax.swing.JButton bSerIdVals;
+    public javax.swing.JButton bSwthVals;
+    public javax.swing.JCheckBox chGenAcqPlat;
+    public javax.swing.JCheckBox chRes;
+    public javax.swing.JCheckBox chSensMode;
+    public javax.swing.JCheckBox chSensName;
+    public javax.swing.JCheckBox chSensType;
+    public javax.swing.JCheckBox chSerId;
+    public javax.swing.JCheckBox chSwthId;
+    public javax.swing.JLabel lAq1;
+    public javax.swing.JLabel lRs1;
+    public javax.swing.JLabel lRs2;
+    public javax.swing.JSpinner spResFrom;
+    public javax.swing.JSpinner spResTo;
     // End of variables declaration//GEN-END:variables
 }

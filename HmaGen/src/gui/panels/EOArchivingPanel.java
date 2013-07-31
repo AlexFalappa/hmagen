@@ -47,9 +47,9 @@ public class EOArchivingPanel extends javax.swing.JPanel {
         lAr1 = new javax.swing.JLabel();
         bArCntVals = new javax.swing.JButton();
         lAd2 = new javax.swing.JLabel();
+        spArdtFrom = new javax.swing.JSpinner();
         spArdtTo = new javax.swing.JSpinner();
         lAd1 = new javax.swing.JLabel();
-        spArdtFrom = new javax.swing.JSpinner();
 
         bArchIdVals.setText("Allowed values...");
         bArchIdVals.setEnabled(false);
@@ -96,16 +96,16 @@ public class EOArchivingPanel extends javax.swing.JPanel {
         lAd2.setText("to");
         lAd2.setEnabled(false);
 
+        spArdtFrom.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.SECOND));
+        spArdtFrom.setEditor(new javax.swing.JSpinner.DateEditor(spArdtFrom, "yyyy-MM-dd HH:mm:ss"));
+        spArdtFrom.setEnabled(false);
+
         spArdtTo.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.SECOND));
         spArdtTo.setEditor(new javax.swing.JSpinner.DateEditor(spArdtTo, "yyyy-MM-dd HH:mm:ss"));
         spArdtTo.setEnabled(false);
 
         lAd1.setText("from");
         lAd1.setEnabled(false);
-
-        spArdtFrom.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.SECOND));
-        spArdtFrom.setEditor(new javax.swing.JSpinner.DateEditor(spArdtFrom, "yyyy-MM-dd HH:mm:ss"));
-        spArdtFrom.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -158,7 +158,7 @@ public class EOArchivingPanel extends javax.swing.JPanel {
                     .addComponent(spArdtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lAd2)
                     .addComponent(spArdtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -168,14 +168,14 @@ public class EOArchivingPanel extends javax.swing.JPanel {
 
     private void chArchIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chArchIdItemStateChanged
         bArchIdVals.setEnabled(chGenArchInfo.isSelected() && chArchId
-            .isSelected());
+                .isSelected());
     }//GEN-LAST:event_chArchIdItemStateChanged
 
     private void chArchDateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chArchDateItemStateChanged
         spArdtFrom.setEnabled(chGenArchInfo.isSelected() && chArchDate
-            .isSelected());
+                .isSelected());
         spArdtTo.setEnabled(chGenArchInfo.isSelected() && chArchDate
-            .isSelected());
+                .isSelected());
         lAd1.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
         lAd2.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
     }//GEN-LAST:event_chArchDateItemStateChanged
@@ -192,17 +192,16 @@ public class EOArchivingPanel extends javax.swing.JPanel {
     private void bArCntValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bArCntValsActionPerformed
         App.mf.showValsDialog(HmaGenSettings.ARCHIVING_CENTERS);
     }//GEN-LAST:event_bArCntValsActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bArCntVals;
-    private javax.swing.JButton bArchIdVals;
-    private javax.swing.JCheckBox chArchDate;
-    private javax.swing.JCheckBox chArchId;
-    private javax.swing.JCheckBox chGenArchInfo;
-    private javax.swing.JLabel lAd1;
-    private javax.swing.JLabel lAd2;
-    private javax.swing.JLabel lAr1;
-    private javax.swing.JSpinner spArdtFrom;
-    private javax.swing.JSpinner spArdtTo;
+    public javax.swing.JButton bArCntVals;
+    public javax.swing.JButton bArchIdVals;
+    public javax.swing.JCheckBox chArchDate;
+    public javax.swing.JCheckBox chArchId;
+    public javax.swing.JCheckBox chGenArchInfo;
+    public javax.swing.JLabel lAd1;
+    public javax.swing.JLabel lAd2;
+    public javax.swing.JLabel lAr1;
+    public javax.swing.JSpinner spArdtFrom;
+    public javax.swing.JSpinner spArdtTo;
     // End of variables declaration//GEN-END:variables
 }

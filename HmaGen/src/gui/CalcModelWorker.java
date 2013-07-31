@@ -70,23 +70,25 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
                 model.put("envelope", "");
         }
         // precalculate some values
-        final Integer orbFrom = (Integer) mf.spOrbitFrom.getValue();
-        final Integer orbDelta = (Integer) mf.spOrbitTo.getValue() - orbFrom;
-        final Integer lstOrbOfs = (Integer) mf.spLstOrbitOfs.getValue();
-        final long startTime = ((Date) mf.spSensFrom.getValue()).getTime();
-        final long stopTime = ((Date) mf.spSensTo.getValue()).getTime();
+        final Integer orbFrom = (Integer) mf.pProd.spOrbitFrom.getValue();
+        final Integer orbDelta = (Integer) mf.pProd.spOrbitTo.getValue() - orbFrom;
+        final Integer lstOrbOfs = (Integer) mf.pProd.spLstOrbitOfs.getValue();
+        final long startTime = ((Date) mf.pProd.spSensFrom.getValue()).getTime();
+        final long stopTime = ((Date) mf.pProd.spSensTo.getValue()).getTime();
         final long timeDelta = stopTime - startTime;
-        final long acqStartTime = ((Date) mf.spArdtFrom.getValue()).getTime();
-        final long acqStopTime = ((Date) mf.spArdtTo.getValue()).getTime();
-        final long acqDelta = acqStopTime - acqStartTime;
-        final Integer cldCovFrom = (Integer) mf.spCldCovFrom.getValue();
-        final Integer cldCovDelta = (Integer) mf.spCldCovTo.getValue() - cldCovFrom;
-        final Integer snwCovFrom = (Integer) mf.spCldCovFrom.getValue();
-        final Integer snwCovDelta = (Integer) mf.spCldCovTo.getValue() - snwCovFrom;
-        final Integer resFrom = (Integer) mf.spResFrom.getValue();
-        final Integer resDelta = (Integer) mf.spResTo.getValue() - snwCovFrom;
-        Integer durationDelta = (Integer) mf.spDuration.getValue();
-        switch (mf.cbDurationUnit.getSelectedItem().toString()) {
+        final long archStartTime = ((Date) mf.pArch.spArdtFrom.getValue())
+                .getTime();
+        final long archStopTime = ((Date) mf.pArch.spArdtTo.getValue())
+                .getTime();
+        final long archDelta = archStopTime - archStartTime;
+        final Integer cldCovFrom = (Integer) mf.pProdOpt.spCldCovFrom.getValue();
+        final Integer cldCovDelta = (Integer) mf.pProdOpt.spCldCovTo.getValue() - cldCovFrom;
+        final Integer snwCovFrom = (Integer) mf.pProdOpt.spCldCovFrom.getValue();
+        final Integer snwCovDelta = (Integer) mf.pProdOpt.spCldCovTo.getValue() - snwCovFrom;
+        final Integer resFrom = (Integer) mf.pAcq.spResFrom.getValue();
+        final Integer resDelta = (Integer) mf.pAcq.spResTo.getValue() - snwCovFrom;
+        Integer durationDelta = (Integer) mf.pProd.spDuration.getValue();
+        switch (mf.pProd.cbDurationUnit.getSelectedItem().toString()) {
             case "minutes":
                 durationDelta *= 60000;
                 break;
@@ -116,17 +118,18 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
         for (int i = 1; i <= nRecs && !isCancelled(); i++) {
             Map rec = new HashMap();
-            rec.put("prodId", String.format("%s-%d", mf.tfPrefix.getText(), i));
+            rec.put("prodId", String
+                    .format("%s-%d", mf.pProd.tfPrefix.getText(), i));
             genEOProduct(rec, startTime, timeDelta, durationDelta, orbFrom,
                     orbDelta, lstOrbOfs, classification, cldCovFrom, cldCovDelta,
                     snwCovFrom, snwCovDelta);
-            if (mf.chGenAcqPlat.isSelected()) {
+            if (mf.pAcq.chGenAcqPlat.isSelected()) {
                 genEOAcqInfo(rec, resFrom, resDelta);
             }
-            if (mf.chGenArchInfo.isSelected()) {
-                genEOArchInfo(rec, acqStartTime, acqDelta);
+            if (mf.pArch.chGenArchInfo.isSelected()) {
+                genEOArchInfo(rec, archStartTime, archDelta);
             }
-            if (mf.chGenBrwsInfo.isSelected()) {
+            if (mf.pBrws.chGenBrwsInfo.isSelected()) {
                 genEOBrwsInfo(rec);
             }
             records.add(rec);
@@ -165,12 +168,12 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
     }
 
     private void genFootprintAndCenter(Map rec) {
-        double mxH = (double) mf.spHeight.getValue();
-        double mxW = (double) mf.spWidth.getValue();
-        double minLatCen = (double) mf.spFtMinLat.getValue() + mxH;
-        double maxLatCen = (double) mf.spFtMaxLat.getValue() - mxH;
-        double minLonCen = (double) mf.spFtMinLon.getValue() + mxW;
-        double maxLonCen = (double) mf.spFtMaxLon.getValue() - mxW;
+        double mxH = (double) mf.pProd.spHeight.getValue();
+        double mxW = (double) mf.pProd.spWidth.getValue();
+        double minLatCen = (double) mf.pProd.spFtMinLat.getValue() + mxH;
+        double maxLatCen = (double) mf.pProd.spFtMaxLat.getValue() - mxH;
+        double minLonCen = (double) mf.pProd.spFtMinLon.getValue() + mxW;
+        double maxLonCen = (double) mf.pProd.spFtMaxLon.getValue() - mxW;
         double cenLat = minLatCen + rng.nextDouble() * (maxLatCen - minLatCen);
         double cenLon = minLonCen + rng.nextDouble() * (maxLonCen - minLonCen);
         double h2 = rng.nextDouble() * mxH / 2.0;
@@ -189,7 +192,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         sb.append(String.valueOf(cenLat + h2)).append(' ').append(String
                 .valueOf(cenLon - w2));
         rec.put("footprint", sb.toString());
-        if (mf.chCenter.isSelected()) {
+        if (mf.pProd.chCenter.isSelected()) {
             sb.setLength(0);
             sb.append(String.valueOf(cenLat)).append(' ').append(String.valueOf(
                     cenLon));
@@ -200,32 +203,32 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
     private void genEOProduct(Map rec, final long startTime, final long timeDelta, Integer durationDelta, final Integer orbFrom, final Integer orbDelta, final Integer lstOrbOfs, String classification, final Integer cldCovFrom, final Integer cldCovDelta, final Integer snwCovFrom, final Integer snwCovDelta) {
         ArrayList<String> vals = mf.settings.valMap.get(
                 HmaGenSettings.PARENT_IDENTIFIERS);
-        if (mf.chParentId.isSelected() && vals != null) {
+        if (mf.pProd.chParentId.isSelected() && vals != null) {
             genValue("parentId", rec, vals);
         }
         vals = mf.settings.valMap.get(HmaGenSettings.PRODUCT_TYPES);
-        if (mf.chPrdType.isSelected() && vals != null) {
+        if (mf.pProd.chPrdType.isSelected() && vals != null) {
             genValue("prdType", rec, vals);
         }
         vals = mf.settings.valMap.get(HmaGenSettings.STATUSES);
-        if (mf.chStatus.isSelected() && vals != null) {
+        if (mf.pProd.chStatus.isSelected() && vals != null) {
             genValue("status", rec, vals);
         }
         vals = mf.settings.valMap.get(HmaGenSettings.POLARIZATIONS);
-        if (mf.chPolarztn.isSelected()) {
+        if (mf.pProdSar.chPolarztn.isSelected()) {
             genValue("polarisation", rec, vals);
         }
-        if (mf.chSensing.isSelected()) {
+        if (mf.pProd.chSensing.isSelected()) {
             long time = startTime + (long) (Math.floor(
                     rng.nextDouble() * timeDelta));
             rec.put("startSensing", df.format(new Date(time)));
             time += rng.nextInt(durationDelta);
             rec.put("stopSensing", df.format(new Date(time)));
         }
-        if (mf.chOrbitNum.isSelected()) {
+        if (mf.pProd.chOrbitNum.isSelected()) {
             Integer orb = orbFrom + rng.nextInt(orbDelta);
             rec.put("orbitNumber", orb.toString());
-            if (mf.chLastOrbitOfs.isSelected()) {
+            if (mf.pProd.chLastOrbitOfs.isSelected()) {
                 orb += rng.nextInt(lstOrbOfs);
                 rec.put("lastOrbit", orb.toString());
             }
@@ -233,14 +236,14 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         if (mf.chClassification.isSelected()) {
             rec.put("classif", classification);
         }
-        if (mf.chFootprint.isSelected()) {
+        if (mf.pProd.chFootprint.isSelected()) {
             genFootprintAndCenter(rec);
         }
-        if (mf.chCloudCov.isSelected()) {
+        if (mf.pProdOpt.chCloudCov.isSelected()) {
             Integer cover = cldCovFrom + rng.nextInt(cldCovDelta);
             rec.put("cloudCover", cover.toString());
         }
-        if (mf.chSnowCov.isSelected()) {
+        if (mf.pProdOpt.chSnowCov.isSelected()) {
             Integer cover = snwCovFrom + rng.nextInt(snwCovDelta);
             rec.put("snowCover", cover.toString());
         }
@@ -250,11 +253,11 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         ArrayList<String> vals = mf.settings.valMap.get(
                 HmaGenSettings.ARCHIVING_CENTERS);
         genValue("archCenter", rec, vals);
-        if (mf.chArchId.isSelected()) {
+        if (mf.pArch.chArchId.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.ARCHIVING_IDS);
             genValue("archId", rec, vals);
         }
-        if (mf.chArchDate.isSelected()) {
+        if (mf.pArch.chArchDate.isSelected()) {
             long time = acqStartTime + (long) (Math.floor(
                     rng.nextDouble() * acqDelta));
             rec.put("archDate", df.format(new Date(time)));
@@ -265,27 +268,27 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         ArrayList<String> vals = mf.settings.valMap.
                 get(HmaGenSettings.PLATFORMS);
         genValue("platName", rec, vals);
-        if (mf.chSerId.isSelected()) {
+        if (mf.pAcq.chSerId.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.SER_IDS);
             genValue("platSer", rec, vals);
         }
-        if (mf.chSensName.isSelected()) {
+        if (mf.pAcq.chSensName.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.SENS_NAMES);
             genValue("sensName", rec, vals);
         }
-        if (mf.chSensMode.isSelected()) {
+        if (mf.pAcq.chSensMode.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.SENS_MODES);
             genValue("sensMode", rec, vals);
         }
-        if (mf.chSensType.isSelected()) {
+        if (mf.pAcq.chSensType.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.SENS_TYPES);
             genValue("sensType", rec, vals);
         }
-        if (mf.chSwthId.isSelected()) {
+        if (mf.pAcq.chSwthId.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.SWATH_IDS);
             genValue("swathId", rec, vals);
         }
-        if (mf.chRes.isSelected()) {
+        if (mf.pAcq.chRes.isSelected()) {
             Integer res = resFrom + rng.nextInt(resDelta);
             rec.put("resolution", res.toString());
         }
@@ -295,7 +298,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         ArrayList<String> vals = mf.settings.valMap.get(
                 HmaGenSettings.THUMB_URLS);
         genValue("thmbUrl", rec, vals);
-        if (mf.chQlkUrl.isSelected()) {
+        if (mf.pBrws.chQlkUrl.isSelected()) {
             vals = mf.settings.valMap.get(HmaGenSettings.QLOOK_URLS);
             genValue("qlkUrl", rec, vals);
         }

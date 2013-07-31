@@ -99,7 +99,7 @@ public class EOBrowsePanel extends javax.swing.JPanel {
                             .addComponent(lBr1)
                             .addComponent(chQlkUrl)))
                     .addComponent(chGenBrwsInfo))
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,7 +114,7 @@ public class EOBrowsePanel extends javax.swing.JPanel {
                 .addComponent(chQlkUrl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bQlkUrlsVals)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -127,7 +127,7 @@ public class EOBrowsePanel extends javax.swing.JPanel {
 
     private void chQlkUrlItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chQlkUrlItemStateChanged
         bQlkUrlsVals.setEnabled(chGenBrwsInfo.isSelected() && chQlkUrl
-            .isSelected());
+                .isSelected());
     }//GEN-LAST:event_chQlkUrlItemStateChanged
 
     private void bThmbUrlsValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bThmbUrlsValsActionPerformed
@@ -137,12 +137,11 @@ public class EOBrowsePanel extends javax.swing.JPanel {
     private void bQlkUrlsValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bQlkUrlsValsActionPerformed
         App.mf.showValsDialog(HmaGenSettings.QLOOK_URLS);
     }//GEN-LAST:event_bQlkUrlsValsActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bQlkUrlsVals;
-    private javax.swing.JButton bThmbUrlsVals;
-    private javax.swing.JCheckBox chGenBrwsInfo;
-    private javax.swing.JCheckBox chQlkUrl;
-    private javax.swing.JLabel lBr1;
+    public javax.swing.JButton bQlkUrlsVals;
+    public javax.swing.JButton bThmbUrlsVals;
+    public javax.swing.JCheckBox chGenBrwsInfo;
+    public javax.swing.JCheckBox chQlkUrl;
+    public javax.swing.JLabel lBr1;
     // End of variables declaration//GEN-END:variables
 }

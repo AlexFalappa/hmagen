@@ -138,7 +138,7 @@ public class EOProductOptPanel extends javax.swing.JPanel {
                             .addComponent(spSnwCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lSc1)
                             .addComponent(spSnwCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(169, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -157,15 +157,15 @@ public class EOProductOptPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_chSnowCovItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox chCloudCov;
-    private javax.swing.JCheckBox chSnowCov;
-    private javax.swing.JLabel lCc1;
-    private javax.swing.JLabel lCc2;
-    private javax.swing.JLabel lSc1;
-    private javax.swing.JLabel lSc2;
-    private javax.swing.JSpinner spCldCovFrom;
-    private javax.swing.JSpinner spCldCovTo;
-    private javax.swing.JSpinner spSnwCovFrom;
-    private javax.swing.JSpinner spSnwCovTo;
+    public javax.swing.JCheckBox chCloudCov;
+    public javax.swing.JCheckBox chSnowCov;
+    public javax.swing.JLabel lCc1;
+    public javax.swing.JLabel lCc2;
+    public javax.swing.JLabel lSc1;
+    public javax.swing.JLabel lSc2;
+    public javax.swing.JSpinner spCldCovFrom;
+    public javax.swing.JSpinner spCldCovTo;
+    public javax.swing.JSpinner spSnwCovFrom;
+    public javax.swing.JSpinner spSnwCovTo;
     // End of variables declaration//GEN-END:variables
 }

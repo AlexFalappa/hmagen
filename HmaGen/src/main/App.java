@@ -22,23 +22,24 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * Application entry point.
- *
+ * <p/>
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class App {
+
     public static MainFrame mf = null;
 
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            UIManager
+                    .setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             //ignored
         }
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                mf=new MainFrame();
+                mf = new MainFrame();
                 mf.setLocationRelativeTo(null);
                 mf.setVisible(true);
             }

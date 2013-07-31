@@ -45,6 +45,7 @@ public class EOProductPanel extends javax.swing.JPanel {
         spWidth = new javax.swing.JSpinner();
         lF2 = new javax.swing.JLabel();
         lSt3 = new javax.swing.JLabel();
+        spSensFrom = new javax.swing.JSpinner();
         spSensTo = new javax.swing.JSpinner();
         chPrdType = new javax.swing.JCheckBox();
         bPrdTypeVals = new javax.swing.JButton();
@@ -57,11 +58,10 @@ public class EOProductPanel extends javax.swing.JPanel {
         lF1 = new javax.swing.JLabel();
         chFootprint = new javax.swing.JCheckBox();
         lSt1 = new javax.swing.JLabel();
-        spSensFrom = new javax.swing.JSpinner();
         lF5 = new javax.swing.JLabel();
+        spOrbitFrom = new javax.swing.JSpinner();
         spOrbitTo = new javax.swing.JSpinner();
         spFtMaxLon = new javax.swing.JSpinner();
-        spOrbitFrom = new javax.swing.JSpinner();
         lOn2 = new javax.swing.JLabel();
         chOrbitNum = new javax.swing.JCheckBox();
         lOn1 = new javax.swing.JLabel();
@@ -95,6 +95,10 @@ public class EOProductPanel extends javax.swing.JPanel {
 
         lSt3.setText("to");
         lSt3.setEnabled(false);
+
+        spSensFrom.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.SECOND));
+        spSensFrom.setEditor(new javax.swing.JSpinner.DateEditor(spSensFrom, "yyyy-MM-dd HH:mm:ss"));
+        spSensFrom.setEnabled(false);
 
         spSensTo.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.SECOND));
         spSensTo.setEditor(new javax.swing.JSpinner.DateEditor(spSensTo, "yyyy-MM-dd HH:mm:ss"));
@@ -164,12 +168,11 @@ public class EOProductPanel extends javax.swing.JPanel {
         lSt1.setText("from");
         lSt1.setEnabled(false);
 
-        spSensFrom.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.SECOND));
-        spSensFrom.setEditor(new javax.swing.JSpinner.DateEditor(spSensFrom, "yyyy-MM-dd HH:mm:ss"));
-        spSensFrom.setEnabled(false);
-
         lF5.setText("min lon");
         lF5.setEnabled(false);
+
+        spOrbitFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spOrbitFrom.setEnabled(false);
 
         spOrbitTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
         spOrbitTo.setEnabled(false);
@@ -177,9 +180,6 @@ public class EOProductPanel extends javax.swing.JPanel {
         spFtMaxLon.setModel(new javax.swing.SpinnerNumberModel(180.0d, -180.0d, 180.0d, 0.01d));
         spFtMaxLon.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMaxLon, "##.######"));
         spFtMaxLon.setEnabled(false);
-
-        spOrbitFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
-        spOrbitFrom.setEnabled(false);
 
         lOn2.setText("to");
         lOn2.setEnabled(false);
@@ -463,7 +463,7 @@ public class EOProductPanel extends javax.swing.JPanel {
         lOn2.setEnabled(chOrbitNum.isSelected());
         chLastOrbitOfs.setEnabled(chOrbitNum.isSelected());
         spLstOrbitOfs.setEnabled(chOrbitNum.isSelected() && chLastOrbitOfs
-            .isSelected());
+                .isSelected());
         lOf1.setEnabled(chOrbitNum.isSelected() && chLastOrbitOfs.isSelected());
     }//GEN-LAST:event_chOrbitNumItemStateChanged
 
@@ -474,45 +474,44 @@ public class EOProductPanel extends javax.swing.JPanel {
     private void bParentIdValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bParentIdValsActionPerformed
         App.mf.showValsDialog(HmaGenSettings.PARENT_IDENTIFIERS);
     }//GEN-LAST:event_bParentIdValsActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bParentIdVals;
-    private javax.swing.JButton bPrdTypeVals;
-    private javax.swing.JButton bStatusVals;
-    private javax.swing.JComboBox cbDurationUnit;
-    private javax.swing.JCheckBox chCenter;
-    private javax.swing.JCheckBox chFootprint;
-    private javax.swing.JCheckBox chLastOrbitOfs;
-    private javax.swing.JCheckBox chOrbitNum;
-    private javax.swing.JCheckBox chParentId;
-    private javax.swing.JCheckBox chPrdType;
-    private javax.swing.JCheckBox chSensing;
-    private javax.swing.JCheckBox chStatus;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel lF1;
-    private javax.swing.JLabel lF2;
-    private javax.swing.JLabel lF3;
-    private javax.swing.JLabel lF4;
-    private javax.swing.JLabel lF5;
-    private javax.swing.JLabel lF6;
-    private javax.swing.JLabel lOf1;
-    private javax.swing.JLabel lOn1;
-    private javax.swing.JLabel lOn2;
-    private javax.swing.JLabel lSt1;
-    private javax.swing.JLabel lSt2;
-    private javax.swing.JLabel lSt3;
-    private javax.swing.JSpinner spDuration;
-    private javax.swing.JSpinner spFtMaxLat;
-    private javax.swing.JSpinner spFtMaxLon;
-    private javax.swing.JSpinner spFtMinLat;
-    private javax.swing.JSpinner spFtMinLon;
-    private javax.swing.JSpinner spHeight;
-    private javax.swing.JSpinner spLstOrbitOfs;
-    private javax.swing.JSpinner spOrbitFrom;
-    private javax.swing.JSpinner spOrbitTo;
-    private javax.swing.JSpinner spSensFrom;
-    private javax.swing.JSpinner spSensTo;
-    private javax.swing.JSpinner spWidth;
-    private javax.swing.JTextField tfPrefix;
+    public javax.swing.JButton bParentIdVals;
+    public javax.swing.JButton bPrdTypeVals;
+    public javax.swing.JButton bStatusVals;
+    public javax.swing.JComboBox cbDurationUnit;
+    public javax.swing.JCheckBox chCenter;
+    public javax.swing.JCheckBox chFootprint;
+    public javax.swing.JCheckBox chLastOrbitOfs;
+    public javax.swing.JCheckBox chOrbitNum;
+    public javax.swing.JCheckBox chParentId;
+    public javax.swing.JCheckBox chPrdType;
+    public javax.swing.JCheckBox chSensing;
+    public javax.swing.JCheckBox chStatus;
+    public javax.swing.JLabel jLabel8;
+    public javax.swing.JLabel lF1;
+    public javax.swing.JLabel lF2;
+    public javax.swing.JLabel lF3;
+    public javax.swing.JLabel lF4;
+    public javax.swing.JLabel lF5;
+    public javax.swing.JLabel lF6;
+    public javax.swing.JLabel lOf1;
+    public javax.swing.JLabel lOn1;
+    public javax.swing.JLabel lOn2;
+    public javax.swing.JLabel lSt1;
+    public javax.swing.JLabel lSt2;
+    public javax.swing.JLabel lSt3;
+    public javax.swing.JSpinner spDuration;
+    public javax.swing.JSpinner spFtMaxLat;
+    public javax.swing.JSpinner spFtMaxLon;
+    public javax.swing.JSpinner spFtMinLat;
+    public javax.swing.JSpinner spFtMinLon;
+    public javax.swing.JSpinner spHeight;
+    public javax.swing.JSpinner spLstOrbitOfs;
+    public javax.swing.JSpinner spOrbitFrom;
+    public javax.swing.JSpinner spOrbitTo;
+    public javax.swing.JSpinner spSensFrom;
+    public javax.swing.JSpinner spSensTo;
+    public javax.swing.JSpinner spWidth;
+    public javax.swing.JTextField tfPrefix;
     // End of variables declaration//GEN-END:variables
 }

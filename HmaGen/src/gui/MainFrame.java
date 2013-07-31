@@ -28,12 +28,11 @@ import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -73,20 +72,20 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (IOException | URISyntaxException ex) {
         }
         initComponents();
-        chk2vals.put(HmaGenSettings.ARCHIVING_CENTERS, chGenArchInfo);
-        chk2vals.put(HmaGenSettings.ARCHIVING_IDS, chArchId);
-        chk2vals.put(HmaGenSettings.PARENT_IDENTIFIERS, chParentId);
-        chk2vals.put(HmaGenSettings.PLATFORMS, chGenAcqPlat);
-        chk2vals.put(HmaGenSettings.POLARIZATIONS, chPolarztn);
-        chk2vals.put(HmaGenSettings.PRODUCT_TYPES, chPrdType);
-        chk2vals.put(HmaGenSettings.QLOOK_URLS, chQlkUrl);
-        chk2vals.put(HmaGenSettings.SENS_MODES, chSensMode);
-        chk2vals.put(HmaGenSettings.SENS_NAMES, chSensName);
-        chk2vals.put(HmaGenSettings.SENS_TYPES, chSensType);
-        chk2vals.put(HmaGenSettings.SER_IDS, chSerId);
-        chk2vals.put(HmaGenSettings.STATUSES, chStatus);
-        chk2vals.put(HmaGenSettings.SWATH_IDS, chSwthId);
-        chk2vals.put(HmaGenSettings.THUMB_URLS, chGenBrwsInfo);
+        chk2vals.put(HmaGenSettings.ARCHIVING_CENTERS, pArch.chGenArchInfo);
+        chk2vals.put(HmaGenSettings.ARCHIVING_IDS, pArch.chArchId);
+        chk2vals.put(HmaGenSettings.PARENT_IDENTIFIERS, pProd.chParentId);
+        chk2vals.put(HmaGenSettings.PLATFORMS, pAcq.chGenAcqPlat);
+        chk2vals.put(HmaGenSettings.POLARIZATIONS, pProdSar.chPolarztn);
+        chk2vals.put(HmaGenSettings.PRODUCT_TYPES, pProd.chPrdType);
+        chk2vals.put(HmaGenSettings.QLOOK_URLS, pBrws.chQlkUrl);
+        chk2vals.put(HmaGenSettings.SENS_MODES, pAcq.chSensMode);
+        chk2vals.put(HmaGenSettings.SENS_NAMES, pAcq.chSensName);
+        chk2vals.put(HmaGenSettings.SENS_TYPES, pAcq.chSensType);
+        chk2vals.put(HmaGenSettings.SER_IDS, pAcq.chSerId);
+        chk2vals.put(HmaGenSettings.STATUSES, pProd.chStatus);
+        chk2vals.put(HmaGenSettings.SWATH_IDS, pAcq.chSwthId);
+        chk2vals.put(HmaGenSettings.THUMB_URLS, pBrws.chGenBrwsInfo);
     }
 
     public void showValsDialog(String title) {
@@ -109,12 +108,12 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         spNumRecs = new javax.swing.JSpinner();
         tabPane = new javax.swing.JTabbedPane();
-        eOProductPanel1 = new gui.panels.EOProductPanel();
-        eOProductOptPanel1 = new gui.panels.EOProductOptPanel();
-        eOProductSarPanel1 = new gui.panels.EOProductSarPanel();
-        eOAcqPanel1 = new gui.panels.EOAcqPanel();
-        eOBrowsePanel1 = new gui.panels.EOBrowsePanel();
-        eOArchivingPanel1 = new gui.panels.EOArchivingPanel();
+        pProd = new gui.panels.EOProductPanel();
+        pProdOpt = new gui.panels.EOProductOptPanel();
+        pProdSar = new gui.panels.EOProductSarPanel();
+        pAcq = new gui.panels.EOAcqPanel();
+        pBrws = new gui.panels.EOBrowsePanel();
+        pArch = new gui.panels.EOArchivingPanel();
         bGenerate = new javax.swing.JButton();
         chClassification = new javax.swing.JCheckBox();
         cbClassification = new javax.swing.JComboBox();
@@ -133,12 +132,12 @@ public class MainFrame extends javax.swing.JFrame {
 
         spNumRecs.setModel(new javax.swing.SpinnerNumberModel(5, 1, 9999, 1));
 
-        tabPane.addTab("EOProduct", eOProductPanel1);
-        tabPane.addTab("EOProduct (OPT)", eOProductOptPanel1);
-        tabPane.addTab("EOProduct (SAR)", eOProductSarPanel1);
-        tabPane.addTab("EOAcquisitionPlat", eOAcqPanel1);
-        tabPane.addTab("EOBrowseInfo", eOBrowsePanel1);
-        tabPane.addTab("EOArchivingInfo", eOArchivingPanel1);
+        tabPane.addTab("EOProduct", pProd);
+        tabPane.addTab("EOProduct (OPT)", pProdOpt);
+        tabPane.addTab("EOProduct (SAR)", pProdSar);
+        tabPane.addTab("EOAcquisitionPlat", pAcq);
+        tabPane.addTab("EOBrowseInfo", pBrws);
+        tabPane.addTab("EOArchivingInfo", pArch);
 
         bGenerate.setText("Generate...");
         bGenerate.addActionListener(new java.awt.event.ActionListener() {
@@ -199,9 +198,9 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                        .addComponent(pProgress, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
+                        .addComponent(pProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(bLoad)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bSave))
@@ -240,7 +239,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(cbClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chClassification))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabPane)
+                .addComponent(tabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 403, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -287,7 +286,7 @@ public class MainFrame extends javax.swing.JFrame {
                         selectedFile.getAbsolutePath() + ".hmagen");
             }
             try {
-                fillSettings();
+                fillSettings(this.getClass(), this);
                 xstream.toXML(settings, new FileWriter(selectedFile));
             } catch (IOException | SecurityException | IllegalAccessException | IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(),
@@ -305,7 +304,12 @@ public class MainFrame extends javax.swing.JFrame {
         }
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             settings = (HmaGenSettings) xstream.fromXML(jfc.getSelectedFile());
-            applySettings();
+            applySettings(this.getClass(), this);
+            applySettings(pProd.getClass(), pProd);
+            applySettings(pProdOpt.getClass(), pProdOpt);
+            applySettings(pProdSar.getClass(), pProdSar);
+            applySettings(pAcq.getClass(), pAcq);
+            applySettings(pArch.getClass(), pArch);
             lastConfigLoadDir = jfc.getSelectedFile().getParentFile();
         }
     }//GEN-LAST:event_bLoadActionPerformed
@@ -333,81 +337,87 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JComboBox cbEnvelope;
     javax.swing.JCheckBox chClassification;
     javax.swing.JCheckBox chStripSpace;
-    gui.panels.EOAcqPanel eOAcqPanel1;
-    gui.panels.EOArchivingPanel eOArchivingPanel1;
-    gui.panels.EOBrowsePanel eOBrowsePanel1;
-    gui.panels.EOProductOptPanel eOProductOptPanel1;
-    gui.panels.EOProductPanel eOProductPanel1;
-    gui.panels.EOProductSarPanel eOProductSarPanel1;
     javax.swing.JLabel jLabel1;
     javax.swing.JLabel jLabel2;
     javax.swing.JSeparator jSeparator1;
+    gui.panels.EOAcqPanel pAcq;
+    gui.panels.EOArchivingPanel pArch;
+    gui.panels.EOBrowsePanel pBrws;
+    gui.panels.EOProductPanel pProd;
+    gui.panels.EOProductOptPanel pProdOpt;
+    gui.panels.EOProductSarPanel pProdSar;
     javax.swing.JProgressBar pProgress;
     javax.swing.JSpinner spNumRecs;
     javax.swing.JTabbedPane tabPane;
     // End of variables declaration//GEN-END:variables
 
-    private void fillSettings() throws SecurityException, IllegalAccessException, IllegalArgumentException {
-        Class c = this.getClass();
+    private void fillSettings(Class c, Object instance) throws SecurityException, IllegalAccessException, IllegalArgumentException {
         for (Field f : c.getDeclaredFields()) {
             final String fName = f.getName();
             if (f.getType().equals(JCheckBox.class)) {
-                JCheckBox ch = (JCheckBox) f.get(this);
+                JCheckBox ch = (JCheckBox) f.get(instance);
                 if (ch.isSelected()) {
                     settings.chkbEnabled.add(fName);
                 }
             } else if (f.getType().equals(JSpinner.class)) {
-                JSpinner sp = (JSpinner) f.get(this);
+                JSpinner sp = (JSpinner) f.get(instance);
                 settings.spinnersMap.put(fName, sp.getValue());
             } else if (f.getType().equals(JComboBox.class)) {
-                JComboBox cb = (JComboBox) f.get(this);
+                JComboBox cb = (JComboBox) f.get(instance);
                 settings.combosMap.put(fName, cb.getSelectedItem());
             } else if (f.getType().equals(JTextField.class)) {
-                JTextField tf = (JTextField) f.get(this);
+                JTextField tf = (JTextField) f.get(instance);
                 settings.textfieldsMap.put(fName, tf.getText());
+            } else if (f.getType().getSuperclass().equals(JPanel.class)) {
+                final Object inst = f.get(instance);
+                fillSettings(inst.getClass(), inst);
             }
         }
     }
 
-    private void applySettings() {
-        Class c = this.getClass();
+    private void applySettings(Class c, Object instance) {
         for (String ch : settings.chkbEnabled) {
             try {
-                ((JCheckBox) c.getDeclaredField(ch).get(this)).setSelected(true);
-            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                ((JCheckBox) c.getDeclaredField(ch).get(instance)).setSelected(
+                        true);
+            } catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(),
                         "Load error!", JOptionPane.ERROR_MESSAGE);
+            } catch (NoSuchFieldException ignored) {
             }
         }
         for (Map.Entry<String, Object> e : settings.combosMap.entrySet()) {
             String cb = e.getKey();
             Object val = e.getValue();
             try {
-                ((JComboBox) c.getDeclaredField(cb).get(this)).setSelectedItem(
-                        val);
-            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                ((JComboBox) c.getDeclaredField(cb).get(instance))
+                        .setSelectedItem(val);
+            } catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(),
                         "Load error!", JOptionPane.ERROR_MESSAGE);
+            } catch (NoSuchFieldException ignored) {
             }
         }
         for (Map.Entry<String, Object> e : settings.spinnersMap.entrySet()) {
             String sp = e.getKey();
             Object val = e.getValue();
             try {
-                ((JSpinner) c.getDeclaredField(sp).get(this)).setValue(val);
-            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                ((JSpinner) c.getDeclaredField(sp).get(instance)).setValue(val);
+            } catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(),
                         "Load error!", JOptionPane.ERROR_MESSAGE);
+            } catch (NoSuchFieldException ignored) {
             }
         }
         for (Map.Entry<String, String> e : settings.textfieldsMap.entrySet()) {
             String tf = e.getKey();
             String val = e.getValue();
             try {
-                ((JTextField) c.getDeclaredField(tf).get(this)).setText(val);
-            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                ((JTextField) c.getDeclaredField(tf).get(instance)).setText(val);
+            } catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(),
                         "Load error!", JOptionPane.ERROR_MESSAGE);
+            } catch (NoSuchFieldException ignored) {
             }
         }
     }
@@ -421,8 +431,8 @@ public class MainFrame extends javax.swing.JFrame {
                 return false;
             }
         }
-        Date from = (Date) spSensFrom.getValue();
-        Date to = (Date) spSensTo.getValue();
+        Date from = (Date) pProd.spSensFrom.getValue();
+        Date to = (Date) pProd.spSensTo.getValue();
         if (from.after(to)) {
             tabPane.setSelectedComponent(pProd);
             JOptionPane.showMessageDialog(this,
@@ -430,8 +440,8 @@ public class MainFrame extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        from = (Date) spArdtFrom.getValue();
-        to = (Date) spArdtTo.getValue();
+        from = (Date) pArch.spArdtFrom.getValue();
+        to = (Date) pArch.spArdtTo.getValue();
         if (from.after(to)) {
             tabPane.setSelectedComponent(pArch);
             JOptionPane.showMessageDialog(this,
@@ -439,8 +449,8 @@ public class MainFrame extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        Integer low = (Integer) spCldCovFrom.getValue();
-        Integer high = (Integer) spCldCovTo.getValue();
+        Integer low = (Integer) pProdOpt.spCldCovFrom.getValue();
+        Integer high = (Integer) pProdOpt.spCldCovTo.getValue();
         if (low > high) {
             tabPane.setSelectedComponent(pProd);
             JOptionPane.showMessageDialog(this,
@@ -448,8 +458,8 @@ public class MainFrame extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        low = (Integer) spOrbitFrom.getValue();
-        high = (Integer) spOrbitTo.getValue();
+        low = (Integer) pProd.spOrbitFrom.getValue();
+        high = (Integer) pProd.spOrbitTo.getValue();
         if (low > high) {
             tabPane.setSelectedComponent(pProd);
             JOptionPane.showMessageDialog(this,
@@ -457,8 +467,8 @@ public class MainFrame extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        low = (Integer) spResFrom.getValue();
-        high = (Integer) spResTo.getValue();
+        low = (Integer) pAcq.spResFrom.getValue();
+        high = (Integer) pAcq.spResTo.getValue();
         if (low > high) {
             tabPane.setSelectedComponent(pAcq);
             JOptionPane.showMessageDialog(this,
@@ -466,8 +476,8 @@ public class MainFrame extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        low = (Integer) spSnwCovFrom.getValue();
-        high = (Integer) spSnwCovTo.getValue();
+        low = (Integer) pProdOpt.spSnwCovFrom.getValue();
+        high = (Integer) pProdOpt.spSnwCovTo.getValue();
         if (low > high) {
             tabPane.setSelectedComponent(pProd);
             JOptionPane.showMessageDialog(this,
@@ -475,8 +485,8 @@ public class MainFrame extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        double min = (double) spFtMinLat.getValue();
-        double max = (double) spFtMaxLat.getValue();
+        double min = (double) pProd.spFtMinLat.getValue();
+        double max = (double) pProd.spFtMaxLat.getValue();
         if (min > max) {
             tabPane.setSelectedComponent(pProd);
             JOptionPane.showMessageDialog(this,
@@ -485,8 +495,8 @@ public class MainFrame extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        min = (double) spFtMinLon.getValue();
-        max = (double) spFtMaxLon.getValue();
+        min = (double) pProd.spFtMinLon.getValue();
+        max = (double) pProd.spFtMaxLon.getValue();
         if (min > max) {
             tabPane.setSelectedComponent(pProd);
             JOptionPane.showMessageDialog(this,
