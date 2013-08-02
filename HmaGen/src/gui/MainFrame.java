@@ -76,7 +76,7 @@ public class MainFrame extends javax.swing.JFrame {
         chk2vals.put(HmaGenSettings.ARCHIVING_IDS, pArch.chArchId);
         chk2vals.put(HmaGenSettings.PARENT_IDENTIFIERS, pProd.chParentId);
         chk2vals.put(HmaGenSettings.PLATFORMS, pAcq.chGenAcqPlat);
-        chk2vals.put(HmaGenSettings.POLARIZATIONS, pProdSar.chPolarztn);
+        chk2vals.put(HmaGenSettings.POLARIZATION_CHANS, pProdSar.chPolarzChans);
         chk2vals.put(HmaGenSettings.PRODUCT_TYPES, pProd.chPrdType);
         chk2vals.put(HmaGenSettings.QLOOK_URLS, pBrws.chQlkUrl);
         chk2vals.put(HmaGenSettings.SENS_MODES, pAcq.chSensMode);

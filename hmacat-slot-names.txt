@@ -46,6 +46,8 @@ optical
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOProduct"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSWebRIM-EO::illuminationElevationAngle"]/rim:ValueList/rim:Value[1]
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOProduct"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSWebRIM-EO::cloudCoverPercentage"]/rim:ValueList/rim:Value[1]
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOProduct"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSWebRIM-EO::snowCoverPercentage"]/rim:ValueList/rim:Value[1]
+
+
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOAcquisitionPlatform"]/rim:Name/rim:LocalizedString/@value
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOAcquisitionPlatform"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::platformSerialIdentifier"]/rim:ValueList/rim:Value[1]
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOAcquisitionPlatform"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::platformOrbitType"]/rim:ValueList/rim:Value[1]
@@ -54,10 +56,14 @@ optical
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOAcquisitionPlatform"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::sensorOperationalMode"]/rim:ValueList/rim:Value[1]
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOAcquisitionPlatform"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::sensorResolution"]/rim:ValueList/rim:Value[1]
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOAcquisitionPlatform"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::swathIdentifier"]/rim:ValueList/rim:Value[1]
+
+
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOBrowseInformation"]/rim:Name/rim:LocalizedString/@value
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOBrowseInformation"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::subType"]/rim:ValueList/rim:Value[1]
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOBrowseInformation"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::referenceSystemIdentifier"]/rim:ValueList/rim:Value[1]
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOBrowseInformation"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::fileName"]/rim:ValueList/rim:Value[1]
+
+
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOArchivingInformation"]/rim:Name/rim:LocalizedString/@value
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOArchivingInformation"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::archivingIdentifier"]/rim:ValueList/rim:Value[1]
 /rim:ExtrinsicObject[@objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOArchivingInformation"]/rim:Slot[@name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::archivingDate"]/rim:ValueList/rim:Value[1]

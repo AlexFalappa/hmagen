@@ -76,7 +76,7 @@ public class MainFrame extends javax.swing.JFrame {
         chk2vals.put(HmaGenSettings.ARCHIVING_IDS, chArchId);
         chk2vals.put(HmaGenSettings.PARENT_IDENTIFIERS, chParentId);
         chk2vals.put(HmaGenSettings.PLATFORMS, chGenAcqPlat);
-        chk2vals.put(HmaGenSettings.POLARIZATIONS, chPolarztn);
+        chk2vals.put(HmaGenSettings.POLARIZATION_CHANS, chPolarztn);
         chk2vals.put(HmaGenSettings.PRODUCT_TYPES, chPrdType);
         chk2vals.put(HmaGenSettings.QLOOK_URLS, chQlkUrl);
         chk2vals.put(HmaGenSettings.SENS_MODES, chSensMode);
@@ -1200,7 +1200,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_bParentIdValsActionPerformed
 
     private void bPlrztnValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPlrztnValsActionPerformed
-        showValsDialog(HmaGenSettings.POLARIZATIONS);
+        showValsDialog(HmaGenSettings.POLARIZATION_CHANS);
     }//GEN-LAST:event_bPlrztnValsActionPerformed
 
     private void bArCntValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bArCntValsActionPerformed

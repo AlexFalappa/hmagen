@@ -214,8 +214,8 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         if (mf.pProd.chStatus.isSelected() && vals != null) {
             genValue("status", rec, vals);
         }
-        vals = mf.settings.valMap.get(HmaGenSettings.POLARIZATIONS);
-        if (mf.pProdSar.chPolarztn.isSelected()) {
+        vals = mf.settings.valMap.get(HmaGenSettings.POLARIZATION_CHANS);
+        if (mf.pProdSar.chPolarzChans.isSelected()) {
             genValue("polarisation", rec, vals);
         }
         if (mf.pProd.chSensing.isSelected()) {

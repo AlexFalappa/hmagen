@@ -47,6 +47,16 @@ public class EOProductOptPanel extends javax.swing.JPanel {
         spSnwCovTo = new javax.swing.JSpinner();
         lSc1 = new javax.swing.JLabel();
         lSc2 = new javax.swing.JLabel();
+        chIllumElev = new javax.swing.JCheckBox();
+        chIllumAzim = new javax.swing.JCheckBox();
+        lIe1 = new javax.swing.JLabel();
+        spIllElevFrom = new javax.swing.JSpinner();
+        lIe2 = new javax.swing.JLabel();
+        spIllElevTo = new javax.swing.JSpinner();
+        spIllAzimTo = new javax.swing.JSpinner();
+        spIllAzimFrom = new javax.swing.JSpinner();
+        lIa2 = new javax.swing.JLabel();
+        lIa1 = new javax.swing.JLabel();
 
         spCldCovFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
         spCldCovFrom.setEnabled(false);
@@ -86,6 +96,44 @@ public class EOProductOptPanel extends javax.swing.JPanel {
         lSc2.setText("from");
         lSc2.setEnabled(false);
 
+        chIllumElev.setText("Illumination elevation angle");
+        chIllumElev.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chIllumElevItemStateChanged(evt);
+            }
+        });
+
+        chIllumAzim.setText("Illumination azimuth angle");
+        chIllumAzim.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chIllumAzimItemStateChanged(evt);
+            }
+        });
+
+        lIe1.setText("from");
+        lIe1.setEnabled(false);
+
+        spIllElevFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spIllElevFrom.setEnabled(false);
+
+        lIe2.setText("to");
+        lIe2.setEnabled(false);
+
+        spIllElevTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spIllElevTo.setEnabled(false);
+
+        spIllAzimTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spIllAzimTo.setEnabled(false);
+
+        spIllAzimFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spIllAzimFrom.setEnabled(false);
+
+        lIa2.setText("to");
+        lIa2.setEnabled(false);
+
+        lIa1.setText("from");
+        lIa1.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,28 +141,50 @@ public class EOProductOptPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chCloudCov)
+                    .addComponent(chIllumElev)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(lCc1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spCldCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lCc2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spCldCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(chCloudCov))
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lIe1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spIllElevFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lIe2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spIllElevTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lCc1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spCldCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lCc2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spCldCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chIllumAzim)
+                    .addComponent(chSnowCov)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(lSc2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spSnwCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lSc1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spSnwCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(chSnowCov))
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lIa1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spIllAzimFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lIa2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spIllAzimTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lSc2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spSnwCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lSc1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spSnwCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -125,20 +195,36 @@ public class EOProductOptPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(chCloudCov)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lCc1)
-                            .addComponent(spCldCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lCc2)
-                            .addComponent(spCldCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lCc1)
+                                .addComponent(spCldCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lCc2)
+                                .addComponent(spCldCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lSc2)
+                                .addComponent(spSnwCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lSc1)
+                                .addComponent(spSnwCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(chSnowCov)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lSc2)
-                            .addComponent(spSnwCovFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lSc1)
-                            .addComponent(spSnwCovTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(169, Short.MAX_VALUE))
+                        .addGap(25, 25, 25)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chIllumElev)
+                    .addComponent(chIllumAzim))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lIe1)
+                        .addComponent(spIllElevFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lIe2)
+                        .addComponent(spIllElevTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lIa1)
+                        .addComponent(spIllAzimFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lIa2)
+                        .addComponent(spIllAzimTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -156,15 +242,38 @@ public class EOProductOptPanel extends javax.swing.JPanel {
         lSc2.setEnabled(chSnowCov.isSelected());
     }//GEN-LAST:event_chSnowCovItemStateChanged
 
+    private void chIllumElevItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chIllumElevItemStateChanged
+        spIllElevFrom.setEnabled(chIllumElev.isSelected());
+        spIllElevTo.setEnabled(chIllumElev.isSelected());
+        lIe1.setEnabled(chIllumElev.isSelected());
+        lIe2.setEnabled(chIllumElev.isSelected());
+    }//GEN-LAST:event_chIllumElevItemStateChanged
+
+    private void chIllumAzimItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chIllumAzimItemStateChanged
+        spIllAzimFrom.setEnabled(chIllumAzim.isSelected());
+        spIllAzimTo.setEnabled(chIllumAzim.isSelected());
+        lIa1.setEnabled(chIllumAzim.isSelected());
+        lIa2.setEnabled(chIllumAzim.isSelected());
+    }//GEN-LAST:event_chIllumAzimItemStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox chCloudCov;
+    public javax.swing.JCheckBox chIllumAzim;
+    public javax.swing.JCheckBox chIllumElev;
     public javax.swing.JCheckBox chSnowCov;
     public javax.swing.JLabel lCc1;
     public javax.swing.JLabel lCc2;
+    public javax.swing.JLabel lIa1;
+    public javax.swing.JLabel lIa2;
+    public javax.swing.JLabel lIe1;
+    public javax.swing.JLabel lIe2;
     public javax.swing.JLabel lSc1;
     public javax.swing.JLabel lSc2;
     public javax.swing.JSpinner spCldCovFrom;
     public javax.swing.JSpinner spCldCovTo;
+    public javax.swing.JSpinner spIllAzimFrom;
+    public javax.swing.JSpinner spIllAzimTo;
+    public javax.swing.JSpinner spIllElevFrom;
+    public javax.swing.JSpinner spIllElevTo;
     public javax.swing.JSpinner spSnwCovFrom;
     public javax.swing.JSpinner spSnwCovTo;
     // End of variables declaration//GEN-END:variables

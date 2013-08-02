@@ -21,7 +21,7 @@ import java.util.HashSet;
 
 /**
  * Settings data object.
- *
+ * <p/>
  * @author sasha
  */
 public class HmaGenSettings {
@@ -29,7 +29,8 @@ public class HmaGenSettings {
     public static final String STATUSES = "Statuses";
     public static final String PRODUCT_TYPES = "Product Types";
     public static final String PARENT_IDENTIFIERS = "Parent Ids.";
-    public static final String POLARIZATIONS = "Polarizations";
+    public static final String POLARIZATION_CHANS = "PolarizationChannels";
+    public static final String POLARIZATION_MODES = "PolarizationModes";
     public static final String ARCHIVING_CENTERS = "Archiving Centers";
     public static final String ARCHIVING_IDS = "Archiving Ids";
     public static final String THUMB_URLS = "Thumbnail Urls";
@@ -40,6 +41,7 @@ public class HmaGenSettings {
     public static final String SENS_NAMES = "Sensor Names";
     public static final String SER_IDS = "Plat. Serial Ids.";
     public static final String SWATH_IDS = "Swath Ids.";
+    public static final String ANT_LOOK_DIRS = "Ant. Look Dirs.";
     public HashSet<String> chkbEnabled = new HashSet<>();
     public HashMap<String, Object> spinnersMap = new HashMap<>();
     public HashMap<String, Object> combosMap = new HashMap<>();
@@ -65,7 +67,7 @@ public class HmaGenSettings {
         polarizations.add("VV");
         polarizations.add("HV");
         polarizations.add("VH");
-        valMap.put(HmaGenSettings.POLARIZATIONS, polarizations);
+        valMap.put(HmaGenSettings.POLARIZATION_CHANS, polarizations);
         valMap.put(HmaGenSettings.ARCHIVING_CENTERS, new ArrayList<String>());
         valMap.put(HmaGenSettings.ARCHIVING_IDS, new ArrayList<String>());
         valMap.put(HmaGenSettings.PARENT_IDENTIFIERS, new ArrayList<String>());
