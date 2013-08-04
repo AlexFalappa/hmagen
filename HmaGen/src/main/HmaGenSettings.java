@@ -42,6 +42,7 @@ public class HmaGenSettings {
     public static final String SER_IDS = "Plat. Serial Ids.";
     public static final String SWATH_IDS = "Swath Ids.";
     public static final String ANT_LOOK_DIRS = "Ant. Look Dirs.";
+    public static final String ORBIT_DIRS = "Orbit Dirs.";
     public HashSet<String> chkbEnabled = new HashSet<>();
     public HashMap<String, Object> spinnersMap = new HashMap<>();
     public HashMap<String, Object> combosMap = new HashMap<>();

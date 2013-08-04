@@ -109,6 +109,7 @@ public class MainFrame extends javax.swing.JFrame {
         spNumRecs = new javax.swing.JSpinner();
         tabPane = new javax.swing.JTabbedPane();
         pProd = new gui.panels.EOProductPanel();
+        pProd2 = new gui.panels.EOProductPanel2();
         pProdOpt = new gui.panels.EOProductOptPanel();
         pProdSar = new gui.panels.EOProductSarPanel();
         pAcq = new gui.panels.EOAcqPanel();
@@ -132,7 +133,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         spNumRecs.setModel(new javax.swing.SpinnerNumberModel(5, 1, 9999, 1));
 
-        tabPane.addTab("EOProduct", pProd);
+        tabPane.addTab("EOProduct (1)", pProd);
+        tabPane.addTab("EOProduct (2)", pProd2);
         tabPane.addTab("EOProduct (OPT)", pProdOpt);
         tabPane.addTab("EOProduct (SAR)", pProdSar);
         tabPane.addTab("EOAcquisitionPlat", pAcq);
@@ -239,7 +241,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(cbClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chClassification))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 403, Short.MAX_VALUE)
+                .addComponent(tabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 405, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -344,6 +346,7 @@ public class MainFrame extends javax.swing.JFrame {
     gui.panels.EOArchivingPanel pArch;
     gui.panels.EOBrowsePanel pBrws;
     gui.panels.EOProductPanel pProd;
+    gui.panels.EOProductPanel2 pProd2;
     gui.panels.EOProductOptPanel pProdOpt;
     gui.panels.EOProductSarPanel pProdSar;
     javax.swing.JProgressBar pProgress;

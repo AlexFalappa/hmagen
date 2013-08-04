@@ -45,6 +45,7 @@ public class EOBrowsePanel extends javax.swing.JPanel {
         chQlkUrl = new javax.swing.JCheckBox();
         bThmbUrlsVals = new javax.swing.JButton();
         bQlkUrlsVals = new javax.swing.JButton();
+        chLinkQlkToThmb = new javax.swing.JCheckBox();
 
         chGenBrwsInfo.setText("Generate");
         chGenBrwsInfo.addItemListener(new java.awt.event.ItemListener() {
@@ -80,6 +81,9 @@ public class EOBrowsePanel extends javax.swing.JPanel {
             }
         });
 
+        chLinkQlkToThmb.setText("Link with thumbnails");
+        chLinkQlkToThmb.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,15 +95,19 @@ public class EOBrowsePanel extends javax.swing.JPanel {
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(bQlkUrlsVals))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(bThmbUrlsVals))
                             .addComponent(lBr1)
-                            .addComponent(chQlkUrl)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(22, 22, 22)
+                                        .addComponent(bQlkUrlsVals))
+                                    .addComponent(chQlkUrl))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(chLinkQlkToThmb))))
                     .addComponent(chGenBrwsInfo))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,8 +121,10 @@ public class EOBrowsePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chQlkUrl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bQlkUrlsVals)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bQlkUrlsVals)
+                    .addComponent(chLinkQlkToThmb))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -127,6 +137,8 @@ public class EOBrowsePanel extends javax.swing.JPanel {
 
     private void chQlkUrlItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chQlkUrlItemStateChanged
         bQlkUrlsVals.setEnabled(chGenBrwsInfo.isSelected() && chQlkUrl
+                .isSelected());
+        chLinkQlkToThmb.setEnabled(chGenBrwsInfo.isSelected() && chQlkUrl
                 .isSelected());
     }//GEN-LAST:event_chQlkUrlItemStateChanged
 
@@ -141,6 +153,7 @@ public class EOBrowsePanel extends javax.swing.JPanel {
     public javax.swing.JButton bQlkUrlsVals;
     public javax.swing.JButton bThmbUrlsVals;
     public javax.swing.JCheckBox chGenBrwsInfo;
+    public javax.swing.JCheckBox chLinkQlkToThmb;
     public javax.swing.JCheckBox chQlkUrl;
     public javax.swing.JLabel lBr1;
     // End of variables declaration//GEN-END:variables

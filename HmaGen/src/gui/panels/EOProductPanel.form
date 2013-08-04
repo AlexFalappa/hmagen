@@ -74,13 +74,21 @@
                                       <Component id="spOrbitTo" min="-2" pref="70" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="chLastOrbitOfs" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
                                               <Component id="lOf1" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="spLstOrbitOfs" min="-2" pref="70" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="chLastOrbitOfs" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
+                                              <Component id="bOrbDirVals" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="chOrbitDir" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -125,7 +133,7 @@
                       <Component id="tfPrefix" min="-2" pref="300" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -173,7 +181,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="chOrbitNum" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="chLastOrbitOfs" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                      <Component id="chLastOrbitOfs" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chOrbitDir" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -183,6 +194,7 @@
                   <Component id="spOrbitTo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lOf1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="spLstOrbitOfs" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="bOrbDirVals" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="chFootprint" min="-2" max="-2" attributes="0"/>
@@ -208,7 +220,7 @@
                   <Component id="spFtMaxLon" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lF5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="40" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -519,6 +531,23 @@
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="chOrbitDir">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Orbit direction"/>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="chOrbitDirItemStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="bOrbDirVals">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Allowed values..."/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bOrbDirValsActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

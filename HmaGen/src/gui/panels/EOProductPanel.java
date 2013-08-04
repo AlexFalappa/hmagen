@@ -78,6 +78,8 @@ public class EOProductPanel extends javax.swing.JPanel {
         spFtMinLon = new javax.swing.JSpinner();
         lF6 = new javax.swing.JLabel();
         spFtMinLat = new javax.swing.JSpinner();
+        chOrbitDir = new javax.swing.JCheckBox();
+        bOrbDirVals = new javax.swing.JButton();
 
         spHeight.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0E-4d, 90.0d, 0.01d));
         spHeight.setEditor(new javax.swing.JSpinner.NumberEditor(spHeight, "##.######"));
@@ -245,6 +247,21 @@ public class EOProductPanel extends javax.swing.JPanel {
         spFtMinLat.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMinLat, "##.######"));
         spFtMinLat.setEnabled(false);
 
+        chOrbitDir.setText("Orbit direction");
+        chOrbitDir.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chOrbitDirItemStateChanged(evt);
+            }
+        });
+
+        bOrbDirVals.setText("Allowed values...");
+        bOrbDirVals.setEnabled(false);
+        bOrbDirVals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bOrbDirValsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -300,12 +317,18 @@ public class EOProductPanel extends javax.swing.JPanel {
                                         .addComponent(spOrbitTo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(chLastOrbitOfs)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(22, 22, 22)
                                                 .addComponent(lOf1)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(spLstOrbitOfs, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(chLastOrbitOfs)))
+                                                .addComponent(spLstOrbitOfs, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(17, 17, 17)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(22, 22, 22)
+                                                .addComponent(bOrbDirVals))
+                                            .addComponent(chOrbitDir)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lF1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -336,7 +359,7 @@ public class EOProductPanel extends javax.swing.JPanel {
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,7 +398,9 @@ public class EOProductPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chOrbitNum)
-                    .addComponent(chLastOrbitOfs, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(chLastOrbitOfs)
+                        .addComponent(chOrbitDir)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lOn1)
@@ -383,7 +408,8 @@ public class EOProductPanel extends javax.swing.JPanel {
                     .addComponent(lOn2)
                     .addComponent(spOrbitTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lOf1)
-                    .addComponent(spLstOrbitOfs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spLstOrbitOfs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bOrbDirVals))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chFootprint)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -405,7 +431,7 @@ public class EOProductPanel extends javax.swing.JPanel {
                     .addComponent(lF6)
                     .addComponent(spFtMaxLon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lF5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -474,7 +500,16 @@ public class EOProductPanel extends javax.swing.JPanel {
     private void bParentIdValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bParentIdValsActionPerformed
         App.mf.showValsDialog(HmaGenSettings.PARENT_IDENTIFIERS);
     }//GEN-LAST:event_bParentIdValsActionPerformed
+
+    private void bOrbDirValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bOrbDirValsActionPerformed
+        App.mf.showValsDialog(HmaGenSettings.ORBIT_DIRS);
+    }//GEN-LAST:event_bOrbDirValsActionPerformed
+
+    private void chOrbitDirItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chOrbitDirItemStateChanged
+        bOrbDirVals.setEnabled(chOrbitDir.isSelected());
+    }//GEN-LAST:event_chOrbitDirItemStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton bOrbDirVals;
     public javax.swing.JButton bParentIdVals;
     public javax.swing.JButton bPrdTypeVals;
     public javax.swing.JButton bStatusVals;
@@ -482,6 +517,7 @@ public class EOProductPanel extends javax.swing.JPanel {
     public javax.swing.JCheckBox chCenter;
     public javax.swing.JCheckBox chFootprint;
     public javax.swing.JCheckBox chLastOrbitOfs;
+    public javax.swing.JCheckBox chOrbitDir;
     public javax.swing.JCheckBox chOrbitNum;
     public javax.swing.JCheckBox chParentId;
     public javax.swing.JCheckBox chPrdType;
