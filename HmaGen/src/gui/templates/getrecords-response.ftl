@@ -58,6 +58,13 @@
                             </rim:ValueList>
                         </rim:Slot>
 </#if>
+<#if rec.orbitDir??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::orbitDirection" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                            <rim:ValueList>
+                                <rim:Value>${rec.orbitDir}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
 <#if rec.qltyDeg??>
                         <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::imageQualityDegradation" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
                             <rim:ValueList>
@@ -108,7 +115,28 @@
 <#if rec.acqType??>
                         <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::acquisitionType" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
                             <rim:ValueList>
-                                <rim:Value>${rec.acqType}NOMINAL</rim:Value>
+                                <rim:Value>${rec.acqType}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.acqSubType??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::acquisitionSubType" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                            <rim:ValueList>
+                                <rim:Value>${rec.acqSubType}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.acqStation??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::acquisitionStation" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                            <rim:ValueList>
+                                <rim:Value>${rec.acqStation}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.acqDate??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::acquisitionDate" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:DateTime">
+                            <rim:ValueList>
+                                <rim:Value>${rec.acqDate}</rim:Value>
                             </rim:ValueList>
                         </rim:Slot>
 </#if>
@@ -144,6 +172,13 @@
                         <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::polarisationChannels" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
                             <rim:ValueList>
                                 <rim:Value>${rec.polarisation}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.polarisationModes??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::polarisationMode" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                            <rim:ValueList>
+                                <rim:Value>${rec.polarisationModes}</rim:Value>
                             </rim:ValueList>
                         </rim:Slot>
 </#if>

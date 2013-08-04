@@ -76,6 +76,10 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         final long startTime = ((Date) mf.pProd.spSensFrom.getValue()).getTime();
         final long stopTime = ((Date) mf.pProd.spSensTo.getValue()).getTime();
         final long timeDelta = stopTime - startTime;
+        final long acqStart = ((Date) mf.pProd2.spAcqDateFrom.getValue())
+                .getTime();
+        final long acqStop = ((Date) mf.pProd2.spAcqDateTo.getValue()).getTime();
+        final long acqDelta = acqStop - acqStart;
         final long archStartTime = ((Date) mf.pArch.spArdtFrom.getValue())
                 .getTime();
         final long archStopTime = ((Date) mf.pArch.spArdtTo.getValue())
@@ -214,9 +218,29 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         if (mf.pProd.chStatus.isSelected() && vals != null) {
             genValue("status", rec, vals);
         }
+        vals = mf.settings.valMap.get(HmaGenSettings.ORBIT_DIRS);
+        if (mf.pProd.chOrbitDir.isSelected() && vals != null) {
+            genValue("orbitDir", rec, vals);
+        }
+        vals = mf.settings.valMap.get(HmaGenSettings.ACQ_TYPE);
+        if (mf.pProd2.chAcqType.isSelected() && vals != null) {
+            genValue("acqType", rec, vals);
+        }
+        vals = mf.settings.valMap.get(HmaGenSettings.ACQ_SUBTYPE);
+        if (mf.pProd2.chAcqSubtype.isSelected() && vals != null) {
+            genValue("acqSubType", rec, vals);
+        }
+        vals = mf.settings.valMap.get(HmaGenSettings.ACQ_STATIONS);
+        if (mf.pProd2.chAcqStation.isSelected() && vals != null) {
+            genValue("acqStation", rec, vals);
+        }
         vals = mf.settings.valMap.get(HmaGenSettings.POLARIZATION_CHANS);
         if (mf.pProdSar.chPolarzChans.isSelected()) {
             genValue("polarisation", rec, vals);
+        }
+        vals = mf.settings.valMap.get(HmaGenSettings.POLARIZATION_MODES);
+        if (mf.pProdSar.chPolarzModes.isSelected()) {
+            genValue("polarisationModes", rec, vals);
         }
         if (mf.pProd.chSensing.isSelected()) {
             long time = startTime + (long) (Math.floor(
@@ -295,12 +319,25 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
     }
 
     private void genEOBrwsInfo(Map rec) {
-        ArrayList<String> vals = mf.settings.valMap.get(
-                HmaGenSettings.THUMB_URLS);
-        genValue("thmbUrl", rec, vals);
-        if (mf.pBrws.chQlkUrl.isSelected()) {
-            vals = mf.settings.valMap.get(HmaGenSettings.QLOOK_URLS);
-            genValue("qlkUrl", rec, vals);
+        if (mf.pBrws.chQlkUrl.isSelected() && mf.pBrws.chLinkQlkToThmb
+                .isSelected()) {
+            ArrayList<String> thmbs = mf.settings.valMap.get(
+                    HmaGenSettings.THUMB_URLS);
+            ArrayList<String> qlks = mf.settings.valMap.get(
+                    HmaGenSettings.QLOOK_URLS);
+            int max = thmbs.size() > qlks.size() ? thmbs.size() : qlks.size();
+            int rnd = rng.nextInt(max);
+            rec.put("thmbUrl", thmbs.get(rnd));
+            rec.put("qlkUrl", qlks.get(rnd));
+
+        } else {
+            ArrayList<String> vals = mf.settings.valMap.get(
+                    HmaGenSettings.THUMB_URLS);
+            genValue("thmbUrl", rec, vals);
+            if (mf.pBrws.chQlkUrl.isSelected()) {
+                vals = mf.settings.valMap.get(HmaGenSettings.QLOOK_URLS);
+                genValue("qlkUrl", rec, vals);
+            }
         }
     }
 

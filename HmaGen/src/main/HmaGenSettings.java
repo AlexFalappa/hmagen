@@ -43,6 +43,9 @@ public class HmaGenSettings {
     public static final String SWATH_IDS = "Swath Ids.";
     public static final String ANT_LOOK_DIRS = "Ant. Look Dirs.";
     public static final String ORBIT_DIRS = "Orbit Dirs.";
+    public static final String ACQ_STATIONS = "Acq. Stations";
+    public static final String ACQ_TYPE = "Acq. Types";
+    public static final String ACQ_SUBTYPE = "Acq. Subtypes";
     public HashSet<String> chkbEnabled = new HashSet<>();
     public HashMap<String, Object> spinnersMap = new HashMap<>();
     public HashMap<String, Object> combosMap = new HashMap<>();
@@ -63,6 +66,15 @@ public class HmaGenSettings {
         prdTypes.add("L1B");
         prdTypes.add("ORTHO");
         valMap.put(HmaGenSettings.PRODUCT_TYPES, prdTypes);
+        ArrayList<String> orbdirs = new ArrayList<>();
+        orbdirs.add("ASCENDING");
+        orbdirs.add("DESCENDING");
+        orbdirs.add("BOTH");
+        valMap.put(HmaGenSettings.ORBIT_DIRS, orbdirs);
+        ArrayList<String> acqtypes = new ArrayList<>();
+        acqtypes.add("NOMINAL");
+        acqtypes.add("CALIBRATION");
+        valMap.put(HmaGenSettings.ACQ_TYPE, acqtypes);
         ArrayList<String> polarizations = new ArrayList<>();
         polarizations.add("HH");
         polarizations.add("VV");
@@ -80,5 +92,7 @@ public class HmaGenSettings {
         valMap.put(HmaGenSettings.SENS_NAMES, new ArrayList<String>());
         valMap.put(HmaGenSettings.SER_IDS, new ArrayList<String>());
         valMap.put(HmaGenSettings.SWATH_IDS, new ArrayList<String>());
+        valMap.put(HmaGenSettings.ACQ_STATIONS, new ArrayList<String>());
+        valMap.put(HmaGenSettings.ACQ_SUBTYPE, new ArrayList<String>());
     }
 }

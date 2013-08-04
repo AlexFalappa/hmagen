@@ -75,16 +75,20 @@ public class MainFrame extends javax.swing.JFrame {
         chk2vals.put(HmaGenSettings.ARCHIVING_CENTERS, pArch.chGenArchInfo);
         chk2vals.put(HmaGenSettings.ARCHIVING_IDS, pArch.chArchId);
         chk2vals.put(HmaGenSettings.PARENT_IDENTIFIERS, pProd.chParentId);
-        chk2vals.put(HmaGenSettings.PLATFORMS, pAcq.chGenAcqPlat);
-        chk2vals.put(HmaGenSettings.POLARIZATION_CHANS, pProdSar.chPolarzChans);
         chk2vals.put(HmaGenSettings.PRODUCT_TYPES, pProd.chPrdType);
-        chk2vals.put(HmaGenSettings.QLOOK_URLS, pBrws.chQlkUrl);
+        chk2vals.put(HmaGenSettings.STATUSES, pProd.chStatus);
+        chk2vals.put(HmaGenSettings.ORBIT_DIRS, pProd.chOrbitDir);
+        chk2vals.put(HmaGenSettings.ACQ_STATIONS, pProd2.chAcqStation);
+        chk2vals.put(HmaGenSettings.ACQ_TYPE, pProd2.chAcqType);
+        chk2vals.put(HmaGenSettings.ACQ_SUBTYPE, pProd2.chAcqSubtype);
+        chk2vals.put(HmaGenSettings.POLARIZATION_CHANS, pProdSar.chPolarzChans);
+        chk2vals.put(HmaGenSettings.PLATFORMS, pAcq.chGenAcqPlat);
         chk2vals.put(HmaGenSettings.SENS_MODES, pAcq.chSensMode);
         chk2vals.put(HmaGenSettings.SENS_NAMES, pAcq.chSensName);
         chk2vals.put(HmaGenSettings.SENS_TYPES, pAcq.chSensType);
         chk2vals.put(HmaGenSettings.SER_IDS, pAcq.chSerId);
-        chk2vals.put(HmaGenSettings.STATUSES, pProd.chStatus);
         chk2vals.put(HmaGenSettings.SWATH_IDS, pAcq.chSwthId);
+        chk2vals.put(HmaGenSettings.QLOOK_URLS, pBrws.chQlkUrl);
         chk2vals.put(HmaGenSettings.THUMB_URLS, pBrws.chGenBrwsInfo);
     }
 
@@ -308,6 +312,7 @@ public class MainFrame extends javax.swing.JFrame {
             settings = (HmaGenSettings) xstream.fromXML(jfc.getSelectedFile());
             applySettings(this.getClass(), this);
             applySettings(pProd.getClass(), pProd);
+            applySettings(pProd2.getClass(), pProd2);
             applySettings(pProdOpt.getClass(), pProdOpt);
             applySettings(pProdSar.getClass(), pProdSar);
             applySettings(pAcq.getClass(), pAcq);

@@ -133,10 +133,10 @@ public class EOProductPanel2 extends javax.swing.JPanel {
         lAd1.setText("from");
         lAd1.setEnabled(false);
 
-        spAcrIncidFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spAcrIncidFrom.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(5.0d)));
         spAcrIncidFrom.setEnabled(false);
 
-        spAcrIncidTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spAcrIncidTo.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(100.0d), null, null, Double.valueOf(5.0d)));
         spAcrIncidTo.setEnabled(false);
 
         lAti2.setText("to");
@@ -180,10 +180,10 @@ public class EOProductPanel2 extends javax.swing.JPanel {
         lAlti1.setText("from");
         lAlti1.setEnabled(false);
 
-        spAlonIncidFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spAlonIncidFrom.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(5.0d)));
         spAlonIncidFrom.setEnabled(false);
 
-        spAlonIncidTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spAlonIncidTo.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(100.0d), null, null, Double.valueOf(5.0d)));
         spAlonIncidTo.setEnabled(false);
 
         chWRSLon.setText("WRS longitude (frame)");
@@ -209,16 +209,16 @@ public class EOProductPanel2 extends javax.swing.JPanel {
         lWlo1.setText("from");
         lWlo1.setEnabled(false);
 
-        spWRSLonFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spWRSLonFrom.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(5.0d)));
         spWRSLonFrom.setEnabled(false);
 
-        spWRSLonTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spWRSLonTo.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(100.0d), null, null, Double.valueOf(5.0d)));
         spWRSLonTo.setEnabled(false);
 
-        spWRSLatFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spWRSLatFrom.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(5.0d)));
         spWRSLatFrom.setEnabled(false);
 
-        spWRSLatTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spWRSLatTo.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(100.0d), null, null, Double.valueOf(5.0d)));
         spWRSLatTo.setEnabled(false);
 
         lWla1.setText("from");
@@ -237,10 +237,10 @@ public class EOProductPanel2 extends javax.swing.JPanel {
         lNX1.setText("from");
         lNX1.setEnabled(false);
 
-        spANXFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spANXFrom.setModel(new javax.swing.SpinnerNumberModel(-180.0d, -180.0d, 180.0d, 2.0d));
         spANXFrom.setEnabled(false);
 
-        spANXTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spANXTo.setModel(new javax.swing.SpinnerNumberModel(180.0d, -180.0d, 180.0d, 5.0d));
         spANXTo.setEnabled(false);
 
         chIncid.setText("Incidence angle");
@@ -256,10 +256,10 @@ public class EOProductPanel2 extends javax.swing.JPanel {
         lIa1.setText("from");
         lIa1.setEnabled(false);
 
-        spIncidAngFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spIncidAngFrom.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(5.0d)));
         spIncidAngFrom.setEnabled(false);
 
-        spIncidAngTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spIncidAngTo.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(100.0d), null, null, Double.valueOf(5.0d)));
         spIncidAngTo.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -449,7 +449,7 @@ public class EOProductPanel2 extends javax.swing.JPanel {
     }//GEN-LAST:event_chAcqSubtypeItemStateChanged
 
     private void bAcqSubtypeValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAcqSubtypeValsActionPerformed
-        App.mf.showValsDialog(HmaGenSettings.PRODUCT_TYPES);
+        App.mf.showValsDialog(HmaGenSettings.ACQ_SUBTYPE);
     }//GEN-LAST:event_bAcqSubtypeValsActionPerformed
 
     private void chAcqStationItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chAcqStationItemStateChanged
@@ -457,7 +457,7 @@ public class EOProductPanel2 extends javax.swing.JPanel {
     }//GEN-LAST:event_chAcqStationItemStateChanged
 
     private void bAcqStatnValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAcqStatnValsActionPerformed
-        App.mf.showValsDialog(HmaGenSettings.STATUSES);
+        App.mf.showValsDialog(HmaGenSettings.ACQ_STATIONS);
     }//GEN-LAST:event_bAcqStatnValsActionPerformed
 
     private void chAcqDateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chAcqDateItemStateChanged
@@ -479,7 +479,7 @@ public class EOProductPanel2 extends javax.swing.JPanel {
     }//GEN-LAST:event_chAcqTypeItemStateChanged
 
     private void bAcqTypeValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAcqTypeValsActionPerformed
-        App.mf.showValsDialog(HmaGenSettings.PARENT_IDENTIFIERS);
+        App.mf.showValsDialog(HmaGenSettings.ACQ_TYPE);
     }//GEN-LAST:event_bAcqTypeValsActionPerformed
 
     private void chAlonIncidItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chAlonIncidItemStateChanged
