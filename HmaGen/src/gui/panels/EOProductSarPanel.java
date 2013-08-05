@@ -15,6 +15,7 @@
  */
 package gui.panels;
 
+import gui.Utils;
 import main.App;
 import main.HmaGenSettings;
 
@@ -107,16 +108,16 @@ public class EOProductSarPanel extends javax.swing.JPanel {
         lMni2.setText("to");
         lMni2.setEnabled(false);
 
-        spMinIaTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spMinIaTo.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(100.0d), null, null, Double.valueOf(5.0d)));
         spMinIaTo.setEnabled(false);
 
-        spMinIaFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spMinIaFrom.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(5.0d)));
         spMinIaFrom.setEnabled(false);
 
-        spMaxIaFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spMaxIaFrom.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(5.0d)));
         spMaxIaFrom.setEnabled(false);
 
-        spMaxIaTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spMaxIaTo.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(100.0d), null, null, Double.valueOf(5.0d)));
         spMaxIaTo.setEnabled(false);
 
         lMxi2.setText("to");
@@ -245,17 +246,13 @@ public class EOProductSarPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_bPlrzMdValsActionPerformed
 
     private void chMinIncidAngItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chMinIncidAngItemStateChanged
-        spMinIaFrom.setEnabled(chMinIncidAng.isSelected());
-        spMinIaTo.setEnabled(chMinIncidAng.isSelected());
-        lMni1.setEnabled(chMinIncidAng.isSelected());
-        lMni2.setEnabled(chMinIncidAng.isSelected());
+        Utils.groupEnable(chMinIncidAng.isSelected(), spMinIaFrom, spMinIaTo,
+                lMni1, lMni2);
     }//GEN-LAST:event_chMinIncidAngItemStateChanged
 
     private void chMaxIncidAngItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chMaxIncidAngItemStateChanged
-        spMaxIaFrom.setEnabled(chMaxIncidAng.isSelected());
-        spMaxIaTo.setEnabled(chMaxIncidAng.isSelected());
-        lMxi1.setEnabled(chMaxIncidAng.isSelected());
-        lMxi2.setEnabled(chMaxIncidAng.isSelected());
+        Utils.groupEnable(chMaxIncidAng.isSelected(), spMaxIaFrom, spMaxIaTo,
+                lMxi1, lMxi2);
     }//GEN-LAST:event_chMaxIncidAngItemStateChanged
 
     private void bAntLookValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAntLookValsActionPerformed

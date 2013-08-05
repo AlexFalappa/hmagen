@@ -189,7 +189,7 @@
     <Component class="javax.swing.JSpinner" name="spMinIaTo">
       <Properties>
         <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-          <SpinnerModel initial="100" minimum="0" numberType="java.lang.Integer" stepSize="5" type="number"/>
+          <SpinnerModel initial="100.0" numberType="java.lang.Double" stepSize="5.0" type="number"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -197,7 +197,7 @@
     <Component class="javax.swing.JSpinner" name="spMinIaFrom">
       <Properties>
         <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-          <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="5" type="number"/>
+          <SpinnerModel initial="0.0" numberType="java.lang.Double" stepSize="5.0" type="number"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -205,7 +205,7 @@
     <Component class="javax.swing.JSpinner" name="spMaxIaFrom">
       <Properties>
         <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-          <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="5" type="number"/>
+          <SpinnerModel initial="0.0" numberType="java.lang.Double" stepSize="5.0" type="number"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -213,7 +213,7 @@
     <Component class="javax.swing.JSpinner" name="spMaxIaTo">
       <Properties>
         <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-          <SpinnerModel initial="100" minimum="0" numberType="java.lang.Integer" stepSize="5" type="number"/>
+          <SpinnerModel initial="100.0" numberType="java.lang.Double" stepSize="5.0" type="number"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>

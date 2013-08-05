@@ -15,6 +15,7 @@
  */
 package gui.panels;
 
+import gui.Utils;
 import main.App;
 import main.HmaGenSettings;
 
@@ -129,17 +130,15 @@ public class EOBrowsePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void chGenBrwsInfoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chGenBrwsInfoItemStateChanged
-        lBr1.setEnabled(chGenBrwsInfo.isSelected());
-        bThmbUrlsVals.setEnabled(chGenBrwsInfo.isSelected());
-        chQlkUrl.setEnabled(chGenBrwsInfo.isSelected());
+        Utils.groupEnable(chGenBrwsInfo.isSelected(), lBr1, bThmbUrlsVals,
+                chQlkUrl);
         chQlkUrlItemStateChanged(evt);
     }//GEN-LAST:event_chGenBrwsInfoItemStateChanged
 
     private void chQlkUrlItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chQlkUrlItemStateChanged
-        bQlkUrlsVals.setEnabled(chGenBrwsInfo.isSelected() && chQlkUrl
-                .isSelected());
-        chLinkQlkToThmb.setEnabled(chGenBrwsInfo.isSelected() && chQlkUrl
-                .isSelected());
+        boolean flag = chGenBrwsInfo.isSelected() && chQlkUrl.isSelected();
+        bQlkUrlsVals.setEnabled(flag);
+        chLinkQlkToThmb.setEnabled(flag);
     }//GEN-LAST:event_chQlkUrlItemStateChanged
 
     private void bThmbUrlsValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bThmbUrlsValsActionPerformed

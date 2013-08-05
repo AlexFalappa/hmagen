@@ -15,6 +15,7 @@
  */
 package gui.panels;
 
+import gui.Utils;
 import main.App;
 import main.HmaGenSettings;
 
@@ -461,17 +462,13 @@ public class EOProductPanel2 extends javax.swing.JPanel {
     }//GEN-LAST:event_bAcqStatnValsActionPerformed
 
     private void chAcqDateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chAcqDateItemStateChanged
-        spAcqDateFrom.setEnabled(chAcqDate.isSelected());
-        spAcqDateTo.setEnabled(chAcqDate.isSelected());
-        lAd1.setEnabled(chAcqDate.isSelected());
-        lAd2.setEnabled(chAcqDate.isSelected());
+        Utils.groupEnable(chAcqDate.isSelected(), spAcqDateFrom, spAcqDateTo,
+                lAd1, lAd2);
     }//GEN-LAST:event_chAcqDateItemStateChanged
 
     private void chAcrIncidItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chAcrIncidItemStateChanged
-        spAcrIncidFrom.setEnabled(chAcrIncid.isSelected());
-        spAcrIncidTo.setEnabled(chAcrIncid.isSelected());
-        lAti1.setEnabled(chAcrIncid.isSelected());
-        lAti2.setEnabled(chAcrIncid.isSelected());
+        Utils.groupEnable(chAcrIncid.isSelected(), spAcrIncidFrom, spAcrIncidTo,
+                lAti1, lAti2);
     }//GEN-LAST:event_chAcrIncidItemStateChanged
 
     private void chAcqTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chAcqTypeItemStateChanged
@@ -483,38 +480,27 @@ public class EOProductPanel2 extends javax.swing.JPanel {
     }//GEN-LAST:event_bAcqTypeValsActionPerformed
 
     private void chAlonIncidItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chAlonIncidItemStateChanged
-        lAlti1.setEnabled(chAlonIncid.isSelected());
-        lAlti2.setEnabled(chAlonIncid.isSelected());
-        spAlonIncidFrom.setEnabled(chAlonIncid.isSelected());
-        spAlonIncidTo.setEnabled(chAlonIncid.isSelected());
+        Utils.groupEnable(chAlonIncid.isSelected(), lAlti1, lAlti2,
+                spAlonIncidFrom, spAlonIncidTo);
     }//GEN-LAST:event_chAlonIncidItemStateChanged
 
     private void chWRSLonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chWRSLonItemStateChanged
-        lWlo1.setEnabled(chWRSLon.isSelected());
-        lWlo2.setEnabled(chWRSLon.isSelected());
-        spWRSLonFrom.setEnabled(chWRSLon.isSelected());
-        spWRSLonTo.setEnabled(chWRSLon.isSelected());
+        Utils.groupEnable(chWRSLon.isSelected(), lWlo1, lWlo2, spWRSLonFrom,
+                spWRSLonTo);
     }//GEN-LAST:event_chWRSLonItemStateChanged
 
     private void chWRSLatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chWRSLatItemStateChanged
-        lWla1.setEnabled(chWRSLat.isSelected());
-        lWla2.setEnabled(chWRSLat.isSelected());
-        spWRSLatFrom.setEnabled(chWRSLat.isSelected());
-        spWRSLatTo.setEnabled(chWRSLat.isSelected());
+        Utils.groupEnable(chWRSLat.isSelected(), lWla1, lWla2, spWRSLatFrom,
+                spWRSLatTo);
     }//GEN-LAST:event_chWRSLatItemStateChanged
 
     private void chANXItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chANXItemStateChanged
-        lNX1.setEnabled(chANX.isSelected());
-        lNX2.setEnabled(chANX.isSelected());
-        spANXFrom.setEnabled(chANX.isSelected());
-        spANXTo.setEnabled(chANX.isSelected());
+        Utils.groupEnable(chANX.isSelected(), lNX1, lNX2, spANXFrom, spANXTo);
     }//GEN-LAST:event_chANXItemStateChanged
 
     private void chIncidItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chIncidItemStateChanged
-        lIa1.setEnabled(chIncid.isSelected());
-        lIa2.setEnabled(chIncid.isSelected());
-        spIncidAngFrom.setEnabled(chIncid.isSelected());
-        spIncidAngTo.setEnabled(chIncid.isSelected());
+        Utils.groupEnable(chIncid.isSelected(), lIa1, lIa2, spIncidAngFrom,
+                spIncidAngTo);
     }//GEN-LAST:event_chIncidItemStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton bAcqStatnVals;

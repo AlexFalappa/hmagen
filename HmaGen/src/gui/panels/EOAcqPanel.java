@@ -15,6 +15,7 @@
  */
 package gui.panels;
 
+import gui.Utils;
 import main.App;
 import main.HmaGenSettings;
 
@@ -291,10 +292,8 @@ public class EOAcqPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_chSensModeItemStateChanged
 
     private void chResItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chResItemStateChanged
-        lRs1.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
-        lRs2.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
-        spResFrom.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
-        spResTo.setEnabled(chGenAcqPlat.isSelected() && chRes.isSelected());
+        boolean flag = chGenAcqPlat.isSelected() && chRes.isSelected();
+        Utils.groupEnable(flag, lRs1, lRs2, spResFrom, spResTo);
     }//GEN-LAST:event_chResItemStateChanged
 
     private void bSensTypValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSensTypValsActionPerformed
@@ -314,14 +313,8 @@ public class EOAcqPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_bSerIdValsActionPerformed
 
     private void chGenAcqPlatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chGenAcqPlatItemStateChanged
-        lAq1.setEnabled(chGenAcqPlat.isSelected());
-        bPlatnVals.setEnabled(chGenAcqPlat.isSelected());
-        chSerId.setEnabled(chGenAcqPlat.isSelected());
-        chSensName.setEnabled(chGenAcqPlat.isSelected());
-        chSensMode.setEnabled(chGenAcqPlat.isSelected());
-        chSensType.setEnabled(chGenAcqPlat.isSelected());
-        chSwthId.setEnabled(chGenAcqPlat.isSelected());
-        chRes.setEnabled(chGenAcqPlat.isSelected());
+        Utils.groupEnable(chGenAcqPlat.isSelected(), lAq1, bPlatnVals, chSerId,
+                chSensName, chSensMode, chSensType, chSwthId, chRes);
         chSerIdItemStateChanged(evt);
         chSensNameItemStateChanged(evt);
         chSensTypeItemStateChanged(evt);
@@ -333,7 +326,6 @@ public class EOAcqPanel extends javax.swing.JPanel {
     private void bSensNameValsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSensNameValsActionPerformed
         App.mf.showValsDialog(HmaGenSettings.SENS_NAMES);
     }//GEN-LAST:event_bSensNameValsActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton bPlatnVals;
     public javax.swing.JButton bSensModeVals;

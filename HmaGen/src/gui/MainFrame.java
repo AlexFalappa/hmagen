@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -441,16 +442,25 @@ public class MainFrame extends javax.swing.JFrame {
         }
         Date from = (Date) pProd.spSensFrom.getValue();
         Date to = (Date) pProd.spSensTo.getValue();
-        if (from.after(to)) {
+        if (pProd.chSensing.isSelected() && from.after(to)) {
             tabPane.setSelectedComponent(pProd);
             JOptionPane.showMessageDialog(this,
                     "Bad sensing time generation interval!", "Error!",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        from = (Date) pProd2.spAcqDateFrom.getValue();
+        to = (Date) pProd2.spAcqDateTo.getValue();
+        if (pProd2.chAcqDate.isSelected() && from.after(to)) {
+            tabPane.setSelectedComponent(pProd2);
+            JOptionPane.showMessageDialog(this,
+                    "Bad acquisition date generation interval!", "Error!",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         from = (Date) pArch.spArdtFrom.getValue();
         to = (Date) pArch.spArdtTo.getValue();
-        if (from.after(to)) {
+        if (pArch.chArchDate.isSelected() && from.after(to)) {
             tabPane.setSelectedComponent(pArch);
             JOptionPane.showMessageDialog(this,
                     "Bad archiving date generation interval!", "Error!",
@@ -459,16 +469,25 @@ public class MainFrame extends javax.swing.JFrame {
         }
         Integer low = (Integer) pProdOpt.spCldCovFrom.getValue();
         Integer high = (Integer) pProdOpt.spCldCovTo.getValue();
-        if (low > high) {
-            tabPane.setSelectedComponent(pProd);
+        if (pProdOpt.chCloudCov.isSelected() && low > high) {
+            tabPane.setSelectedComponent(pProdOpt);
             JOptionPane.showMessageDialog(this,
                     "Bad cloud coverage generation interval!", "Error!",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        low = (Integer) pProdOpt.spSnwCovFrom.getValue();
+        high = (Integer) pProdOpt.spSnwCovTo.getValue();
+        if (pProdOpt.chSnowCov.isSelected() && low > high) {
+            tabPane.setSelectedComponent(pProdOpt);
+            JOptionPane.showMessageDialog(this,
+                    "Bad snow coverage generation interval!", "Error!",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         low = (Integer) pProd.spOrbitFrom.getValue();
         high = (Integer) pProd.spOrbitTo.getValue();
-        if (low > high) {
+        if (pProd.chOrbitNum.isSelected() && low > high) {
             tabPane.setSelectedComponent(pProd);
             JOptionPane.showMessageDialog(this,
                     "Bad orbit number generation interval!", "Error!",
@@ -477,39 +496,69 @@ public class MainFrame extends javax.swing.JFrame {
         }
         low = (Integer) pAcq.spResFrom.getValue();
         high = (Integer) pAcq.spResTo.getValue();
-        if (low > high) {
+        if (pAcq.chRes.isSelected() && low > high) {
             tabPane.setSelectedComponent(pAcq);
             JOptionPane.showMessageDialog(this,
                     "Bad sensor resolution generation interval!", "Error!",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        low = (Integer) pProdOpt.spSnwCovFrom.getValue();
-        high = (Integer) pProdOpt.spSnwCovTo.getValue();
-        if (low > high) {
-            tabPane.setSelectedComponent(pProd);
-            JOptionPane.showMessageDialog(this,
-                    "Bad snow coverage generation interval!", "Error!",
-                    JOptionPane.ERROR_MESSAGE);
+        if (pProd.chFootprint.isSelected() && !checkRange(pProd.spFtMinLat,
+                pProd.spFtMaxLat, pProd,
+                "Bad latitude range for footprint generation region!"))
             return false;
-        }
-        double min = (double) pProd.spFtMinLat.getValue();
-        double max = (double) pProd.spFtMaxLat.getValue();
-        if (min > max) {
-            tabPane.setSelectedComponent(pProd);
-            JOptionPane.showMessageDialog(this,
-                    "Bad latitude range for footprint generation region!",
-                    "Error!",
-                    JOptionPane.ERROR_MESSAGE);
+        if (pProd.chFootprint.isSelected() && !checkRange(pProd.spFtMinLon,
+                pProd.spFtMaxLon, pProd,
+                "Bad longitude range for footprint generation region!"))
             return false;
-        }
-        min = (double) pProd.spFtMinLon.getValue();
-        max = (double) pProd.spFtMaxLon.getValue();
+        if (pProd2.chANX.isSelected() && !checkRange(pProd2.spANXFrom,
+                pProd2.spANXTo, pProd2,
+                "Bad ascending node longitude generation range!"))
+            return false;
+        if (pProd2.chAcrIncid.isSelected() && !checkRange(pProd2.spAcrIncidFrom,
+                pProd2.spAcrIncidTo, pProd2,
+                "Bad across track incidence angle generation range!"))
+            return false;
+        if (pProd2.chAlonIncid.isSelected() && !checkRange(
+                pProd2.spAlonIncidFrom, pProd2.spAlonIncidTo, pProd2,
+                "Bad along track incidence angle generation range!"))
+            return false;
+        if (pProd2.chIncid.isSelected() && !checkRange(pProd2.spIncidAngFrom,
+                pProd2.spIncidAngTo, pProd2,
+                "Bad incidence angle generation range!"))
+            return false;
+        if (pProd2.chWRSLat.isSelected() && !checkRange(pProd2.spWRSLatFrom,
+                pProd2.spWRSLatTo, pProd2,
+                "Bad WRS latitude generation range!"))
+            return false;
+        if (pProd2.chWRSLon.isSelected() && !checkRange(pProd2.spWRSLonFrom,
+                pProd2.spWRSLonTo, pProd2, "Bad WRS longitude generation range!"))
+            return false;
+        if (pProdSar.chMinIncidAng.isSelected() && !checkRange(
+                pProdSar.spMinIaFrom, pProdSar.spMinIaTo, pProdSar,
+                "Bad minimum incidence angle generation range!"))
+            return false;
+        if (pProdSar.chMaxIncidAng.isSelected() && !checkRange(
+                pProdSar.spMaxIaFrom, pProdSar.spMaxIaTo, pProdSar,
+                "Bad maximum incidence angle generation range!"))
+            return false;
+        if (pProdOpt.chIllumElev.isSelected() && !checkRange(
+                pProdOpt.spIllElevFrom, pProdOpt.spIllElevTo, pProdOpt,
+                "Bad illumination elevation angle generation range!"))
+            return false;
+        if (pProdOpt.chIllumAzim.isSelected() && !checkRange(
+                pProdOpt.spIllAzimFrom, pProdOpt.spIllAzimTo, pProdOpt,
+                "Bad illumination azimuth angle generation range!"))
+            return false;
+        return true;
+    }
+
+    private boolean checkRange(JSpinner from, JSpinner to, JComponent tab, String errMex) {
+        double min = (double) from.getValue();
+        double max = (double) to.getValue();
         if (min > max) {
-            tabPane.setSelectedComponent(pProd);
-            JOptionPane.showMessageDialog(this,
-                    "Bad longitude range for footprint generation region!",
-                    "Error!",
+            tabPane.setSelectedComponent(tab);
+            JOptionPane.showMessageDialog(this, errMex, "Error!",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }

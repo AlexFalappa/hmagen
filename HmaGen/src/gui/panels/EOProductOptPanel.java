@@ -15,6 +15,8 @@
  */
 package gui.panels;
 
+import gui.Utils;
+
 /**
  *
  * @author sasha
@@ -87,7 +89,7 @@ public class EOProductOptPanel extends javax.swing.JPanel {
         lCc2.setText("to");
         lCc2.setEnabled(false);
 
-        spSnwCovTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(10), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spSnwCovTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
         spSnwCovTo.setEnabled(false);
 
         lSc1.setText("to");
@@ -113,19 +115,19 @@ public class EOProductOptPanel extends javax.swing.JPanel {
         lIe1.setText("from");
         lIe1.setEnabled(false);
 
-        spIllElevFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spIllElevFrom.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(5.0d)));
         spIllElevFrom.setEnabled(false);
 
         lIe2.setText("to");
         lIe2.setEnabled(false);
 
-        spIllElevTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spIllElevTo.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(100.0d), null, null, Double.valueOf(5.0d)));
         spIllElevTo.setEnabled(false);
 
-        spIllAzimTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spIllAzimTo.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(100.0d), null, null, Double.valueOf(5.0d)));
         spIllAzimTo.setEnabled(false);
 
-        spIllAzimFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
+        spIllAzimFrom.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(5.0d)));
         spIllAzimFrom.setEnabled(false);
 
         lIa2.setText("to");
@@ -229,31 +231,23 @@ public class EOProductOptPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void chCloudCovItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chCloudCovItemStateChanged
-        spCldCovFrom.setEnabled(chCloudCov.isSelected());
-        spCldCovTo.setEnabled(chCloudCov.isSelected());
-        lCc1.setEnabled(chCloudCov.isSelected());
-        lCc2.setEnabled(chCloudCov.isSelected());
+        Utils.groupEnable(chCloudCov.isSelected(), spCldCovFrom, spCldCovFrom,
+                spCldCovTo, lCc1, lCc2);
     }//GEN-LAST:event_chCloudCovItemStateChanged
 
     private void chSnowCovItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chSnowCovItemStateChanged
-        spSnwCovFrom.setEnabled(chSnowCov.isSelected());
-        spSnwCovTo.setEnabled(chSnowCov.isSelected());
-        lSc1.setEnabled(chSnowCov.isSelected());
-        lSc2.setEnabled(chSnowCov.isSelected());
+        Utils.groupEnable(chSnowCov.isSelected(), spSnwCovFrom, spSnwCovTo,
+                lSc1, lSc2);
     }//GEN-LAST:event_chSnowCovItemStateChanged
 
     private void chIllumElevItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chIllumElevItemStateChanged
-        spIllElevFrom.setEnabled(chIllumElev.isSelected());
-        spIllElevTo.setEnabled(chIllumElev.isSelected());
-        lIe1.setEnabled(chIllumElev.isSelected());
-        lIe2.setEnabled(chIllumElev.isSelected());
+        Utils.groupEnable(chIllumElev.isSelected(), spIllElevFrom, spIllElevTo,
+                lIe1, lIe2);
     }//GEN-LAST:event_chIllumElevItemStateChanged
 
     private void chIllumAzimItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chIllumAzimItemStateChanged
-        spIllAzimFrom.setEnabled(chIllumAzim.isSelected());
-        spIllAzimTo.setEnabled(chIllumAzim.isSelected());
-        lIa1.setEnabled(chIllumAzim.isSelected());
-        lIa2.setEnabled(chIllumAzim.isSelected());
+        Utils.groupEnable(chIllumAzim.isSelected(), spIllAzimFrom, spIllAzimTo,
+                lIa1, lIa2);
     }//GEN-LAST:event_chIllumAzimItemStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox chCloudCov;

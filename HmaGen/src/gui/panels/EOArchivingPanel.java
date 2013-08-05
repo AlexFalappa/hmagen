@@ -15,6 +15,7 @@
  */
 package gui.panels;
 
+import gui.Utils;
 import main.App;
 import main.HmaGenSettings;
 
@@ -172,19 +173,13 @@ public class EOArchivingPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_chArchIdItemStateChanged
 
     private void chArchDateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chArchDateItemStateChanged
-        spArdtFrom.setEnabled(chGenArchInfo.isSelected() && chArchDate
-                .isSelected());
-        spArdtTo.setEnabled(chGenArchInfo.isSelected() && chArchDate
-                .isSelected());
-        lAd1.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
-        lAd2.setEnabled(chGenArchInfo.isSelected() && chArchDate.isSelected());
+        boolean flag = chGenArchInfo.isSelected() && chArchDate.isSelected();
+        Utils.groupEnable(flag, spArdtFrom, spArdtTo, lAd1, lAd2);
     }//GEN-LAST:event_chArchDateItemStateChanged
 
     private void chGenArchInfoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chGenArchInfoItemStateChanged
-        lAr1.setEnabled(chGenArchInfo.isSelected());
-        bArCntVals.setEnabled(chGenArchInfo.isSelected());
-        chArchDate.setEnabled(chGenArchInfo.isSelected());
-        chArchId.setEnabled(chGenArchInfo.isSelected());
+        Utils.groupEnable(chGenArchInfo.isSelected(), lAr1, bArCntVals,
+                chArchDate, chArchId);
         chArchDateItemStateChanged(evt);
         chArchIdItemStateChanged(evt);
     }//GEN-LAST:event_chGenArchInfoItemStateChanged

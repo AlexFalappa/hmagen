@@ -15,6 +15,7 @@
  */
 package gui.panels;
 
+import gui.Utils;
 import main.App;
 import main.HmaGenSettings;
 
@@ -457,40 +458,22 @@ public class EOProductPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_chLastOrbitOfsItemStateChanged
 
     private void chSensingItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chSensingItemStateChanged
-        spSensFrom.setEnabled(chSensing.isSelected());
-        spSensTo.setEnabled(chSensing.isSelected());
-        spDuration.setEnabled(chSensing.isSelected());
-        cbDurationUnit.setEnabled(chSensing.isSelected());
-        lSt1.setEnabled(chSensing.isSelected());
-        lSt2.setEnabled(chSensing.isSelected());
-        lSt3.setEnabled(chSensing.isSelected());
+        Utils.groupEnable(chSensing.isSelected(), spSensFrom, spSensTo,
+                spDuration, cbDurationUnit, lSt1, lSt2, lSt3);
     }//GEN-LAST:event_chSensingItemStateChanged
 
     private void chFootprintItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chFootprintItemStateChanged
-        spWidth.setEnabled(chFootprint.isSelected());
-        spHeight.setEnabled(chFootprint.isSelected());
-        spFtMinLat.setEnabled(chFootprint.isSelected());
-        spFtMaxLat.setEnabled(chFootprint.isSelected());
-        spFtMinLon.setEnabled(chFootprint.isSelected());
-        spFtMaxLon.setEnabled(chFootprint.isSelected());
-        chCenter.setEnabled(chFootprint.isSelected());
-        lF1.setEnabled(chFootprint.isSelected());
-        lF2.setEnabled(chFootprint.isSelected());
-        lF3.setEnabled(chFootprint.isSelected());
-        lF4.setEnabled(chFootprint.isSelected());
-        lF5.setEnabled(chFootprint.isSelected());
-        lF6.setEnabled(chFootprint.isSelected());
+        Utils.groupEnable(chFootprint.isSelected(), spWidth, spHeight,
+                spFtMinLat, spFtMaxLat, spFtMinLon, spFtMaxLon, chCenter, lF1,
+                lF2, lF3, lF4, lF5, lF6);
     }//GEN-LAST:event_chFootprintItemStateChanged
 
     private void chOrbitNumItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chOrbitNumItemStateChanged
-        spOrbitFrom.setEnabled(chOrbitNum.isSelected());
-        spOrbitTo.setEnabled(chOrbitNum.isSelected());
-        lOn1.setEnabled(chOrbitNum.isSelected());
-        lOn2.setEnabled(chOrbitNum.isSelected());
-        chLastOrbitOfs.setEnabled(chOrbitNum.isSelected());
-        spLstOrbitOfs.setEnabled(chOrbitNum.isSelected() && chLastOrbitOfs
-                .isSelected());
-        lOf1.setEnabled(chOrbitNum.isSelected() && chLastOrbitOfs.isSelected());
+        Utils.groupEnable(chOrbitNum.isSelected(), spOrbitFrom, spOrbitTo, lOn1,
+                lOn2, chLastOrbitOfs);
+        boolean flag = chOrbitNum.isSelected() && chLastOrbitOfs.isSelected();
+        spLstOrbitOfs.setEnabled(flag);
+        lOf1.setEnabled(flag);
     }//GEN-LAST:event_chOrbitNumItemStateChanged
 
     private void chParentIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chParentIdItemStateChanged
