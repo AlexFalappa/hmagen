@@ -83,6 +83,8 @@ public class MainFrame extends javax.swing.JFrame {
         chk2vals.put(HmaGenSettings.ACQ_TYPE, pProd2.chAcqType);
         chk2vals.put(HmaGenSettings.ACQ_SUBTYPE, pProd2.chAcqSubtype);
         chk2vals.put(HmaGenSettings.POLARIZATION_CHANS, pProdSar.chPolarzChans);
+        chk2vals.put(HmaGenSettings.POLARIZATION_MODES, pProdSar.chPolarzModes);
+        chk2vals.put(HmaGenSettings.ANT_LOOK_DIRS, pProdSar.chAntLook);
         chk2vals.put(HmaGenSettings.PLATFORMS, pAcq.chGenAcqPlat);
         chk2vals.put(HmaGenSettings.SENS_MODES, pAcq.chSensMode);
         chk2vals.put(HmaGenSettings.SENS_NAMES, pAcq.chSensName);
@@ -318,6 +320,7 @@ public class MainFrame extends javax.swing.JFrame {
             applySettings(pProdSar.getClass(), pProdSar);
             applySettings(pAcq.getClass(), pAcq);
             applySettings(pArch.getClass(), pArch);
+            applySettings(pBrws.getClass(), pBrws);
             lastConfigLoadDir = jfc.getSelectedFile().getParentFile();
         }
     }//GEN-LAST:event_bLoadActionPerformed
@@ -511,10 +514,6 @@ public class MainFrame extends javax.swing.JFrame {
                 pProd.spFtMaxLon, pProd,
                 "Bad longitude range for footprint generation region!"))
             return false;
-        if (pProd2.chANX.isSelected() && !checkRange(pProd2.spANXFrom,
-                pProd2.spANXTo, pProd2,
-                "Bad ascending node longitude generation range!"))
-            return false;
         if (pProd2.chAcrIncid.isSelected() && !checkRange(pProd2.spAcrIncidFrom,
                 pProd2.spAcrIncidTo, pProd2,
                 "Bad across track incidence angle generation range!"))
@@ -523,16 +522,20 @@ public class MainFrame extends javax.swing.JFrame {
                 pProd2.spAlonIncidFrom, pProd2.spAlonIncidTo, pProd2,
                 "Bad along track incidence angle generation range!"))
             return false;
-        if (pProd2.chIncid.isSelected() && !checkRange(pProd2.spIncidAngFrom,
-                pProd2.spIncidAngTo, pProd2,
-                "Bad incidence angle generation range!"))
-            return false;
         if (pProd2.chWRSLat.isSelected() && !checkRange(pProd2.spWRSLatFrom,
                 pProd2.spWRSLatTo, pProd2,
                 "Bad WRS latitude generation range!"))
             return false;
         if (pProd2.chWRSLon.isSelected() && !checkRange(pProd2.spWRSLonFrom,
                 pProd2.spWRSLonTo, pProd2, "Bad WRS longitude generation range!"))
+            return false;
+        if (pProd2.chANX.isSelected() && !checkRange(pProd2.spANXFrom,
+                pProd2.spANXTo, pProd2,
+                "Bad ascending node longitude generation range!"))
+            return false;
+        if (pProd2.chIncid.isSelected() && !checkRange(pProd2.spIncidAngFrom,
+                pProd2.spIncidAngTo, pProd2,
+                "Bad incidence angle generation range!"))
             return false;
         if (pProdSar.chMinIncidAng.isSelected() && !checkRange(
                 pProdSar.spMinIaFrom, pProdSar.spMinIaTo, pProdSar,

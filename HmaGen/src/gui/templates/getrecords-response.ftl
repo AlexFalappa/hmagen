@@ -30,6 +30,20 @@
                             </rim:ValueList>
                         </rim:Slot>
 </#if>
+<#if rec.prdType??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::productType" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                            <rim:ValueList>
+                                <rim:Value>${rec.prdType}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.status??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::status" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                            <rim:ValueList>
+                                <rim:Value>${rec.status}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
 <#if rec.startSensing??>
                         <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::beginPosition" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:DateTime">
                             <rim:ValueList>
@@ -72,24 +86,6 @@
                             </rim:ValueList>
                         </rim:Slot>
 </#if>
-<#if rec.center??>
-                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::centerOf" slotType="urn:ogc:def:dataType:ISO-19107:2003:GM_Object">
-                            <wrs:ValueList>
-                                <wrs:AnyValue>
-                                    <gml:Point srsName=" urn:ogc:def:crs:EPSG:6.3:4326">
-                                        <gml:pos>${rec.center}</gml:pos>
-                                    </gml:Point>
-                                </wrs:AnyValue>
-                            </wrs:ValueList>
-                        </rim:Slot>
-</#if>
-<#if rec.prdType??>
-                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::productType" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
-                            <rim:ValueList>
-                                <rim:Value>${rec.prdType}</rim:Value>
-                            </rim:ValueList>
-                        </rim:Slot>
-</#if>
 <#if rec.footprint??>
                         <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::multiExtentOf" slotType="urn:ogc:def:dataType:ISO-19107:2003:GM_Object">
                             <wrs:ValueList>
@@ -105,10 +101,56 @@
                             </wrs:ValueList>
                         </rim:Slot>
 </#if>
+<#if rec.center??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::centerOf" slotType="urn:ogc:def:dataType:ISO-19107:2003:GM_Object">
+                            <wrs:ValueList>
+                                <wrs:AnyValue>
+                                    <gml:Point srsName=" urn:ogc:def:crs:EPSG:6.3:4326">
+                                        <gml:pos>${rec.center}</gml:pos>
+                                    </gml:Point>
+                                </wrs:AnyValue>
+                            </wrs:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.Incid??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::incidenceAngle" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
+                            <rim:ValueList>
+                                <rim:Value>${rec.Incid}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
 <#if rec.alongIncAngle??>
                         <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::alongTrackIncidenceAngle" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
                             <rim:ValueList>
                                 <rim:Value>${rec.alongIncAngle}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.acrossIncAngle??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::acrossTrackIncidenceAngle" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
+                            <rim:ValueList>
+                                <rim:Value>${rec.acrossIncAngle}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.ANX??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::ascendingNodeLongitude" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
+                            <rim:ValueList>
+                                <rim:Value>${rec.ANX}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.WRSLat??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::wrsLatitudeGrid" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
+                            <rim:ValueList>
+                                <rim:Value>${rec.WRSLat}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.WRSLon??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::wrsLongitudeGrid" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
+                            <rim:ValueList>
+                                <rim:Value>${rec.WRSLon}</rim:Value>
                             </rim:ValueList>
                         </rim:Slot>
 </#if>
@@ -147,13 +189,6 @@
                             </rim:ValueList>
                         </rim:Slot>
 </#if>
-<#if rec.acrossIncAngle??>
-                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::acrossTrackIncidenceAngle" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
-                            <rim:ValueList>
-                                <rim:Value>${rec.acrossIncAngle}</rim:Value>
-                            </rim:ValueList>
-                        </rim:Slot>
-</#if>
 <#if rec.snowCover??>
                         <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::snowCoverPercentage" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
                             <rim:ValueList>
@@ -161,10 +196,17 @@
                             </rim:ValueList>
                         </rim:Slot>
 </#if>
-<#if rec.status??>
-                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::status" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+<#if rec.illumAzim??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::illuminationAzimuthAngle" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
                             <rim:ValueList>
-                                <rim:Value>${rec.status}</rim:Value>
+                                <rim:Value>${rec.illumAzim}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.illumElev??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::illuminationElevationAngle" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
+                            <rim:ValueList>
+                                <rim:Value>${rec.illumElev}</rim:Value>
                             </rim:ValueList>
                         </rim:Slot>
 </#if>
@@ -179,6 +221,27 @@
                         <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::polarisationMode" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
                             <rim:ValueList>
                                 <rim:Value>${rec.polarisationModes}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.antLookDir??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::antennaLookDirection" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+                            <rim:ValueList>
+                                <rim:Value>${rec.antLookDir}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.minIncid??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::minimumIncidenceAngle" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
+                            <rim:ValueList>
+                                <rim:Value>${rec.minIncid}</rim:Value>
+                            </rim:ValueList>
+                        </rim:Slot>
+</#if>
+<#if rec.maxIncid??>
+                        <rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::maximumIncidenceAngle" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:Double">
+                            <rim:ValueList>
+                                <rim:Value>${rec.maxIncid}</rim:Value>
                             </rim:ValueList>
                         </rim:Slot>
 </#if>

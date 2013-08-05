@@ -46,6 +46,9 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
     private Integer nRecs;
     private final File file;
+    private final HashMap<String, Long> millis = new HashMap<>();
+    private final HashMap<String, Integer> ints = new HashMap<>();
+    private final HashMap<String, Double> doubles = new HashMap<>();
 
     public CalcModelWorker(MainFrame mf, File outFile) {
         this.mf = mf;
@@ -69,28 +72,22 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             default:
                 model.put("envelope", "");
         }
-        // precalculate some values
-        final Integer orbFrom = (Integer) mf.pProd.spOrbitFrom.getValue();
-        final Integer orbDelta = (Integer) mf.pProd.spOrbitTo.getValue() - orbFrom;
-        final Integer lstOrbOfs = (Integer) mf.pProd.spLstOrbitOfs.getValue();
-        final long startTime = ((Date) mf.pProd.spSensFrom.getValue()).getTime();
-        final long stopTime = ((Date) mf.pProd.spSensTo.getValue()).getTime();
-        final long timeDelta = stopTime - startTime;
-        final long acqStart = ((Date) mf.pProd2.spAcqDateFrom.getValue())
-                .getTime();
-        final long acqStop = ((Date) mf.pProd2.spAcqDateTo.getValue()).getTime();
-        final long acqDelta = acqStop - acqStart;
-        final long archStartTime = ((Date) mf.pArch.spArdtFrom.getValue())
-                .getTime();
-        final long archStopTime = ((Date) mf.pArch.spArdtTo.getValue())
-                .getTime();
-        final long archDelta = archStopTime - archStartTime;
-        final Integer cldCovFrom = (Integer) mf.pProdOpt.spCldCovFrom.getValue();
-        final Integer cldCovDelta = (Integer) mf.pProdOpt.spCldCovTo.getValue() - cldCovFrom;
-        final Integer snwCovFrom = (Integer) mf.pProdOpt.spCldCovFrom.getValue();
-        final Integer snwCovDelta = (Integer) mf.pProdOpt.spCldCovTo.getValue() - snwCovFrom;
-        final Integer resFrom = (Integer) mf.pAcq.spResFrom.getValue();
-        final Integer resDelta = (Integer) mf.pAcq.spResTo.getValue() - snwCovFrom;
+        // precalculate integer values
+        ints.put("orbFrom", (Integer) mf.pProd.spOrbitFrom.getValue());
+        ints.put("orbDelta", (Integer) mf.pProd.spOrbitTo.getValue() - ints.get(
+                "orbFrom"));
+        ints.put("lstOrbOfs", (Integer) mf.pProd.spLstOrbitOfs.getValue());
+        ints.put("cldCovFrom", (Integer) mf.pProdOpt.spCldCovFrom.getValue());
+        ints.put("cldCovDelta",
+                (Integer) mf.pProdOpt.spCldCovTo.getValue() - ints.get(
+                "cldCovFrom"));
+        ints.put("snwCovFrom", (Integer) mf.pProdOpt.spCldCovFrom.getValue());
+        ints.put("snwCovDelta",
+                (Integer) mf.pProdOpt.spCldCovTo.getValue() - ints.get(
+                "snwCovFrom"));
+        ints.put("resFrom", (Integer) mf.pAcq.spResFrom.getValue());
+        ints.put("resDelta", (Integer) mf.pAcq.spResTo.getValue() - ints.get(
+                "snwCovFrom"));
         Integer durationDelta = (Integer) mf.pProd.spDuration.getValue();
         switch (mf.pProd.cbDurationUnit.getSelectedItem().toString()) {
             case "minutes":
@@ -102,6 +99,67 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             default:
             // do nothing for milliseconds
         }
+        ints.put("durationDelta", durationDelta);
+        // precalculate milliseconds values
+        millis.put("startTime", ((Date) mf.pProd.spSensFrom.getValue())
+                .getTime());
+        millis.put("timeDelta",
+                ((Date) mf.pProd.spSensTo.getValue()).getTime() - millis.get(
+                "startTime"));
+        millis.put("acqStart", ((Date) mf.pProd2.spAcqDateFrom.getValue())
+                .getTime());
+        millis.put("acqDelta", ((Date) mf.pProd2.spAcqDateTo.getValue())
+                .getTime() - millis.get("acqStart"));
+        millis.put("archStartTime", ((Date) mf.pArch.spArdtFrom.getValue())
+                .getTime());
+        millis.put("archDelta",
+                ((Date) mf.pArch.spArdtTo.getValue()).getTime() - millis.get(
+                "archStartTime"));
+        // precalculate double values
+        doubles.put("anxFrom", (Double) mf.pProd2.spANXFrom.getValue());
+        doubles.put("anxDelta", (Double) mf.pProd2.spANXTo.getValue() - doubles
+                .get("anxFrom"));
+        doubles
+                .put("acrIncidFrom", (Double) mf.pProd2.spAcrIncidFrom
+                .getValue());
+        doubles.put("acrIncidDelta",
+                (Double) mf.pProd2.spAcrIncidTo.getValue() - doubles.get(
+                "acrIncidFrom"));
+        doubles.put("alonIncidFrom", (Double) mf.pProd2.spAlonIncidFrom
+                .getValue());
+        doubles.put("alonIncidDelta", (Double) mf.pProd2.spAlonIncidTo
+                .getValue() - doubles.get("alonIncidFrom"));
+        doubles.put("incidFrom", (Double) mf.pProd2.spIncidAngFrom.getValue());
+        doubles.put("incidDelta",
+                (Double) mf.pProd2.spIncidAngTo.getValue() - doubles.get(
+                "incidFrom"));
+        doubles.put("wrsLatFrom", (Double) mf.pProd2.spWRSLatFrom.getValue());
+        doubles.put("wrsLatDelta",
+                (Double) mf.pProd2.spWRSLatTo.getValue() - doubles.get(
+                "wrsLatFrom"));
+        doubles.put("wrsLonFrom", (Double) mf.pProd2.spWRSLonFrom.getValue());
+        doubles.put("wrsLonDelta",
+                (Double) mf.pProd2.spWRSLonTo.getValue() - doubles.get(
+                "wrsLonFrom"));
+        doubles.put("illumElevFrom", (Double) mf.pProdOpt.spIllElevFrom
+                .getValue());
+        doubles.put("illumElevDelta",
+                (Double) mf.pProdOpt.spIllElevTo.getValue() - doubles.get(
+                "illumElevFrom"));
+        doubles.put("illumAzimFrom", (Double) mf.pProdOpt.spIllAzimFrom
+                .getValue());
+        doubles.put("illumAzimDelta",
+                (Double) mf.pProdOpt.spIllAzimTo.getValue() - doubles.get(
+                "illumAzimFrom"));
+        doubles.put("minIncidFrom", (Double) mf.pProdSar.spMinIaFrom.getValue());
+        doubles.put("minIncidDelta",
+                (Double) mf.pProdSar.spMinIaTo.getValue() - doubles.get(
+                "minIncidFrom"));
+        doubles.put("maxIncidFrom", (Double) mf.pProdSar.spMaxIaFrom.getValue());
+        doubles.put("maxIncidDelta",
+                (Double) mf.pProdSar.spMaxIaTo.getValue() - doubles.get(
+                "maxIncidFrom"));
+        // prepare classification string
         String classification = "";
         switch (mf.cbClassification.getSelectedItem().toString()) {
             case "Optical":
@@ -124,14 +182,15 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             Map rec = new HashMap();
             rec.put("prodId", String
                     .format("%s-%d", mf.pProd.tfPrefix.getText(), i));
-            genEOProduct(rec, startTime, timeDelta, durationDelta, orbFrom,
-                    orbDelta, lstOrbOfs, classification, cldCovFrom, cldCovDelta,
-                    snwCovFrom, snwCovDelta);
+            genEOProduct(rec, classification);
+            genEOProduct2(rec);
+            genEOProductOpt(rec);
+            genEOProductSar(rec);
             if (mf.pAcq.chGenAcqPlat.isSelected()) {
-                genEOAcqInfo(rec, resFrom, resDelta);
+                genEOAcqInfo(rec);
             }
             if (mf.pArch.chGenArchInfo.isSelected()) {
-                genEOArchInfo(rec, archStartTime, archDelta);
+                genEOArchInfo(rec);
             }
             if (mf.pBrws.chGenBrwsInfo.isSelected()) {
                 genEOBrwsInfo(rec);
@@ -204,7 +263,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOProduct(Map rec, final long startTime, final long timeDelta, Integer durationDelta, final Integer orbFrom, final Integer orbDelta, final Integer lstOrbOfs, String classification, final Integer cldCovFrom, final Integer cldCovDelta, final Integer snwCovFrom, final Integer snwCovDelta) {
+    private void genEOProduct(Map rec, String classification) {
         ArrayList<String> vals = mf.settings.valMap.get(
                 HmaGenSettings.PARENT_IDENTIFIERS);
         if (mf.pProd.chParentId.isSelected() && vals != null) {
@@ -222,38 +281,19 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         if (mf.pProd.chOrbitDir.isSelected() && vals != null) {
             genValue("orbitDir", rec, vals);
         }
-        vals = mf.settings.valMap.get(HmaGenSettings.ACQ_TYPE);
-        if (mf.pProd2.chAcqType.isSelected() && vals != null) {
-            genValue("acqType", rec, vals);
-        }
-        vals = mf.settings.valMap.get(HmaGenSettings.ACQ_SUBTYPE);
-        if (mf.pProd2.chAcqSubtype.isSelected() && vals != null) {
-            genValue("acqSubType", rec, vals);
-        }
-        vals = mf.settings.valMap.get(HmaGenSettings.ACQ_STATIONS);
-        if (mf.pProd2.chAcqStation.isSelected() && vals != null) {
-            genValue("acqStation", rec, vals);
-        }
-        vals = mf.settings.valMap.get(HmaGenSettings.POLARIZATION_CHANS);
-        if (mf.pProdSar.chPolarzChans.isSelected()) {
-            genValue("polarisation", rec, vals);
-        }
-        vals = mf.settings.valMap.get(HmaGenSettings.POLARIZATION_MODES);
-        if (mf.pProdSar.chPolarzModes.isSelected()) {
-            genValue("polarisationModes", rec, vals);
-        }
         if (mf.pProd.chSensing.isSelected()) {
-            long time = startTime + (long) (Math.floor(
-                    rng.nextDouble() * timeDelta));
+            long time = millis.get("startTime") + (long) (Math.floor(
+                    rng.nextDouble() * millis.get("timeDelta")));
             rec.put("startSensing", df.format(new Date(time)));
-            time += rng.nextInt(durationDelta);
+            time += rng.nextInt(ints.get("durationDelta"));
             rec.put("stopSensing", df.format(new Date(time)));
         }
         if (mf.pProd.chOrbitNum.isSelected()) {
-            Integer orb = orbFrom + rng.nextInt(orbDelta);
+            Integer orb = ints.get("orbFrom") + rng
+                    .nextInt(ints.get("orbDelta"));
             rec.put("orbitNumber", orb.toString());
             if (mf.pProd.chLastOrbitOfs.isSelected()) {
-                orb += rng.nextInt(lstOrbOfs);
+                orb += rng.nextInt(ints.get("lstOrbOfs"));
                 rec.put("lastOrbit", orb.toString());
             }
         }
@@ -263,17 +303,9 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         if (mf.pProd.chFootprint.isSelected()) {
             genFootprintAndCenter(rec);
         }
-        if (mf.pProdOpt.chCloudCov.isSelected()) {
-            Integer cover = cldCovFrom + rng.nextInt(cldCovDelta);
-            rec.put("cloudCover", cover.toString());
-        }
-        if (mf.pProdOpt.chSnowCov.isSelected()) {
-            Integer cover = snwCovFrom + rng.nextInt(snwCovDelta);
-            rec.put("snowCover", cover.toString());
-        }
     }
 
-    private void genEOArchInfo(Map rec, long acqStartTime, long acqDelta) {
+    private void genEOArchInfo(Map rec) {
         ArrayList<String> vals = mf.settings.valMap.get(
                 HmaGenSettings.ARCHIVING_CENTERS);
         genValue("archCenter", rec, vals);
@@ -282,13 +314,13 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             genValue("archId", rec, vals);
         }
         if (mf.pArch.chArchDate.isSelected()) {
-            long time = acqStartTime + (long) (Math.floor(
-                    rng.nextDouble() * acqDelta));
+            long time = millis.get("archStartTime") + (long) (Math.floor(
+                    rng.nextDouble() * millis.get("archDelta")));
             rec.put("archDate", df.format(new Date(time)));
         }
     }
 
-    private void genEOAcqInfo(Map rec, Integer resFrom, Integer resDelta) {
+    private void genEOAcqInfo(Map rec) {
         ArrayList<String> vals = mf.settings.valMap.
                 get(HmaGenSettings.PLATFORMS);
         genValue("platName", rec, vals);
@@ -313,7 +345,8 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             genValue("swathId", rec, vals);
         }
         if (mf.pAcq.chRes.isSelected()) {
-            Integer res = resFrom + rng.nextInt(resDelta);
+            Integer res = ints.get("resFrom") + rng
+                    .nextInt(ints.get("resDelta"));
             rec.put("resolution", res.toString());
         }
     }
@@ -346,6 +379,100 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             rec.put(key, vals.get(rng.nextInt(vals.size())));
         } else {
             rec.put(key, vals.get(0));
+        }
+    }
+
+    private void genEOProductOpt(Map rec) {
+        if (mf.pProdOpt.chCloudCov.isSelected()) {
+            Integer cover = ints.get("cldCovFrom") + rng.nextInt(ints.get(
+                    "cldCovDelta"));
+            rec.put("cloudCover", cover.toString());
+        }
+        if (mf.pProdOpt.chSnowCov.isSelected()) {
+            Integer cover = ints.get("snwCovFrom") + rng.nextInt(ints.get(
+                    "snwCovDelta"));
+            rec.put("snowCover", cover.toString());
+        }
+        if (mf.pProdOpt.chIllumAzim.isSelected()) {
+            Double val = doubles.get("illumAzimFrom") + rng.nextDouble() * doubles
+                    .get("illumAzimDelta");
+            rec.put("illumAzim", val.toString());
+        }
+        if (mf.pProdOpt.chIllumElev.isSelected()) {
+            Double val = doubles.get("illumElevFrom") + rng.nextDouble() * doubles
+                    .get("illumElevDelta");
+            rec.put("illumElev", val.toString());
+        }
+    }
+
+    private void genEOProductSar(Map rec) {
+        ArrayList<String> vals = mf.settings.valMap.get(
+                HmaGenSettings.POLARIZATION_CHANS);
+        if (mf.pProdSar.chPolarzChans.isSelected()) {
+            genValue("polarisation", rec, vals);
+        }
+        vals = mf.settings.valMap.get(HmaGenSettings.POLARIZATION_MODES);
+        if (mf.pProdSar.chPolarzModes.isSelected()) {
+            genValue("polarisationModes", rec, vals);
+        }
+        vals = mf.settings.valMap.get(HmaGenSettings.ANT_LOOK_DIRS);
+        if (mf.pProdSar.chAntLook.isSelected()) {
+            genValue("antLookDir", rec, vals);
+        }
+        if (mf.pProdSar.chMinIncidAng.isSelected()) {
+            Double val = doubles.get("minIncidFrom") + rng.nextDouble() * doubles
+                    .get("minIncidDelta");
+            rec.put("minIncid", val.toString());
+        }
+        if (mf.pProdSar.chMaxIncidAng.isSelected()) {
+            Double val = doubles.get("maxIncidFrom") + rng.nextDouble() * doubles
+                    .get("maxIncidDelta");
+            rec.put("maxIncid", val.toString());
+        }
+    }
+
+    private void genEOProduct2(Map rec) {
+        ArrayList<String> vals = mf.settings.valMap.get(HmaGenSettings.ACQ_TYPE);
+        if (mf.pProd2.chAcqType.isSelected() && vals != null) {
+            genValue("acqType", rec, vals);
+        }
+        vals = mf.settings.valMap.get(HmaGenSettings.ACQ_SUBTYPE);
+        if (mf.pProd2.chAcqSubtype.isSelected() && vals != null) {
+            genValue("acqSubType", rec, vals);
+        }
+        vals = mf.settings.valMap.get(HmaGenSettings.ACQ_STATIONS);
+        if (mf.pProd2.chAcqStation.isSelected() && vals != null) {
+            genValue("acqStation", rec, vals);
+        }
+        if (mf.pProd2.chANX.isSelected()) {
+            Double val = doubles.get("anxFrom") + rng.nextDouble() * doubles
+                    .get("anxDelta");
+            rec.put("ANX", val.toString());
+        }
+        if (mf.pProd2.chAlonIncid.isSelected()) {
+            Double val = doubles.get("alonIncidFrom") + rng.nextDouble() * doubles
+                    .get("alonIncidDelta");
+            rec.put("alongIncAngle", val.toString());
+        }
+        if (mf.pProd2.chAcrIncid.isSelected()) {
+            Double val = doubles.get("acrIncidFrom") + rng.nextDouble() * doubles
+                    .get("acrIncidDelta");
+            rec.put("acrossIncAngle", val.toString());
+        }
+        if (mf.pProd2.chWRSLat.isSelected()) {
+            Double val = doubles.get("wrsLatFrom") + rng.nextDouble() * doubles
+                    .get("wrsLatDelta");
+            rec.put("WRSLat", val.toString());
+        }
+        if (mf.pProd2.chWRSLon.isSelected()) {
+            Double val = doubles.get("wrsLonFrom") + rng.nextDouble() * doubles
+                    .get("wrsLonDelta");
+            rec.put("WRSLon", val.toString());
+        }
+        if (mf.pProd2.chIncid.isSelected()) {
+            Double val = doubles.get("incidFrom") + rng.nextDouble() * doubles
+                    .get("incidDelta");
+            rec.put("Incid", val.toString());
         }
     }
 }
