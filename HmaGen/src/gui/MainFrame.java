@@ -24,7 +24,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,11 +65,10 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         xstream.alias("hmagensettings", HmaGenSettings.class);
         try {
-            cfg.setDirectoryForTemplateLoading(
-                    new File(getClass().getResource("templates").toURI()));
+            cfg.setClassForTemplateLoading(MainFrame.class, "templates");
             cfg.setObjectWrapper(new DefaultObjectWrapper());
             template = cfg.getTemplate("getrecords-response.ftl");
-        } catch (IOException | URISyntaxException ex) {
+        } catch (IOException ignored) {
         }
         initComponents();
         chk2vals.put(HmaGenSettings.ARCHIVING_CENTERS, pArch.chGenArchInfo);
