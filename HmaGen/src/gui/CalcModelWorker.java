@@ -57,7 +57,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
 
     @Override
     protected Map doInBackground() throws Exception {
-        Map model = new HashMap();
+        HashMap<String,Object> model = new HashMap<>();
         model.put("numRecs", mf.spNumRecs.getValue().toString());
         List<Map<String, String>> records = new ArrayList<>();
         model.put("records", records);
@@ -179,7 +179,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             chnkSize = nRecs / 20;
         }
         for (int i = 1; i <= nRecs && !isCancelled(); i++) {
-            Map rec = new HashMap();
+            HashMap<String,String> rec = new HashMap<>();
             rec.put("prodId", String
                     .format("%s-%d", mf.pProd.tfPrefix.getText(), i));
             genEOProduct(rec, classification);
@@ -230,7 +230,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genFootprintAndCenter(Map rec) {
+    private void genFootprintAndCenter(Map<String,String> rec) {
         double mxH = (double) mf.pProd.spHeight.getValue();
         double mxW = (double) mf.pProd.spWidth.getValue();
         double minLatCen = (double) mf.pProd.spFtMinLat.getValue() + mxH;
@@ -263,7 +263,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOProduct(Map rec, String classification) {
+    private void genEOProduct(Map<String,String> rec, String classification) {
         ArrayList<String> vals = mf.settings.valMap.get(
                 HmaGenSettings.PARENT_IDENTIFIERS);
         if (mf.pProd.chParentId.isSelected() && vals != null) {
@@ -305,7 +305,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOArchInfo(Map rec) {
+    private void genEOArchInfo(Map<String,String> rec) {
         ArrayList<String> vals = mf.settings.valMap.get(
                 HmaGenSettings.ARCHIVING_CENTERS);
         genValue("archCenter", rec, vals);
@@ -320,7 +320,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOAcqInfo(Map rec) {
+    private void genEOAcqInfo(Map<String,String> rec) {
         ArrayList<String> vals = mf.settings.valMap.
                 get(HmaGenSettings.PLATFORMS);
         genValue("platName", rec, vals);
@@ -351,7 +351,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOBrwsInfo(Map rec) {
+    private void genEOBrwsInfo(Map<String,String> rec) {
         if (mf.pBrws.chQlkUrl.isSelected() && mf.pBrws.chLinkQlkToThmb
                 .isSelected()) {
             ArrayList<String> thmbs = mf.settings.valMap.get(
@@ -374,7 +374,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genValue(String key, Map rec, ArrayList<String> vals) {
+    private void genValue(String key, Map<String,String> rec, ArrayList<String> vals) {
         if (vals.size() > 1) {
             rec.put(key, vals.get(rng.nextInt(vals.size())));
         } else {
@@ -382,7 +382,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOProductOpt(Map rec) {
+    private void genEOProductOpt(Map<String,String> rec) {
         if (mf.pProdOpt.chCloudCov.isSelected()) {
             Integer cover = ints.get("cldCovFrom") + rng.nextInt(ints.get(
                     "cldCovDelta"));
@@ -405,7 +405,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOProductSar(Map rec) {
+    private void genEOProductSar(Map<String,String> rec) {
         ArrayList<String> vals = mf.settings.valMap.get(
                 HmaGenSettings.POLARIZATION_CHANS);
         if (mf.pProdSar.chPolarzChans.isSelected()) {
@@ -431,7 +431,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOProduct2(Map rec) {
+    private void genEOProduct2(Map<String,String> rec) {
         ArrayList<String> vals = mf.settings.valMap.get(HmaGenSettings.ACQ_TYPE);
         if (mf.pProd2.chAcqType.isSelected() && vals != null) {
             genValue("acqType", rec, vals);
