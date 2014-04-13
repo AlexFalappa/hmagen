@@ -31,12 +31,12 @@ public class Utils {
     }
 
     /**
-     * Enable/disable a group of JComponents.
+     * Enable/disable a group of JComponents widgets.
      * <p/>
      * @param flag  the enable/disable flag
      * @param comps the components as variable arguments
      */
-    public static void groupEnable(boolean flag, JComponent... comps) {
+    public static void widgetsEnable(boolean flag, JComponent... comps) {
         for (JComponent cmp : comps) {
             cmp.setEnabled(flag);
         }
