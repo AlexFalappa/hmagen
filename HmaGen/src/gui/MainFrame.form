@@ -169,7 +169,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="gui.panels.EOSpecificAttrsPanel" name="eOSpecificAttrsPanel1">
+        <Component class="gui.panels.EOSpecificAttrsPanel" name="pSpecAttr">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Specific Attributes">

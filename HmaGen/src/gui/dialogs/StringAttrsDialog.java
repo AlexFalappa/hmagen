@@ -15,7 +15,7 @@
  */
 package gui.dialogs;
 
-import java.util.ArrayList;
+import gui.Utils;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import main.specattrs.SpecAttr;
@@ -36,15 +36,7 @@ public class StringAttrsDialog extends BaseDialog {
     }
 
     public SpecAttr getAttr() {
-        return new StringSpecAttr(txAttrName.getText(), getAttrValues());
-    }
-
-    private ArrayList<String> getAttrValues() {
-        ArrayList<String> ret = new ArrayList<>();
-        for (int i = 0; i < dlmStrings.size(); i++) {
-            ret.add(dlmStrings.get(i));
-        }
-        return ret;
+        return new StringSpecAttr(txAttrName.getText(), Utils.listModelAsList(dlmStrings));
     }
 
     /**

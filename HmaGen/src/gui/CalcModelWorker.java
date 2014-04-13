@@ -33,6 +33,7 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import main.HmaGenSettings;
+import main.specattrs.SpecAttr;
 
 /**
  *
@@ -42,13 +43,13 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
 
     private final MainFrame mf;
     private final Random rng = new Random();
-    private final DateFormat df = new SimpleDateFormat(
-            "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
     private Integer nRecs;
     private final File file;
     private final HashMap<String, Long> millis = new HashMap<>();
     private final HashMap<String, Integer> ints = new HashMap<>();
     private final HashMap<String, Double> doubles = new HashMap<>();
+    private ArrayList<SpecAttr> lAttrs = new ArrayList<SpecAttr>();
 
     public CalcModelWorker(MainFrame mf, File outFile) {
         this.mf = mf;
@@ -57,9 +58,9 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
 
     @Override
     protected Map doInBackground() throws Exception {
-        HashMap<String,Object> model = new HashMap<>();
+        HashMap<String, Object> model = new HashMap<>();
         model.put("numRecs", mf.spNumRecs.getValue().toString());
-        List<Map<String, String>> records = new ArrayList<>();
+        List<Map<String, Object>> records = new ArrayList<>();
         model.put("records", records);
         // envelope
         switch (mf.cbEnvelope.getSelectedIndex()) {
@@ -72,22 +73,20 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             default:
                 model.put("envelope", "");
         }
+        // retrieve specific attributes
+        lAttrs = Utils.listModelAsList(mf.pSpecAttr.dlmAttrs);
         // precalculate integer values
         ints.put("orbFrom", (Integer) mf.pProd.spOrbitFrom.getValue());
-        ints.put("orbDelta", (Integer) mf.pProd.spOrbitTo.getValue() - ints.get(
-                "orbFrom"));
+        ints.put("orbDelta", (Integer) mf.pProd.spOrbitTo.getValue() - ints.get("orbFrom"));
         ints.put("lstOrbOfs", (Integer) mf.pProd.spLstOrbitOfs.getValue());
         ints.put("cldCovFrom", (Integer) mf.pProdOpt.spCldCovFrom.getValue());
-        ints.put("cldCovDelta",
-                (Integer) mf.pProdOpt.spCldCovTo.getValue() - ints.get(
+        ints.put("cldCovDelta", (Integer) mf.pProdOpt.spCldCovTo.getValue() - ints.get(
                 "cldCovFrom"));
         ints.put("snwCovFrom", (Integer) mf.pProdOpt.spCldCovFrom.getValue());
-        ints.put("snwCovDelta",
-                (Integer) mf.pProdOpt.spCldCovTo.getValue() - ints.get(
+        ints.put("snwCovDelta", (Integer) mf.pProdOpt.spCldCovTo.getValue() - ints.get(
                 "snwCovFrom"));
         ints.put("resFrom", (Integer) mf.pAcq.spResFrom.getValue());
-        ints.put("resDelta", (Integer) mf.pAcq.spResTo.getValue() - ints.get(
-                "snwCovFrom"));
+        ints.put("resDelta", (Integer) mf.pAcq.spResTo.getValue() - ints.get("snwCovFrom"));
         Integer durationDelta = (Integer) mf.pProd.spDuration.getValue();
         switch (mf.pProd.cbDurationUnit.getSelectedItem().toString()) {
             case "minutes":
@@ -101,63 +100,45 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
         ints.put("durationDelta", durationDelta);
         // precalculate milliseconds values
-        millis.put("startTime", ((Date) mf.pProd.spSensFrom.getValue())
-                .getTime());
-        millis.put("timeDelta",
-                ((Date) mf.pProd.spSensTo.getValue()).getTime() - millis.get(
+        millis.put("startTime", ((Date) mf.pProd.spSensFrom.getValue()).getTime());
+        millis.put("timeDelta", ((Date) mf.pProd.spSensTo.getValue()).getTime() - millis.get(
                 "startTime"));
-        millis.put("acqStart", ((Date) mf.pProd2.spAcqDateFrom.getValue())
-                .getTime());
-        millis.put("acqDelta", ((Date) mf.pProd2.spAcqDateTo.getValue())
-                .getTime() - millis.get("acqStart"));
-        millis.put("archStartTime", ((Date) mf.pArch.spArdtFrom.getValue())
-                .getTime());
-        millis.put("archDelta",
-                ((Date) mf.pArch.spArdtTo.getValue()).getTime() - millis.get(
+        millis.put("acqStart", ((Date) mf.pProd2.spAcqDateFrom.getValue()).getTime());
+        millis.put("acqDelta", ((Date) mf.pProd2.spAcqDateTo.getValue()).getTime() - millis.get(
+                "acqStart"));
+        millis.put("archStartTime", ((Date) mf.pArch.spArdtFrom.getValue()).getTime());
+        millis.put("archDelta", ((Date) mf.pArch.spArdtTo.getValue()).getTime() - millis.get(
                 "archStartTime"));
         // precalculate double values
         doubles.put("anxFrom", (Double) mf.pProd2.spANXFrom.getValue());
-        doubles.put("anxDelta", (Double) mf.pProd2.spANXTo.getValue() - doubles
-                .get("anxFrom"));
-        doubles
-                .put("acrIncidFrom", (Double) mf.pProd2.spAcrIncidFrom
-                .getValue());
-        doubles.put("acrIncidDelta",
-                (Double) mf.pProd2.spAcrIncidTo.getValue() - doubles.get(
+        doubles.put("anxDelta", (Double) mf.pProd2.spANXTo.getValue() - doubles.get("anxFrom"));
+        doubles.put("acrIncidFrom", (Double) mf.pProd2.spAcrIncidFrom.getValue());
+        doubles.put("acrIncidDelta", (Double) mf.pProd2.spAcrIncidTo.getValue() - doubles.get(
                 "acrIncidFrom"));
-        doubles.put("alonIncidFrom", (Double) mf.pProd2.spAlonIncidFrom
-                .getValue());
-        doubles.put("alonIncidDelta", (Double) mf.pProd2.spAlonIncidTo
-                .getValue() - doubles.get("alonIncidFrom"));
+        doubles.put("alonIncidFrom", (Double) mf.pProd2.spAlonIncidFrom.getValue());
+        doubles.put("alonIncidDelta", (Double) mf.pProd2.spAlonIncidTo.getValue() - doubles.get(
+                "alonIncidFrom"));
         doubles.put("incidFrom", (Double) mf.pProd2.spIncidAngFrom.getValue());
-        doubles.put("incidDelta",
-                (Double) mf.pProd2.spIncidAngTo.getValue() - doubles.get(
+        doubles.put("incidDelta", (Double) mf.pProd2.spIncidAngTo.getValue() - doubles.get(
                 "incidFrom"));
         doubles.put("wrsLatFrom", (Double) mf.pProd2.spWRSLatFrom.getValue());
-        doubles.put("wrsLatDelta",
-                (Double) mf.pProd2.spWRSLatTo.getValue() - doubles.get(
+        doubles.put("wrsLatDelta", (Double) mf.pProd2.spWRSLatTo.getValue() - doubles.get(
                 "wrsLatFrom"));
         doubles.put("wrsLonFrom", (Double) mf.pProd2.spWRSLonFrom.getValue());
-        doubles.put("wrsLonDelta",
-                (Double) mf.pProd2.spWRSLonTo.getValue() - doubles.get(
+        doubles.put("wrsLonDelta", (Double) mf.pProd2.spWRSLonTo.getValue() - doubles.get(
                 "wrsLonFrom"));
-        doubles.put("illumElevFrom", (Double) mf.pProdOpt.spIllElevFrom
-                .getValue());
-        doubles.put("illumElevDelta",
-                (Double) mf.pProdOpt.spIllElevTo.getValue() - doubles.get(
+        doubles.put("illumElevFrom", (Double) mf.pProdOpt.spIllElevFrom.getValue());
+        doubles.put("illumElevDelta", (Double) mf.pProdOpt.spIllElevTo.getValue() - doubles.get(
                 "illumElevFrom"));
         doubles.put("illumAzimFrom", (Double) mf.pProdOpt.spIllAzimFrom
                 .getValue());
-        doubles.put("illumAzimDelta",
-                (Double) mf.pProdOpt.spIllAzimTo.getValue() - doubles.get(
+        doubles.put("illumAzimDelta", (Double) mf.pProdOpt.spIllAzimTo.getValue() - doubles.get(
                 "illumAzimFrom"));
         doubles.put("minIncidFrom", (Double) mf.pProdSar.spMinIaFrom.getValue());
-        doubles.put("minIncidDelta",
-                (Double) mf.pProdSar.spMinIaTo.getValue() - doubles.get(
+        doubles.put("minIncidDelta", (Double) mf.pProdSar.spMinIaTo.getValue() - doubles.get(
                 "minIncidFrom"));
         doubles.put("maxIncidFrom", (Double) mf.pProdSar.spMaxIaFrom.getValue());
-        doubles.put("maxIncidDelta",
-                (Double) mf.pProdSar.spMaxIaTo.getValue() - doubles.get(
+        doubles.put("maxIncidDelta", (Double) mf.pProdSar.spMaxIaTo.getValue() - doubles.get(
                 "maxIncidFrom"));
         // prepare classification string
         String classification = "";
@@ -179,7 +160,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             chnkSize = nRecs / 20;
         }
         for (int i = 1; i <= nRecs && !isCancelled(); i++) {
-            HashMap<String,String> rec = new HashMap<>();
+            HashMap<String, Object> rec = new HashMap<>();
             rec.put("prodId", String
                     .format("%s-%d", mf.pProd.tfPrefix.getText(), i));
             genEOProduct(rec, classification);
@@ -194,6 +175,9 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             }
             if (mf.pBrws.chGenBrwsInfo.isSelected()) {
                 genEOBrwsInfo(rec);
+            }
+            if (mf.pSpecAttr.chGenSpecific.isSelected()) {
+                genEOSpecAttrs(rec);
             }
             records.add(rec);
             if (i % chnkSize == 0) {
@@ -230,7 +214,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genFootprintAndCenter(Map<String,String> rec) {
+    private void genFootprintAndCenter(Map<String, Object> rec) {
         double mxH = (double) mf.pProd.spHeight.getValue();
         double mxW = (double) mf.pProd.spWidth.getValue();
         double minLatCen = (double) mf.pProd.spFtMinLat.getValue() + mxH;
@@ -263,7 +247,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOProduct(Map<String,String> rec, String classification) {
+    private void genEOProduct(Map<String, Object> rec, String classification) {
         ArrayList<String> vals = mf.settings.valMap.get(
                 HmaGenSettings.PARENT_IDENTIFIERS);
         if (mf.pProd.chParentId.isSelected() && vals != null) {
@@ -305,7 +289,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOArchInfo(Map<String,String> rec) {
+    private void genEOArchInfo(Map<String, Object> rec) {
         ArrayList<String> vals = mf.settings.valMap.get(
                 HmaGenSettings.ARCHIVING_CENTERS);
         genValue("archCenter", rec, vals);
@@ -320,7 +304,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOAcqInfo(Map<String,String> rec) {
+    private void genEOAcqInfo(Map<String, Object> rec) {
         ArrayList<String> vals = mf.settings.valMap.
                 get(HmaGenSettings.PLATFORMS);
         genValue("platName", rec, vals);
@@ -351,7 +335,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOBrwsInfo(Map<String,String> rec) {
+    private void genEOBrwsInfo(Map<String, Object> rec) {
         if (mf.pBrws.chQlkUrl.isSelected() && mf.pBrws.chLinkQlkToThmb
                 .isSelected()) {
             ArrayList<String> thmbs = mf.settings.valMap.get(
@@ -374,7 +358,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genValue(String key, Map<String,String> rec, ArrayList<String> vals) {
+    private void genValue(String key, Map<String, Object> rec, ArrayList<String> vals) {
         if (vals.size() > 1) {
             rec.put(key, vals.get(rng.nextInt(vals.size())));
         } else {
@@ -382,7 +366,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOProductOpt(Map<String,String> rec) {
+    private void genEOProductOpt(Map<String, Object> rec) {
         if (mf.pProdOpt.chCloudCov.isSelected()) {
             Integer cover = ints.get("cldCovFrom") + rng.nextInt(ints.get(
                     "cldCovDelta"));
@@ -405,7 +389,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOProductSar(Map<String,String> rec) {
+    private void genEOProductSar(Map<String, Object> rec) {
         ArrayList<String> vals = mf.settings.valMap.get(
                 HmaGenSettings.POLARIZATION_CHANS);
         if (mf.pProdSar.chPolarzChans.isSelected()) {
@@ -431,7 +415,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         }
     }
 
-    private void genEOProduct2(Map<String,String> rec) {
+    private void genEOProduct2(Map<String, Object> rec) {
         ArrayList<String> vals = mf.settings.valMap.get(HmaGenSettings.ACQ_TYPE);
         if (mf.pProd2.chAcqType.isSelected() && vals != null) {
             genValue("acqType", rec, vals);
@@ -474,5 +458,13 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
                     .get("incidDelta");
             rec.put("Incid", val.toString());
         }
+    }
+
+    private void genEOSpecAttrs(HashMap<String, Object> rec) {
+        List<String[]> specAttrs = new ArrayList<>();
+        for (SpecAttr attr : lAttrs) {
+            specAttrs.add(new String[]{attr.getName(), attr.getRandValue(rng).toString()});
+        }
+        rec.put("specAttrs", specAttrs);
     }
 }

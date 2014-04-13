@@ -15,6 +15,8 @@
  */
 package gui;
 
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
 
 /**
@@ -31,7 +33,7 @@ public class Utils {
     }
 
     /**
-     * Enable/disable a group of JComponents widgets.
+     * Enable/disable a group of <tt>JComponent</tt>s widgets.
      * <p/>
      * @param flag  the enable/disable flag
      * @param comps the components as variable arguments
@@ -41,4 +43,20 @@ public class Utils {
             cmp.setEnabled(flag);
         }
     }
+
+    /**
+     * Converts a <tt>DefaultListModel</tt> into an <tt>ArrayList</tt> object.
+     * <p>
+     * @param <T>       the elements type
+     * @param listModel a DefaultListModel to convert
+     * @return an ArrayList containing the list model elements
+     */
+    public static <T> ArrayList<T> listModelAsList(DefaultListModel<T> listModel) {
+        ArrayList<T> ret = new ArrayList<>();
+        for (int i = 0; i < listModel.size(); i++) {
+            ret.add(listModel.get(i));
+        }
+        return ret;
+    }
+
 }

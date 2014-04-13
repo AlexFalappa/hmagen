@@ -24,8 +24,11 @@ import java.util.Random;
  */
 public interface SpecAttr {
 
+    String getName();
+
     Object getRandValue(Random rgen);
 
+    @Override
     String toString();
 
 }

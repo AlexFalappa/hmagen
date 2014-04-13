@@ -362,6 +362,11 @@
                                         classificationNode="urn:ogc:def:classificationScheme:OGC-CSW-ebRIM-EO::EOProductTypes:${rec.classif}"
                                         classificationScheme="urn:ogc:def:classificationScheme:OGC-CSW-ebRIM-EO::EOProductTypes"/>
 </#if>
+<#if rec.specAttrs??>
+    <#list rec.specAttrs as attr>
+        attributo ${attr[0]} valore ${attr[1]}
+    </#list>
+</#if>
                 </rim:RegistryObjectList>
             </rim:RegistryPackage>
 </#list>

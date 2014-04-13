@@ -119,7 +119,7 @@ public class MainFrame extends javax.swing.JFrame {
         pAcq = new gui.panels.EOAcqPanel();
         pBrws = new gui.panels.EOBrowsePanel();
         pArch = new gui.panels.EOArchivingPanel();
-        eOSpecificAttrsPanel1 = new gui.panels.EOSpecificAttrsPanel();
+        pSpecAttr = new gui.panels.EOSpecificAttrsPanel();
         bGenerate = new javax.swing.JButton();
         chClassification = new javax.swing.JCheckBox();
         cbClassification = new javax.swing.JComboBox();
@@ -145,7 +145,7 @@ public class MainFrame extends javax.swing.JFrame {
         tabPane.addTab("EOAcquisitionPlat", pAcq);
         tabPane.addTab("EOBrowseInfo", pBrws);
         tabPane.addTab("EOArchivingInfo", pArch);
-        tabPane.addTab("Specific Attributes", eOSpecificAttrsPanel1);
+        tabPane.addTab("Specific Attributes", pSpecAttr);
 
         bGenerate.setText("Generate...");
         bGenerate.addActionListener(new java.awt.event.ActionListener() {
@@ -347,7 +347,6 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JComboBox cbEnvelope;
     javax.swing.JCheckBox chClassification;
     javax.swing.JCheckBox chStripSpace;
-    gui.panels.EOSpecificAttrsPanel eOSpecificAttrsPanel1;
     javax.swing.JLabel jLabel1;
     javax.swing.JLabel jLabel2;
     javax.swing.JSeparator jSeparator1;
@@ -359,6 +358,7 @@ public class MainFrame extends javax.swing.JFrame {
     gui.panels.EOProductOptPanel pProdOpt;
     gui.panels.EOProductSarPanel pProdSar;
     javax.swing.JProgressBar pProgress;
+    gui.panels.EOSpecificAttrsPanel pSpecAttr;
     javax.swing.JSpinner spNumRecs;
     javax.swing.JTabbedPane tabPane;
     // End of variables declaration//GEN-END:variables

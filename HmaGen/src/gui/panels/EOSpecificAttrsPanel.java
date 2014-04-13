@@ -31,7 +31,7 @@ import main.specattrs.SpecAttr;
  */
 public class EOSpecificAttrsPanel extends javax.swing.JPanel {
 
-    private final DefaultListModel<SpecAttr> dlmAttrs;
+    public final DefaultListModel<SpecAttr> dlmAttrs;
 
     /**
      * Creates new form EOSpecificAttrsPanel
@@ -180,12 +180,12 @@ public class EOSpecificAttrsPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bAddFloat;
-    private javax.swing.JButton bAddInt;
-    private javax.swing.JButton bAddString;
-    private javax.swing.JButton bDel;
-    private javax.swing.JCheckBox chGenSpecific;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList lAttrs;
+    public javax.swing.JButton bAddFloat;
+    public javax.swing.JButton bAddInt;
+    public javax.swing.JButton bAddString;
+    public javax.swing.JButton bDel;
+    public javax.swing.JCheckBox chGenSpecific;
+    public javax.swing.JScrollPane jScrollPane2;
+    public javax.swing.JList lAttrs;
     // End of variables declaration//GEN-END:variables
 }
