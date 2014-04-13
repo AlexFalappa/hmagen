@@ -169,6 +169,15 @@
             </Constraint>
           </Constraints>
         </Component>
+        <Component class="gui.panels.EOSpecificAttrsPanel" name="eOSpecificAttrsPanel1">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Specific Attributes">
+                <Property name="tabTitle" type="java.lang.String" value="Specific Attributes"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+        </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JButton" name="bGenerate">
