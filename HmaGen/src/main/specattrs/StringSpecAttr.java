@@ -44,7 +44,7 @@ public class StringSpecAttr implements SpecAttr {
 
     @Override
     public String toString() {
-        return String.format("%s with %d values", attrName, attrValues.size());
+        return String.format("%s with values %s", attrName, attrValues.toString());
     }
 
 }
