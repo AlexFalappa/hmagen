@@ -20,7 +20,8 @@ import javax.swing.JOptionPane;
 import main.specattrs.SpecAttr;
 
 /**
- *
+ * Base class for specific attributes dialogs.
+ * <p>
  * @author Alessandro Falappa
  */
 public abstract class BaseDialog extends JDialog {

@@ -22,7 +22,10 @@ import main.specattrs.SpecAttr;
 import main.specattrs.StringSpecAttr;
 
 /**
- *
+ * Dialog for specific attributes of type string.
+ * <p>
+ * A name and a list of strings are requested.
+ * <p>
  * @author Alessandro Falappa
  */
 public class StringAttrsDialog extends BaseDialog {
@@ -33,6 +36,7 @@ public class StringAttrsDialog extends BaseDialog {
         super(parent, modal);
         dlmStrings = new DefaultListModel<>();
         initComponents();
+        getRootPane().setDefaultButton(bOk);
     }
 
     public SpecAttr getAttr() {

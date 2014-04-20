@@ -19,7 +19,10 @@ import main.specattrs.FloatSpecAttr;
 import main.specattrs.SpecAttr;
 
 /**
- *
+ * Dialog for specific attributes of type float.
+ * <p>
+ * A name and a float range are requested.
+ * <p>
  * @author Alessandro Falappa
  */
 public class FloatAttrsDialog extends BaseDialog {
@@ -27,6 +30,7 @@ public class FloatAttrsDialog extends BaseDialog {
     public FloatAttrsDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        getRootPane().setDefaultButton(bOk);
     }
 
     public SpecAttr getAttr() {

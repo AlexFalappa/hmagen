@@ -19,7 +19,10 @@ import main.specattrs.IntSpecAttr;
 import main.specattrs.SpecAttr;
 
 /**
- *
+ * Dialog for specific attributes of type integer.
+ * <p>
+ * A name and an integer range are requested.
+ * <p>
  * @author Alessandro Falappa
  */
 public class IntAttrsDialog extends BaseDialog {
@@ -27,6 +30,7 @@ public class IntAttrsDialog extends BaseDialog {
     public IntAttrsDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        getRootPane().setDefaultButton(bOk);
     }
 
     public SpecAttr getAttr() {
