@@ -51,6 +51,7 @@ public class SetOfValsDialog extends javax.swing.JDialog {
             }
         }
         initComponents();
+        getRootPane().setDefaultButton(bOk);
         tfItem.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
