@@ -59,4 +59,19 @@ public class Utils {
         return ret;
     }
 
+    /**
+     * Converts an <tt>ArrayList</tt> into a <tt>DefaultListModel</tt> object.
+     * <p>
+     * @param <T>  the elements type
+     * @param list an ArrayList to convert
+     * @return a DefaultListModel containing the list elements
+     */
+    public static <T> DefaultListModel<T> listAsListModel(ArrayList<T> list) {
+        DefaultListModel<T> ret = new DefaultListModel<>();
+        for (T elem : list) {
+            ret.addElement(elem);
+        }
+        return ret;
+    }
+
 }
