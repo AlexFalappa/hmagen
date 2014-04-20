@@ -36,8 +36,9 @@ import main.HmaGenSettings;
 import main.specattrs.SpecAttr;
 
 /**
- *
- * @author sasha
+ * Worker thread for actual metadata generation.
+ * <p>
+ * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class CalcModelWorker extends SwingWorker<Map, Integer> {
 

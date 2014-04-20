@@ -20,8 +20,9 @@ import main.App;
 import main.HmaGenSettings;
 
 /**
- *
- * @author sasha
+ * Panel for EOArchiving extrinsic object attributes.
+ * <p>
+ * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class EOArchivingPanel extends javax.swing.JPanel {
 

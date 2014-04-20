@@ -22,7 +22,7 @@ import javax.swing.JComponent;
 /**
  * Class of static utility methods for GUI classes.
  * <p/>
- * @author Alessandro Falappa
+ * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class Utils {
 

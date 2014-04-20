@@ -22,7 +22,7 @@ import java.util.HashSet;
 /**
  * Settings data object.
  * <p/>
- * @author sasha
+ * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class HmaGenSettings {
 

@@ -20,7 +20,7 @@ import java.util.Random;
 /**
  * HMA Specific Attribute generation interface.
  * <p>
- * @author Alessandro Falappa
+ * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public interface SpecAttr {
 

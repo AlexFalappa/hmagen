@@ -20,8 +20,9 @@ import main.App;
 import main.HmaGenSettings;
 
 /**
- *
- * @author sasha
+ * First panel for EOProduct extrinsic object attributes.
+ * <p>
+ * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class EOProductPanel extends javax.swing.JPanel {
 

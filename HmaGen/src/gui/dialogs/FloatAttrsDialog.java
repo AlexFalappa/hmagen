@@ -23,7 +23,7 @@ import main.specattrs.SpecAttr;
  * <p>
  * A name and a float range are requested.
  * <p>
- * @author Alessandro Falappa
+ * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class FloatAttrsDialog extends BaseDialog {
 

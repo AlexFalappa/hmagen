@@ -20,8 +20,9 @@ import main.App;
 import main.HmaGenSettings;
 
 /**
- *
- * @author sasha
+ * Panel for EOProduct extrinsic object SAR attributes.
+ * <p>
+ * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class EOProductSarPanel extends javax.swing.JPanel {
 

@@ -18,8 +18,9 @@ package gui.panels;
 import gui.Utils;
 
 /**
- *
- * @author sasha
+ * Panel for EOProduct extrinsic object optical attributes.
+ * <p>
+ * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class EOProductOptPanel extends javax.swing.JPanel {
 

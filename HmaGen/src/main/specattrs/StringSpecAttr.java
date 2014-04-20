@@ -21,7 +21,7 @@ import java.util.Random;
 /**
  * HMA specific attribute of String datatype.
  * <p>
- * @author Alessandro Falappa
+ * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class StringSpecAttr implements SpecAttr {
 

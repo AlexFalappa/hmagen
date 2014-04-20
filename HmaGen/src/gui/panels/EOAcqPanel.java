@@ -20,8 +20,9 @@ import main.App;
 import main.HmaGenSettings;
 
 /**
- *
- * @author sasha
+ * Panel for EOAcquisition extrinsic object attributes.
+ * <p>
+ * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class EOAcqPanel extends javax.swing.JPanel {
 

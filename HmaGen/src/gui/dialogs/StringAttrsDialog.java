@@ -26,7 +26,7 @@ import main.specattrs.StringSpecAttr;
  * <p>
  * A name and a list of strings are requested.
  * <p>
- * @author Alessandro Falappa
+ * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class StringAttrsDialog extends BaseDialog {
 
