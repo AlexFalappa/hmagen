@@ -245,6 +245,22 @@ xmlns:gml="http://www.opengis.net/gml">
 </rim:ValueList>
 </rim:Slot>
 </#if>
+<#if rec.specAttrs??>
+<rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::vendorSpecificAttributes" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+<rim:ValueList>
+<#list rec.specAttrs as attr>
+<rim:Value>${attr[0]}</rim:Value>
+</#list>
+</rim:ValueList>
+</rim:Slot>
+<rim:Slot name="urn:ogc:def:slot:OGC-CSW-ebRIM-EO::vendorSpecificValues" slotType="urn:oasis:names:tc:ebxml-regrep:DataType:String">
+<rim:ValueList>
+<#list rec.specAttrs as attr>
+<rim:Value>${attr[1]}</rim:Value>
+</#list>
+</rim:ValueList>
+</rim:Slot>
+</#if>
 </rim:ExtrinsicObject>
 <#if rec.archCenter??>
 <rim:ExtrinsicObject id="${rec.prodId}:ARCH" objectType="urn:ogc:def:objectType:OGC-CSW-ebRIM-EO::EOArchivingInformation">
