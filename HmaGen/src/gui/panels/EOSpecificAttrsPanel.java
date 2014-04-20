@@ -20,6 +20,7 @@ import gui.dialogs.BaseDialog;
 import gui.dialogs.FloatAttrsDialog;
 import gui.dialogs.IntAttrsDialog;
 import gui.dialogs.StringAttrsDialog;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import main.App;
@@ -32,7 +33,7 @@ import main.specattrs.SpecAttr;
  */
 public class EOSpecificAttrsPanel extends javax.swing.JPanel {
 
-    public final DefaultListModel<SpecAttr> dlmAttrs;
+    public DefaultListModel<SpecAttr> dlmAttrs;
 
     /**
      * Creates new form EOSpecificAttrsPanel
@@ -40,6 +41,11 @@ public class EOSpecificAttrsPanel extends javax.swing.JPanel {
     public EOSpecificAttrsPanel() {
         dlmAttrs = new DefaultListModel<>();
         initComponents();
+    }
+
+    public void applySettings(ArrayList<SpecAttr> specAttrsList) {
+        dlmAttrs = Utils.listAsListModel(specAttrsList);
+        lAttrs.setModel(dlmAttrs);
     }
 
     /**
@@ -59,9 +65,9 @@ public class EOSpecificAttrsPanel extends javax.swing.JPanel {
         lAttrs = new javax.swing.JList();
 
         chGenSpecific.setText("Generate");
-        chGenSpecific.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chGenSpecificActionPerformed(evt);
+        chGenSpecific.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chGenSpecificItemStateChanged(evt);
             }
         });
 
@@ -157,11 +163,6 @@ public class EOSpecificAttrsPanel extends javax.swing.JPanel {
             dlmAttrs.removeElementAt(lAttrs.getSelectedIndex());
     }//GEN-LAST:event_bDelActionPerformed
 
-    private void chGenSpecificActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chGenSpecificActionPerformed
-        Utils.widgetsEnable(chGenSpecific.isSelected(), lAttrs, bAddString, bAddInt, bAddFloat,
-                bDel);
-    }//GEN-LAST:event_chGenSpecificActionPerformed
-
     private void bAddFloatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddFloatActionPerformed
         FloatAttrsDialog d = new FloatAttrsDialog(App.mf, true);
         askAndAddAttr(d);
@@ -172,11 +173,18 @@ public class EOSpecificAttrsPanel extends javax.swing.JPanel {
         askAndAddAttr(d);
     }//GEN-LAST:event_bAddIntActionPerformed
 
+    private void chGenSpecificItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chGenSpecificItemStateChanged
+        Utils.widgetsEnable(chGenSpecific.isSelected(), lAttrs, bAddString, bAddInt, bAddFloat,
+                bDel);
+    }//GEN-LAST:event_chGenSpecificItemStateChanged
+
     private void askAndAddAttr(BaseDialog d) {
         d.setLocationRelativeTo(this);
         d.setVisible(true);
         if (d.getOption() == JOptionPane.OK_OPTION) {
-            dlmAttrs.addElement(d.getAttr());
+            final SpecAttr attribute = d.getAttr();
+            dlmAttrs.addElement(attribute);
+            App.mf.specAttrToSettings(attribute);
         }
     }
 

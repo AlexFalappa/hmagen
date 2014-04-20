@@ -18,6 +18,7 @@ package main;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import main.specattrs.SpecAttr;
 
 /**
  * Settings data object.
@@ -46,11 +47,13 @@ public class HmaGenSettings {
     public static final String ACQ_STATIONS = "Acq. Stations";
     public static final String ACQ_TYPE = "Acq. Types";
     public static final String ACQ_SUBTYPE = "Acq. Subtypes";
+    public static final String SPEC_ATTRS = "Spec.Attrs.";
     public HashSet<String> chkbEnabled = new HashSet<>();
     public HashMap<String, Object> spinnersMap = new HashMap<>();
     public HashMap<String, Object> combosMap = new HashMap<>();
     public HashMap<String, String> textfieldsMap = new HashMap<>();
     public HashMap<String, ArrayList<String>> valMap = new HashMap<>();
+    public ArrayList<SpecAttr> specAttrsList = new ArrayList<>();
 
     public HmaGenSettings() {
         ArrayList<String> strs = new ArrayList<>();

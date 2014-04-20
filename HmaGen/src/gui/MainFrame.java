@@ -37,6 +37,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import main.HmaGenSettings;
+import main.specattrs.SpecAttr;
 
 /**
  * Main application window.
@@ -46,7 +47,7 @@ import main.HmaGenSettings;
 public class MainFrame extends javax.swing.JFrame {
 
     private final Configuration cfg = new Configuration();
-    private XStream xstream = new XStream(new StaxDriver());
+    private final XStream xstream = new XStream(new StaxDriver());
     Template template = null;
     HmaGenSettings settings = new HmaGenSettings();
     CalcModelWorker cmWorker = null;
@@ -91,6 +92,7 @@ public class MainFrame extends javax.swing.JFrame {
         chk2vals.put(HmaGenSettings.SWATH_IDS, pAcq.chSwthId);
         chk2vals.put(HmaGenSettings.QLOOK_URLS, pBrws.chQlkUrl);
         chk2vals.put(HmaGenSettings.THUMB_URLS, pBrws.chGenBrwsInfo);
+        chk2vals.put(HmaGenSettings.SPEC_ATTRS, pSpecAttr.chGenSpecific);
     }
 
     public void showValsDialog(String title) {
@@ -99,6 +101,10 @@ public class MainFrame extends javax.swing.JFrame {
         pid.setLocationRelativeTo(this);
         pid.setVisible(true);
         settings.valMap.put(title, pid.getValList());
+    }
+
+    public void specAttrToSettings(SpecAttr attr) {
+        settings.specAttrsList.add(attr);
     }
 
     /**
@@ -320,6 +326,8 @@ public class MainFrame extends javax.swing.JFrame {
             applySettings(pAcq.getClass(), pAcq);
             applySettings(pArch.getClass(), pArch);
             applySettings(pBrws.getClass(), pBrws);
+            applySettings(pSpecAttr.getClass(), pSpecAttr);
+            pSpecAttr.applySettings(settings.specAttrsList);
             lastConfigLoadDir = jfc.getSelectedFile().getParentFile();
         }
     }//GEN-LAST:event_bLoadActionPerformed
@@ -390,11 +398,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void applySettings(Class c, Object instance) {
         for (String ch : settings.chkbEnabled) {
             try {
-                ((JCheckBox) c.getDeclaredField(ch).get(instance)).setSelected(
-                        true);
+                ((JCheckBox) c.getDeclaredField(ch).get(instance)).setSelected(true);
             } catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(),
-                        "Load error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!",
+                        JOptionPane.ERROR_MESSAGE);
             } catch (NoSuchFieldException ignored) {
             }
         }
@@ -402,11 +409,10 @@ public class MainFrame extends javax.swing.JFrame {
             String cb = e.getKey();
             Object val = e.getValue();
             try {
-                ((JComboBox) c.getDeclaredField(cb).get(instance))
-                        .setSelectedItem(val);
+                ((JComboBox) c.getDeclaredField(cb).get(instance)).setSelectedItem(val);
             } catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(),
-                        "Load error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!",
+                        JOptionPane.ERROR_MESSAGE);
             } catch (NoSuchFieldException ignored) {
             }
         }
@@ -416,8 +422,8 @@ public class MainFrame extends javax.swing.JFrame {
             try {
                 ((JSpinner) c.getDeclaredField(sp).get(instance)).setValue(val);
             } catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(),
-                        "Load error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!",
+                        JOptionPane.ERROR_MESSAGE);
             } catch (NoSuchFieldException ignored) {
             }
         }
@@ -427,8 +433,8 @@ public class MainFrame extends javax.swing.JFrame {
             try {
                 ((JTextField) c.getDeclaredField(tf).get(instance)).setText(val);
             } catch (SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(),
-                        "Load error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Load error!",
+                        JOptionPane.ERROR_MESSAGE);
             } catch (NoSuchFieldException ignored) {
             }
         }
@@ -438,8 +444,8 @@ public class MainFrame extends javax.swing.JFrame {
         for (String vals : settings.valMap.keySet()) {
             if (chk2vals.get(vals).isSelected() && settings.valMap.get(vals)
                     .size() == 0) {
-                JOptionPane.showMessageDialog(this, "No " + vals + " values!",
-                        "Error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No " + vals + " values!", "Error!",
+                        JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -447,8 +453,7 @@ public class MainFrame extends javax.swing.JFrame {
         Date to = (Date) pProd.spSensTo.getValue();
         if (pProd.chSensing.isSelected() && from.after(to)) {
             tabPane.setSelectedComponent(pProd);
-            JOptionPane.showMessageDialog(this,
-                    "Bad sensing time generation interval!", "Error!",
+            JOptionPane.showMessageDialog(this, "Bad sensing time generation interval!", "Error!",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -456,17 +461,15 @@ public class MainFrame extends javax.swing.JFrame {
         to = (Date) pProd2.spAcqDateTo.getValue();
         if (pProd2.chAcqDate.isSelected() && from.after(to)) {
             tabPane.setSelectedComponent(pProd2);
-            JOptionPane.showMessageDialog(this,
-                    "Bad acquisition date generation interval!", "Error!",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Bad acquisition date generation interval!",
+                    "Error!", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         from = (Date) pArch.spArdtFrom.getValue();
         to = (Date) pArch.spArdtTo.getValue();
         if (pArch.chArchDate.isSelected() && from.after(to)) {
             tabPane.setSelectedComponent(pArch);
-            JOptionPane.showMessageDialog(this,
-                    "Bad archiving date generation interval!", "Error!",
+            JOptionPane.showMessageDialog(this, "Bad archiving date generation interval!", "Error!",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -474,8 +477,7 @@ public class MainFrame extends javax.swing.JFrame {
         Integer high = (Integer) pProdOpt.spCldCovTo.getValue();
         if (pProdOpt.chCloudCov.isSelected() && low > high) {
             tabPane.setSelectedComponent(pProdOpt);
-            JOptionPane.showMessageDialog(this,
-                    "Bad cloud coverage generation interval!", "Error!",
+            JOptionPane.showMessageDialog(this, "Bad cloud coverage generation interval!", "Error!",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -483,8 +485,7 @@ public class MainFrame extends javax.swing.JFrame {
         high = (Integer) pProdOpt.spSnwCovTo.getValue();
         if (pProdOpt.chSnowCov.isSelected() && low > high) {
             tabPane.setSelectedComponent(pProdOpt);
-            JOptionPane.showMessageDialog(this,
-                    "Bad snow coverage generation interval!", "Error!",
+            JOptionPane.showMessageDialog(this, "Bad snow coverage generation interval!", "Error!",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -492,8 +493,7 @@ public class MainFrame extends javax.swing.JFrame {
         high = (Integer) pProd.spOrbitTo.getValue();
         if (pProd.chOrbitNum.isSelected() && low > high) {
             tabPane.setSelectedComponent(pProd);
-            JOptionPane.showMessageDialog(this,
-                    "Bad orbit number generation interval!", "Error!",
+            JOptionPane.showMessageDialog(this, "Bad orbit number generation interval!", "Error!",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -501,57 +501,45 @@ public class MainFrame extends javax.swing.JFrame {
         high = (Integer) pAcq.spResTo.getValue();
         if (pAcq.chRes.isSelected() && low > high) {
             tabPane.setSelectedComponent(pAcq);
-            JOptionPane.showMessageDialog(this,
-                    "Bad sensor resolution generation interval!", "Error!",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Bad sensor resolution generation interval!",
+                    "Error!", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (pProd.chFootprint.isSelected() && !checkRange(pProd.spFtMinLat,
-                pProd.spFtMaxLat, pProd,
+        if (pProd.chFootprint.isSelected() && !checkRange(pProd.spFtMinLat, pProd.spFtMaxLat, pProd,
                 "Bad latitude range for footprint generation region!"))
             return false;
-        if (pProd.chFootprint.isSelected() && !checkRange(pProd.spFtMinLon,
-                pProd.spFtMaxLon, pProd,
+        if (pProd.chFootprint.isSelected() && !checkRange(pProd.spFtMinLon, pProd.spFtMaxLon, pProd,
                 "Bad longitude range for footprint generation region!"))
             return false;
-        if (pProd2.chAcrIncid.isSelected() && !checkRange(pProd2.spAcrIncidFrom,
-                pProd2.spAcrIncidTo, pProd2,
-                "Bad across track incidence angle generation range!"))
+        if (pProd2.chAcrIncid.isSelected() && !checkRange(pProd2.spAcrIncidFrom, pProd2.spAcrIncidTo,
+                pProd2, "Bad across track incidence angle generation range!"))
             return false;
-        if (pProd2.chAlonIncid.isSelected() && !checkRange(
-                pProd2.spAlonIncidFrom, pProd2.spAlonIncidTo, pProd2,
-                "Bad along track incidence angle generation range!"))
+        if (pProd2.chAlonIncid.isSelected() && !checkRange(pProd2.spAlonIncidFrom,
+                pProd2.spAlonIncidTo, pProd2, "Bad along track incidence angle generation range!"))
             return false;
-        if (pProd2.chWRSLat.isSelected() && !checkRange(pProd2.spWRSLatFrom,
-                pProd2.spWRSLatTo, pProd2,
-                "Bad WRS latitude generation range!"))
+        if (pProd2.chWRSLat.isSelected() && !checkRange(pProd2.spWRSLatFrom, pProd2.spWRSLatTo,
+                pProd2, "Bad WRS latitude generation range!"))
             return false;
-        if (pProd2.chWRSLon.isSelected() && !checkRange(pProd2.spWRSLonFrom,
-                pProd2.spWRSLonTo, pProd2, "Bad WRS longitude generation range!"))
+        if (pProd2.chWRSLon.isSelected() && !checkRange(pProd2.spWRSLonFrom, pProd2.spWRSLonTo,
+                pProd2, "Bad WRS longitude generation range!"))
             return false;
-        if (pProd2.chANX.isSelected() && !checkRange(pProd2.spANXFrom,
-                pProd2.spANXTo, pProd2,
+        if (pProd2.chANX.isSelected() && !checkRange(pProd2.spANXFrom, pProd2.spANXTo, pProd2,
                 "Bad ascending node longitude generation range!"))
             return false;
-        if (pProd2.chIncid.isSelected() && !checkRange(pProd2.spIncidAngFrom,
-                pProd2.spIncidAngTo, pProd2,
-                "Bad incidence angle generation range!"))
+        if (pProd2.chIncid.isSelected() && !checkRange(pProd2.spIncidAngFrom, pProd2.spIncidAngTo,
+                pProd2, "Bad incidence angle generation range!"))
             return false;
-        if (pProdSar.chMinIncidAng.isSelected() && !checkRange(
-                pProdSar.spMinIaFrom, pProdSar.spMinIaTo, pProdSar,
-                "Bad minimum incidence angle generation range!"))
+        if (pProdSar.chMinIncidAng.isSelected() && !checkRange(pProdSar.spMinIaFrom,
+                pProdSar.spMinIaTo, pProdSar, "Bad minimum incidence angle generation range!"))
             return false;
-        if (pProdSar.chMaxIncidAng.isSelected() && !checkRange(
-                pProdSar.spMaxIaFrom, pProdSar.spMaxIaTo, pProdSar,
-                "Bad maximum incidence angle generation range!"))
+        if (pProdSar.chMaxIncidAng.isSelected() && !checkRange(pProdSar.spMaxIaFrom,
+                pProdSar.spMaxIaTo, pProdSar, "Bad maximum incidence angle generation range!"))
             return false;
-        if (pProdOpt.chIllumElev.isSelected() && !checkRange(
-                pProdOpt.spIllElevFrom, pProdOpt.spIllElevTo, pProdOpt,
-                "Bad illumination elevation angle generation range!"))
+        if (pProdOpt.chIllumElev.isSelected() && !checkRange(pProdOpt.spIllElevFrom,
+                pProdOpt.spIllElevTo, pProdOpt, "Bad illumination elevation angle generation range!"))
             return false;
-        if (pProdOpt.chIllumAzim.isSelected() && !checkRange(
-                pProdOpt.spIllAzimFrom, pProdOpt.spIllAzimTo, pProdOpt,
-                "Bad illumination azimuth angle generation range!"))
+        if (pProdOpt.chIllumAzim.isSelected() && !checkRange(pProdOpt.spIllAzimFrom,
+                pProdOpt.spIllAzimTo, pProdOpt, "Bad illumination azimuth angle generation range!"))
             return false;
         return true;
     }
@@ -561,8 +549,7 @@ public class MainFrame extends javax.swing.JFrame {
         double max = (double) to.getValue();
         if (min > max) {
             tabPane.setSelectedComponent(tab);
-            JOptionPane.showMessageDialog(this, errMex, "Error!",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, errMex, "Error!", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
