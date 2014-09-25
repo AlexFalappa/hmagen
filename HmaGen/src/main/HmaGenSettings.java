@@ -103,4 +103,10 @@ public class HmaGenSettings {
         valMap.put(HmaGenSettings.ACQ_STATIONS, new ArrayList<String>());
         valMap.put(HmaGenSettings.ACQ_SUBTYPE, new ArrayList<String>());
     }
+
+    @Override
+    public String toString() {
+        return "HmaGenSettings{" + "chkbEnabled=" + chkbEnabled + ", spinnersMap=" + spinnersMap + ", combosMap=" + combosMap + ", textfieldsMap=" + textfieldsMap + ", valMap=" + valMap + ", specAttrsList=" + specAttrsList + '}';
+    }
+
 }
