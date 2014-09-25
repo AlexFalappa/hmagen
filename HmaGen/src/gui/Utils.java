@@ -15,6 +15,8 @@
  */
 package gui;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
@@ -40,6 +42,21 @@ public class Utils {
      */
     public static void widgetsEnable(boolean flag, JComponent... comps) {
         for (JComponent cmp : comps) {
+            cmp.setEnabled(flag);
+        }
+    }
+
+    /**
+     * Enable/disable all the widgets in a <tt>Container</tt>.
+     * <p/>
+     * @param flag      the enable/disable flag
+     * @param container the container
+     */
+    public static void containerEnable(boolean flag, Container container) {
+        for (Component cmp : container.getComponents()) {
+            if (cmp instanceof Container) {
+                containerEnable(flag, (Container) cmp);
+            }
             cmp.setEnabled(flag);
         }
     }
