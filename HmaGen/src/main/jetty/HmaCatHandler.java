@@ -15,11 +15,13 @@
  */
 package main.jetty;
 
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import gui.TemplateModelCalculator;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import main.HmaGenSettings;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
@@ -29,18 +31,31 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
  */
 public class HmaCatHandler extends AbstractHandler {
 
-    HmaGenSettings genSettings;
+    private final Template template;
+    private TemplateModelCalculator tmc;
 
-    public void setGenSettings(HmaGenSettings genSettings) {
-        this.genSettings = genSettings;
+    public HmaCatHandler(Template template) {
+        this.template = template;
+    }
+
+    public void setTemplateCalculator(TemplateModelCalculator tmc) {
+        this.tmc = tmc;
     }
 
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         baseRequest.setHandled(true);
-        response.setContentType("text/plain");
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().println(genSettings.toString());
+        try {
+            if (tmc == null) {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            } else {
+                response.setContentType("application/xml");
+                response.setStatus(HttpServletResponse.SC_OK);
+                template.process(tmc.calcModel(), response.getWriter());
+            }
+        } catch (TemplateException ex) {
+            throw new ServletException(ex);
+        }
     }
 
 }

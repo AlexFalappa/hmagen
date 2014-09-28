@@ -58,12 +58,11 @@ public class MainFrame extends javax.swing.JFrame {
     private File lastGenerationDir = null;
     private File lastConfigLoadDir = null;
     private File lastConfigSaveDir = null;
-    private final FileNameExtensionFilter hmagenFF = new FileNameExtensionFilter(
-            "HmaGen configuration files (*.hmagen)", "hmagen");
-    private final FileNameExtensionFilter hmaFF = new FileNameExtensionFilter(
-            "HMA GetRecords files (*.xml)", "xml");
+    private final FileNameExtensionFilter hmagenFF = new FileNameExtensionFilter("HmaGen configuration files (*.hmagen)", "hmagen");
+    private final FileNameExtensionFilter hmaFF = new FileNameExtensionFilter("HMA GetRecords files (*.xml)", "xml");
     private Server serv;
     private HmaCatHandler catHandler;
+    private TemplateModelCalculator modelCalculator;
 
     /**
      * Creates new form MainFrame
@@ -77,6 +76,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (IOException ignored) {
         }
         initComponents();
+        pProgress.setVisible(false);
         chk2vals.put(HmaGenSettings.ARCHIVING_CENTERS, pArch.chGenArchInfo);
         chk2vals.put(HmaGenSettings.ARCHIVING_IDS, pArch.chArchId);
         chk2vals.put(HmaGenSettings.PARENT_IDENTIFIERS, pProd.chParentId);
@@ -196,8 +196,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        pProgress.setEnabled(false);
-
         chStripSpace.setText("Strip leading whitespace");
         chStripSpace.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,7 +222,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tabPane)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(bGenerate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,9 +230,9 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(lRecs)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bServe)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bLoad)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bSave))
@@ -282,26 +280,22 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGenerateActionPerformed
-        if (cmWorker != null) {
-            cmWorker.cancel(false);
-        } else {
-            if (checkAllValid()) {
-                JFileChooser jfc = new JFileChooser();
-                jfc.setFileFilter(hmaFF);
-                if (lastGenerationDir != null)
-                    jfc.setCurrentDirectory(lastGenerationDir);
-                if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = jfc.getSelectedFile();
-                    if (selectedFile != null) {
-                        if (!selectedFile.getName().endsWith(".xml")) {
-                            selectedFile = new File(selectedFile.getAbsolutePath() + ".xml");
-                        }
-                        cmWorker = new CalcModelWorker(this, selectedFile);
-                        bGenerate.setText("Cancel");
-                        pProgress.setMaximum((int) spNumRecs.getValue());
-                        cmWorker.execute();
-                        lastGenerationDir = selectedFile.getParentFile();
+        if (checkAllValid()) {
+            JFileChooser jfc = new JFileChooser();
+            jfc.setFileFilter(hmaFF);
+            if (lastGenerationDir != null)
+                jfc.setCurrentDirectory(lastGenerationDir);
+            if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = jfc.getSelectedFile();
+                if (selectedFile != null) {
+                    if (!selectedFile.getName().endsWith(".xml")) {
+                        selectedFile = new File(selectedFile.getAbsolutePath() + ".xml");
                     }
+                    enableWidgets(false);
+                    bServe.setEnabled(false);
+                    cmWorker = new CalcModelWorker(this, selectedFile);
+                    cmWorker.execute();
+                    lastGenerationDir = selectedFile.getParentFile();
                 }
             }
         }
@@ -370,29 +364,29 @@ public class MainFrame extends javax.swing.JFrame {
     private void bServeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bServeActionPerformed
         if (serv == null) {
             serv = new Server(8080);
-            catHandler = new HmaCatHandler();
-            catHandler.setGenSettings(settings);
+            catHandler = new HmaCatHandler(template);
             serv.setHandler(catHandler);
         }
         try {
             if (serv.isStarted()) {
                 serv.stop();
                 bServe.setText("Start server");
-                pProgress.setIndeterminate(false);
-                enableFrame(true);
+                bGenerate.setEnabled(true);
+                enableWidgets(true);
             } else {
-                fillSettings(this.getClass(), this);
+                modelCalculator = new TemplateModelCalculator(this);
+                catHandler.setTemplateCalculator(modelCalculator);
                 serv.start();
                 bServe.setText("Stop server");
-                pProgress.setIndeterminate(true);
-                enableFrame(false);
+                bGenerate.setEnabled(false);
+                enableWidgets(false);
             }
         } catch (Exception ex) {
 
         }
     }//GEN-LAST:event_bServeActionPerformed
 
-    private void enableFrame(boolean flag) {
+    public void enableWidgets(boolean flag) {
         Utils.widgetsEnable(flag, lRecs, spNumRecs, bGenerate, bLoad, bSave, lEnvelope, cbEnvelope, chStripSpace,
                 chClassification);
         cbClassification.setEnabled(flag && chClassification.isSelected());
@@ -400,6 +394,8 @@ public class MainFrame extends javax.swing.JFrame {
             p.setEnabled(flag);
         }
         tabPane.setEnabled(flag);
+        pProgress.setVisible(!flag);
+        pProgress.setIndeterminate(!flag);
     }
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
