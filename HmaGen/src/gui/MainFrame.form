@@ -36,7 +36,7 @@
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="spNumRecs" min="-2" pref="80" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lRecs" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="bServe" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -48,7 +48,7 @@
                   </Group>
                   <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="lEnvelope" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbEnvelope" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -70,7 +70,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="pProgress" alignment="1" min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lRecs" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="spNumRecs" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="bGenerate" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="bSave" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -82,7 +82,7 @@
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lEnvelope" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cbEnvelope" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="chStripSpace" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cbClassification" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -96,7 +96,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lRecs">
       <Properties>
         <Property name="text" type="java.lang.String" value="records"/>
       </Properties>
@@ -246,7 +246,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chStripSpaceActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="lEnvelope">
       <Properties>
         <Property name="text" type="java.lang.String" value="Envelope"/>
       </Properties>

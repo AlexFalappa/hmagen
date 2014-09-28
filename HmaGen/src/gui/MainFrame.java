@@ -120,7 +120,7 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lRecs = new javax.swing.JLabel();
         spNumRecs = new javax.swing.JSpinner();
         tabPane = new javax.swing.JTabbedPane();
         pProd = new gui.panels.EOProductPanel();
@@ -139,7 +139,7 @@ public class MainFrame extends javax.swing.JFrame {
         pProgress = new javax.swing.JProgressBar();
         jSeparator1 = new javax.swing.JSeparator();
         chStripSpace = new javax.swing.JCheckBox();
-        jLabel2 = new javax.swing.JLabel();
+        lEnvelope = new javax.swing.JLabel();
         cbEnvelope = new javax.swing.JComboBox();
         bServe = new javax.swing.JButton();
 
@@ -151,7 +151,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("records");
+        lRecs.setText("records");
 
         spNumRecs.setModel(new javax.swing.SpinnerNumberModel(5, 1, 999, 10));
 
@@ -205,7 +205,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Envelope");
+        lEnvelope.setText("Envelope");
 
         cbEnvelope.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "None", "SOAP V1.1", "SOAP v1.2" }));
 
@@ -229,7 +229,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)
+                        .addComponent(lRecs)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bServe)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -240,7 +240,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(bSave))
                     .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(lEnvelope)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbEnvelope, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -258,7 +258,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pProgress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
+                        .addComponent(lRecs)
                         .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bGenerate)
                         .addComponent(bSave)
@@ -268,7 +268,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(lEnvelope)
                     .addComponent(cbEnvelope, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chStripSpace)
                     .addComponent(cbClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -379,23 +379,27 @@ public class MainFrame extends javax.swing.JFrame {
                 serv.stop();
                 bServe.setText("Start server");
                 pProgress.setIndeterminate(false);
-                enableTabPanes(true);
+                enableFrame(true);
             } else {
                 fillSettings(this.getClass(), this);
                 serv.start();
                 bServe.setText("Stop server");
                 pProgress.setIndeterminate(true);
-                enableTabPanes(false);
+                enableFrame(false);
             }
         } catch (Exception ex) {
 
         }
     }//GEN-LAST:event_bServeActionPerformed
 
-    private void enableTabPanes(boolean flag) {
+    private void enableFrame(boolean flag) {
+        Utils.widgetsEnable(flag, lRecs, spNumRecs, bGenerate, bLoad, bSave, lEnvelope, cbEnvelope, chStripSpace,
+                chClassification);
+        cbClassification.setEnabled(flag && chClassification.isSelected());
         for (Component p : tabPane.getComponents()) {
             p.setEnabled(flag);
         }
+        tabPane.setEnabled(flag);
     }
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -416,9 +420,9 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JComboBox cbEnvelope;
     javax.swing.JCheckBox chClassification;
     javax.swing.JCheckBox chStripSpace;
-    javax.swing.JLabel jLabel1;
-    javax.swing.JLabel jLabel2;
     javax.swing.JSeparator jSeparator1;
+    javax.swing.JLabel lEnvelope;
+    javax.swing.JLabel lRecs;
     gui.panels.EOAcqPanel pAcq;
     gui.panels.EOArchivingPanel pArch;
     gui.panels.EOBrowsePanel pBrws;

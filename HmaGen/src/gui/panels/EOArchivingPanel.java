@@ -34,8 +34,17 @@ public class EOArchivingPanel extends javax.swing.JPanel {
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
-        //TODO implement as in EOAcqPanel
+    public void setEnabled(boolean flag) {
+        chGenArchInfo.setEnabled(flag);
+        chArchDate.setEnabled(flag && chGenArchInfo.isSelected());
+        chArchId.setEnabled(flag && chGenArchInfo.isSelected());
+        bArCntVals.setEnabled(flag && chGenArchInfo.isSelected());
+        bArchIdVals.setEnabled(flag && chArchId.isSelected());
+        spArdtFrom.setEnabled(flag && chArchDate.isSelected());
+        spArdtTo.setEnabled(flag && chArchDate.isSelected());
+        lAr1.setEnabled(flag && chGenArchInfo.isSelected());
+        lAd1.setEnabled(flag && chArchDate.isSelected());
+        lAd2.setEnabled(flag && chArchDate.isSelected());
     }
 
     /**

@@ -36,22 +36,22 @@ public class EOAcqPanel extends javax.swing.JPanel {
     @Override
     public void setEnabled(boolean flag) {
         chGenAcqPlat.setEnabled(flag);
-        chRes.setEnabled(flag);
-        chSensMode.setEnabled(flag);
-        chSensName.setEnabled(flag);
-        chSensType.setEnabled(flag);
-        chSerId.setEnabled(flag);
-        chSwthId.setEnabled(flag);
+        chRes.setEnabled(flag && chGenAcqPlat.isSelected());
+        chSensMode.setEnabled(flag && chGenAcqPlat.isSelected());
+        chSensName.setEnabled(flag && chGenAcqPlat.isSelected());
+        chSensType.setEnabled(flag && chGenAcqPlat.isSelected());
+        chSerId.setEnabled(flag && chGenAcqPlat.isSelected());
+        chSwthId.setEnabled(flag && chGenAcqPlat.isSelected());
         bPlatnVals.setEnabled(flag && chGenAcqPlat.isSelected());
-        lAq1.setEnabled(flag && chGenAcqPlat.isSelected());
         bSensModeVals.setEnabled(flag && chSensMode.isSelected());
         bSensNameVals.setEnabled(flag && chSensName.isSelected());
         bSensTypVals.setEnabled(flag && chSensType.isSelected());
         bSerIdVals.setEnabled(flag && chSerId.isSelected());
         bSwthVals.setEnabled(flag && chSwthId.isSelected());
         spResFrom.setEnabled(flag && chRes.isSelected());
-        lRs1.setEnabled(flag && chRes.isSelected());
         spResTo.setEnabled(flag && chRes.isSelected());
+        lAq1.setEnabled(flag && chGenAcqPlat.isSelected());
+        lRs1.setEnabled(flag && chRes.isSelected());
         lRs2.setEnabled(flag && chRes.isSelected());
     }
 

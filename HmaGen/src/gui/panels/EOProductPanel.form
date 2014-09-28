@@ -128,9 +128,9 @@
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                      <Component id="lPrefix" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tfPrefix" min="-2" pref="300" max="-2" attributes="0"/>
+                      <Component id="txPrefix" min="-2" pref="300" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="20" max="32767" attributes="0"/>
@@ -142,8 +142,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfPrefix" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lPrefix" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txPrefix" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
@@ -464,13 +464,13 @@
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfPrefix">
+    <Component class="javax.swing.JTextField" name="txPrefix">
       <Properties>
         <Property name="columns" type="int" value="30"/>
         <Property name="text" type="java.lang.String" value="prod"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel8">
+    <Component class="javax.swing.JLabel" name="lPrefix">
       <Properties>
         <Property name="text" type="java.lang.String" value="Product identifier Prefix"/>
       </Properties>
