@@ -76,7 +76,6 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (IOException ignored) {
         }
         initComponents();
-        pProgress.setVisible(false);
         chk2vals.put(HmaGenSettings.ARCHIVING_CENTERS, pArch.chGenArchInfo);
         chk2vals.put(HmaGenSettings.ARCHIVING_IDS, pArch.chArchId);
         chk2vals.put(HmaGenSettings.PARENT_IDENTIFIERS, pProd.chParentId);
@@ -137,7 +136,6 @@ public class MainFrame extends javax.swing.JFrame {
         bSave = new javax.swing.JButton();
         bLoad = new javax.swing.JButton();
         pProgress = new javax.swing.JProgressBar();
-        jSeparator1 = new javax.swing.JSeparator();
         chStripSpace = new javax.swing.JCheckBox();
         lEnvelope = new javax.swing.JLabel();
         cbEnvelope = new javax.swing.JComboBox();
@@ -198,6 +196,10 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.UIDefaults d = new javax.swing.UIDefaults();
+        d.put("ProgressBar[Enabled+Indeterminate].foregroundPainter", new IndeterminateRegionPainter());
+        pProgress.putClientProperty("Nimbus.Overrides", d);
+
         chStripSpace.setText("Strip leading whitespace");
         chStripSpace.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,6 +229,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pProgress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tabPane)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(bGenerate)
@@ -235,10 +238,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lRecs)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bLoad))
-                    .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lEnvelope)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -269,12 +269,10 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(pProgress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lRecs)
-                            .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bGenerate)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lRecs)
+                        .addComponent(spNumRecs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bGenerate))
                     .addComponent(bLoad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -282,9 +280,9 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(bSave)
                     .addComponent(chCollsFromReq)
                     .addComponent(chRandomize))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lEnvelope)
                     .addComponent(cbEnvelope, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -292,7 +290,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(cbClassification, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chClassification))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabPane)
+                .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -414,7 +412,6 @@ public class MainFrame extends javax.swing.JFrame {
             p.setEnabled(flag);
         }
         tabPane.setEnabled(flag);
-        pProgress.setVisible(!flag);
         pProgress.setIndeterminate(!flag);
     }
 
@@ -438,7 +435,6 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JCheckBox chCollsFromReq;
     javax.swing.JCheckBox chRandomize;
     javax.swing.JCheckBox chStripSpace;
-    javax.swing.JSeparator jSeparator1;
     javax.swing.JLabel lEnvelope;
     javax.swing.JLabel lRecs;
     gui.panels.EOAcqPanel pAcq;

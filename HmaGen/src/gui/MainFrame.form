@@ -27,9 +27,10 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="pProgress" max="32767" attributes="0"/>
                   <Component id="tabPane" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="bGenerate" linkSize="1" min="-2" max="-2" attributes="0"/>
@@ -38,11 +39,8 @@
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="lRecs" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="pProgress" min="-2" pref="148" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="bLoad" linkSize="2" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lEnvelope" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -73,13 +71,10 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="pProgress" alignment="1" min="-2" pref="27" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lRecs" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="spNumRecs" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="bGenerate" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lRecs" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="spNumRecs" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="bGenerate" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="bLoad" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -90,9 +85,9 @@
                   <Component id="chCollsFromReq" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="chRandomize" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="pProgress" min="-2" pref="15" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lEnvelope" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cbEnvelope" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -101,7 +96,7 @@
                   <Component id="chClassification" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="tabPane" max="32767" attributes="0"/>
+              <Component id="tabPane" pref="428" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -244,8 +239,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JProgressBar" name="pProgress">
-    </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator1">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="javax.swing.UIDefaults d = new javax.swing.UIDefaults();&#xa;d.put(&quot;ProgressBar[Enabled+Indeterminate].foregroundPainter&quot;, new IndeterminateRegionPainter());&#xa;pProgress.putClientProperty(&quot;Nimbus.Overrides&quot;, d);"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JCheckBox" name="chStripSpace">
       <Properties>
