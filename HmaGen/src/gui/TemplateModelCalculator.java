@@ -45,6 +45,7 @@ public class TemplateModelCalculator {
     private final HashMap<String, Double> doubles = new HashMap<>();
     private ArrayList<SpecAttr> lAttrs = new ArrayList<>();
     private String classification = "";
+    private boolean randomize;
 
     public TemplateModelCalculator(MainFrame mf) {
         this.mf = mf;
@@ -100,8 +101,6 @@ public class TemplateModelCalculator {
         doubles.put("maxIncidDelta", (Double) mf.pProdSar.spMaxIaTo.getValue() - doubles.get("maxIncidFrom"));
         // retrieve specific attributes
         lAttrs = Utils.listModelAsList(mf.pSpecAttr.dlmAttrs);
-        // record number
-        nRecs = (Integer) mf.spNumRecs.getValue();
         // prepare classification string
         switch (mf.cbClassification.getSelectedItem().toString()) {
             case "Optical":
@@ -114,6 +113,10 @@ public class TemplateModelCalculator {
                 classification = "ATM";
                 break;
         }
+    }
+
+    public void setRandomize(boolean randomize) {
+        this.randomize = randomize;
     }
 
     public Map calcModel() {
@@ -129,6 +132,12 @@ public class TemplateModelCalculator {
                 break;
             default:
                 model.put("envelope", "");
+        }
+        // record number
+        if (randomize) {
+            nRecs = rng.nextInt((Integer) mf.spNumRecs.getValue() + 1);
+        } else {
+            nRecs = (Integer) mf.spNumRecs.getValue();
         }
         // generate metadata values and fill model
         List<Map<String, Object>> records = new ArrayList<>();

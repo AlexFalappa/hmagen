@@ -393,7 +393,9 @@ public class MainFrame extends javax.swing.JFrame {
                 enableWidgets(true);
             } else {
                 modelCalculator = new TemplateModelCalculator(this);
+                modelCalculator.setRandomize(chRandomize.isSelected());
                 catHandler.setTemplateCalculator(modelCalculator);
+                catHandler.setCollectionFromRequest(chCollsFromReq.isSelected());
                 serv.start();
                 bServe.setText("Stop server");
                 bGenerate.setEnabled(false);

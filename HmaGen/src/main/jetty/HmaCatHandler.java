@@ -58,4 +58,7 @@ public class HmaCatHandler extends AbstractHandler {
         }
     }
 
+    public void setCollectionFromRequest(boolean selected) {
+    }
+
 }
