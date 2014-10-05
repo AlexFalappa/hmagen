@@ -68,7 +68,7 @@ public class EOSpecificAttrsPanel extends javax.swing.JPanel {
         bAddFloat = new javax.swing.JButton();
         bDel = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        lAttrs = new javax.swing.JList();
+        lAttrs = new javax.swing.JList<SpecAttr>();
 
         chGenSpecific.setText("Generate");
         chGenSpecific.addItemListener(new java.awt.event.ItemListener() {
@@ -200,6 +200,6 @@ public class EOSpecificAttrsPanel extends javax.swing.JPanel {
     public javax.swing.JButton bDel;
     public javax.swing.JCheckBox chGenSpecific;
     public javax.swing.JScrollPane jScrollPane2;
-    public javax.swing.JList lAttrs;
+    public javax.swing.JList<SpecAttr> lAttrs;
     // End of variables declaration//GEN-END:variables
 }
