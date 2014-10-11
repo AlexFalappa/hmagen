@@ -51,7 +51,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private final Configuration cfg = new Configuration();
     private final XStream xstream = new XStream(new StaxDriver());
-    Template template = null;
+    Template templateResults = null;
+    Template templateHits = null;
     HmaGenSettings settings = new HmaGenSettings();
     CalcModelWorker cmWorker = null;
     HashMap<String, JCheckBox> chk2vals = new HashMap<>();
@@ -72,7 +73,8 @@ public class MainFrame extends javax.swing.JFrame {
         try {
             cfg.setClassForTemplateLoading(MainFrame.class, "templates");
             cfg.setObjectWrapper(new DefaultObjectWrapper());
-            template = cfg.getTemplate("getrecords-response.ftl");
+            templateResults = cfg.getTemplate("getrecords-response.ftl");
+            templateHits = cfg.getTemplate("getrecords-hits-response.ftl");
         } catch (IOException ignored) {
         }
         initComponents();
@@ -370,9 +372,11 @@ public class MainFrame extends javax.swing.JFrame {
     private void chStripSpaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chStripSpaceActionPerformed
         try {
             if (chStripSpace.isSelected()) {
-                template = cfg.getTemplate("getrecords-response-compact.ftl");
+                templateResults = cfg.getTemplate("getrecords-response-compact.ftl");
+                templateResults = cfg.getTemplate("getrecords-hits-response-compact.ftl");
             } else {
-                template = cfg.getTemplate("getrecords-response.ftl");
+                templateResults = cfg.getTemplate("getrecords-response.ftl");
+                templateHits = cfg.getTemplate("getrecords-hits-response.ftl");
             }
         } catch (IOException ex) {
             //ignored
@@ -382,7 +386,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void bServeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bServeActionPerformed
         if (serv == null) {
             serv = new Server(8080);
-            catHandler = new HmaCatHandler(template);
+            catHandler = new HmaCatHandler(templateHits, templateResults);
             serv.setHandler(catHandler);
         }
         try {

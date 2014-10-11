@@ -40,6 +40,7 @@ public class TemplateModelCalculator {
     private Random rng;
     private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
     private Integer nRecs;
+    ArrayList<String> collections = new ArrayList<>();
     private final HashMap<String, Long> millis = new HashMap<>();
     private final HashMap<String, Integer> ints = new HashMap<>();
     private final HashMap<String, Double> doubles = new HashMap<>();
@@ -115,8 +116,16 @@ public class TemplateModelCalculator {
         }
     }
 
-    public void setRandomize(boolean randomize) {
-        this.randomize = randomize;
+    public void setRandomize(boolean flag) {
+        randomize = flag;
+    }
+
+    public void setCollectionFromRequest(ArrayList<String> collections) {
+        if (collections != null) {
+            this.collections = collections;
+        } else {
+            this.collections = mf.settings.valMap.get(HmaGenSettings.PARENT_IDENTIFIERS);
+        }
     }
 
     public Map calcModel() {
@@ -195,12 +204,10 @@ public class TemplateModelCalculator {
     }
 
     private void genEOProduct(Map<String, Object> rec, String classification) {
-        ArrayList<String> vals = mf.settings.valMap.get(
-                HmaGenSettings.PARENT_IDENTIFIERS);
-        if (mf.pProd.chParentId.isSelected() && vals != null) {
-            genValue("parentId", rec, vals);
+        if (mf.pProd.chParentId.isSelected()) {
+            genValue("parentId", rec, collections);
         }
-        vals = mf.settings.valMap.get(HmaGenSettings.PRODUCT_TYPES);
+        ArrayList<String> vals = mf.settings.valMap.get(HmaGenSettings.PRODUCT_TYPES);
         if (mf.pProd.chPrdType.isSelected() && vals != null) {
             genValue("prdType", rec, vals);
         }

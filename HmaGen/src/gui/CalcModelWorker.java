@@ -53,7 +53,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         try {
             Map model = get();
             try (Writer out = new BufferedWriter(new FileWriter(file))) {
-                mf.template.process(model, out);
+                mf.templateResults.process(model, out);
                 mf.enableWidgets(true);
                 mf.bServe.setEnabled(true);
                 JOptionPane.showMessageDialog(mf, String.format("Generated %s products to:\n%s", mf.spNumRecs.getValue(), file
