@@ -114,6 +114,10 @@ public class TemplateModelCalculator {
                 classification = "ATM";
                 break;
         }
+        // collections from settings as default
+        if (mf.settings.valMap.containsKey(HmaGenSettings.PARENT_IDENTIFIERS)) {
+            collections = mf.settings.valMap.get(HmaGenSettings.PARENT_IDENTIFIERS);
+        }
     }
 
     public void setRandomize(boolean flag) {
@@ -121,10 +125,8 @@ public class TemplateModelCalculator {
     }
 
     public void setCollectionFromRequest(ArrayList<String> collections) {
-        if (collections != null) {
+        if (collections != null && !collections.isEmpty()) {
             this.collections = collections;
-        } else {
-            this.collections = mf.settings.valMap.get(HmaGenSettings.PARENT_IDENTIFIERS);
         }
     }
 
@@ -204,7 +206,7 @@ public class TemplateModelCalculator {
     }
 
     private void genEOProduct(Map<String, Object> rec, String classification) {
-        if (mf.pProd.chParentId.isSelected()) {
+        if (mf.pProd.chParentId.isSelected() && collections != null && !collections.isEmpty()) {
             genValue("parentId", rec, collections);
         }
         ArrayList<String> vals = mf.settings.valMap.get(HmaGenSettings.PRODUCT_TYPES);
