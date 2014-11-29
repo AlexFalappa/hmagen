@@ -21,10 +21,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+import main.App;
 
 /**
  * Worker thread for actual metadata generation.
@@ -54,8 +56,10 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             Map model = get();
             try (Writer out = new BufferedWriter(new FileWriter(file))) {
                 mf.templateResults.process(model, out);
-                JOptionPane.showMessageDialog(mf, String.format("Generated %s products to:\n%s", mf.spNumRecs.getValue(), file
-                        .getAbsolutePath()), "Success", JOptionPane.INFORMATION_MESSAGE);
+                final int nRecs = ((List) model.get("records")).size();
+                App.metrics.counter("generator.totalRecs").inc(nRecs);
+                JOptionPane.showMessageDialog(mf, String.format("Generated %s products to:\n%s", nRecs, file.getAbsolutePath()), "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (ExecutionException | InterruptedException | IOException | TemplateException ex) {
             JOptionPane.showMessageDialog(mf, ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);

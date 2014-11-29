@@ -31,6 +31,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+import main.App;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
@@ -79,8 +80,9 @@ public class HmaCatHandler extends AbstractHandler {
                 }
                 response.setContentType("application/xml");
                 final Map model = tmc.calcModel();
-                System.out.print("Records ");
-                System.out.println(((List) model.get("records")).size());
+                final int nRecs = ((List) model.get("records")).size();
+                System.out.printf("Records %d%n", nRecs);
+                App.metrics.counter("server.totalRecs").inc(nRecs);
                 if (reqIsHits) {
                     templateHits.process(model, response.getWriter());
                 } else {

@@ -37,6 +37,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import main.App;
 import main.HmaGenSettings;
 import main.jetty.HmaCatHandler;
 import main.specattrs.SpecAttr;
@@ -419,6 +420,7 @@ public class MainFrame extends javax.swing.JFrame {
                 bServe.setText("Start server");
                 bGenerate.setEnabled(true);
                 enableWidgets(true);
+                App.metrics.counter("server.activations").inc();
             } else {
                 modelCalculator = new TemplateModelCalculator(this);
                 modelCalculator.setRandomize(chRandomize.isSelected());
