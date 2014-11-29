@@ -18,4 +18,23 @@ Features
 * Import/Export of generation settings
 * Generation in worker thread with progress notification
 * Serving trough an embedded Jetty HTTP server
+* In server mode the number of records can be randomized and the parent identifiers can be those of the request
+* Statistics are collected in server mode and shown when server is stopped - **TODO**
 * Before generation settings are validated (e.g. intervals with end greater than beginning, allowed value lists not empty, etc.)
+
+##Changelog
+
+### V. 0.2
+
+??-Nov-2014
+
+* Transitioned to maven build tool
+* It's now possible to specify the server port
+* Logging trough SLF4J api with Logback implementation
+* Statistics trough Dropwizard Metrics library - **TODO**
+
+### V. 0.1
+
+2014-2013
+
+* Initial release as NetBeans project
