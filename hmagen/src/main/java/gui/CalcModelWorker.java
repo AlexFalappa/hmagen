@@ -54,13 +54,14 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
             Map model = get();
             try (Writer out = new BufferedWriter(new FileWriter(file))) {
                 mf.templateResults.process(model, out);
-                mf.enableWidgets(true);
-                mf.bServe.setEnabled(true);
                 JOptionPane.showMessageDialog(mf, String.format("Generated %s products to:\n%s", mf.spNumRecs.getValue(), file
                         .getAbsolutePath()), "Success", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (ExecutionException | InterruptedException | IOException | TemplateException ex) {
             JOptionPane.showMessageDialog(mf, ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            mf.enableWidgets(true);
+            mf.bServe.setEnabled(true);
         }
     }
 }
