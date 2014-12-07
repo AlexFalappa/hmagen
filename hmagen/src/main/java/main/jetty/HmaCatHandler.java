@@ -92,6 +92,8 @@ public class HmaCatHandler extends AbstractHandler {
             }
         } catch (TemplateException ex) {
             throw new ServletException(ex);
+        } catch (Exception ex) {
+            throw new ServletException(ex);
         }
     }
 
@@ -118,9 +120,9 @@ public class HmaCatHandler extends AbstractHandler {
             if (tagName.contains("GetRecords")) {
                 reqIsHits = element.getAttributeByName(new QName("resultType")).getValue().equalsIgnoreCase("hits");
                 if (reqIsHits) {
-                    System.out.print("HITS ");
+                    System.out.println("HITS ");
                 } else {
-                    System.out.print("RESULTS ");
+                    System.out.println("RESULTS ");
                 }
             } else if (tagName.contains("PropertyName")) {
                 if (xrd.getElementText().contains("parentIdentifier")) {

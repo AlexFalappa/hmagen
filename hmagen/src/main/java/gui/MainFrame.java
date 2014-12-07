@@ -41,6 +41,7 @@ import main.App;
 import main.HmaGenSettings;
 import main.jetty.HmaCatHandler;
 import main.specattrs.SpecAttr;
+import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 
@@ -407,6 +408,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         if (servConn == null) {
             servConn = new ServerConnector(serv);
+            serv.setConnectors(new Connector[]{servConn});
         }
         try {
             servConn.setPort(Integer.parseInt(txServPort.getText()));
