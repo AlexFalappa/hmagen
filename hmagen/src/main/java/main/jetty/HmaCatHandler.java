@@ -35,6 +35,8 @@ import javax.xml.stream.events.XMLEvent;
 import main.App;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -42,6 +44,7 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
  */
 public class HmaCatHandler extends AbstractHandler {
 
+    private static final Logger logger = LoggerFactory.getLogger(HmaCatHandler.class);
     private final Template templateResults;
     private final Template templateHits;
     private TemplateModelCalculator tmc;
@@ -59,40 +62,45 @@ public class HmaCatHandler extends AbstractHandler {
     }
 
     public void setTemplateCalculator(TemplateModelCalculator tmc) {
+        if (tmc == null) {
+            throw new IllegalArgumentException("Null template calculator!");
+        }
         this.tmc = tmc;
     }
 
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        baseRequest.setHandled(true);
         final Timer.Context timerCtx = App.metrics.timer("server.resp.time").time();
         try {
-            if (tmc == null) {
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            } else {
-                try {
-                    analyzeReq(request);
-                } catch (XMLStreamException ex) {
-                    throw new ServletException(ex.getMessage());
-                }
-                if (collsFromReq && !reqColls.isEmpty()) {
-                    tmc.setCollectionFromRequest(reqColls);
-                } else {
-                    tmc.setCollectionFromRequest(null);
-                }
-                response.setContentType("application/xml");
-                final Map model = tmc.calcModel();
-                final int nRecs = ((List) model.get("records")).size();
-                System.out.printf("Records %d%n", nRecs);
-                App.metrics.counter("server.recs.total").inc(nRecs);
-                App.metrics.histogram("server.recs.histogram").update(nRecs);
-                if (reqIsHits) {
-                    templateHits.process(model, response.getWriter());
-                } else {
-                    templateResults.process(model, response.getWriter());
-                }
-                response.setStatus(HttpServletResponse.SC_OK);
+            baseRequest.setHandled(true);
+            try {
+                analyzeReq(request);
+            } catch (XMLStreamException ex) {
+                throw new ServletException(ex.getMessage());
             }
+            if (collsFromReq && !reqColls.isEmpty()) {
+                tmc.setCollectionFromRequest(reqColls);
+            } else {
+                tmc.setCollectionFromRequest(null);
+            }
+            response.setContentType("application/xml");
+            final Map model = tmc.calcModel();
+            final int nRecs = ((List) model.get("records")).size();
+            if (reqIsHits) {
+                templateHits.process(model, response.getWriter());
+            } else {
+                templateResults.process(model, response.getWriter());
+            }
+            response.setStatus(HttpServletResponse.SC_OK);
+            logger.info("Responded with {} recs", nRecs);
+            // statistics gathering
+            if (reqIsHits) {
+                App.metrics.counter("server.reqs.hits").inc();
+            } else {
+                App.metrics.counter("server.reqs.results").inc();
+            }
+            App.metrics.counter("server.recs.total").inc(nRecs);
+            App.metrics.histogram("server.recs.histogram").update(nRecs);
         } catch (TemplateException ex) {
             throw new ServletException(ex);
         } catch (Exception ex) {
@@ -124,11 +132,6 @@ public class HmaCatHandler extends AbstractHandler {
             String tagName = element.getName().getLocalPart();
             if (tagName.contains("GetRecords")) {
                 reqIsHits = element.getAttributeByName(new QName("resultType")).getValue().equalsIgnoreCase("hits");
-                if (reqIsHits) {
-                    System.out.println("HITS ");
-                } else {
-                    System.out.println("RESULTS ");
-                }
             } else if (tagName.contains("PropertyName")) {
                 if (xrd.getElementText().contains("parentIdentifier")) {
                     xev = xrd.nextEvent();
@@ -139,9 +142,12 @@ public class HmaCatHandler extends AbstractHandler {
                 }
             }
         }
-        System.out.print("collections ");
-        System.out.println(reqColls);
         xrd.close();
+        if (reqIsHits) {
+            logger.info("HITS with collections {}", reqColls);
+        } else {
+            logger.info("RESULTS with collections {}", reqColls);
+        }
     }
 
 }

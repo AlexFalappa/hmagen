@@ -37,7 +37,7 @@ public class App {
     public static void main(String[] args) {
         // setup statistics reporter
         final Slf4jReporter reporter = Slf4jReporter.forRegistry(metrics)
-                .outputTo(LoggerFactory.getLogger("hmagen.server.statistics"))
+                .outputTo(LoggerFactory.getLogger("hmagen.statistics"))
                 .convertRatesTo(TimeUnit.SECONDS)
                 .convertDurationsTo(TimeUnit.MILLISECONDS)
                 .build();
