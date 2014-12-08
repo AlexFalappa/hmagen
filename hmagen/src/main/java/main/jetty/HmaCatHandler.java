@@ -15,6 +15,7 @@
  */
 package main.jetty;
 
+import com.codahale.metrics.Timer;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import gui.TemplateModelCalculator;
@@ -64,6 +65,7 @@ public class HmaCatHandler extends AbstractHandler {
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         baseRequest.setHandled(true);
+        final Timer.Context timerCtx = App.metrics.timer("server.resp.time").time();
         try {
             if (tmc == null) {
                 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -82,7 +84,8 @@ public class HmaCatHandler extends AbstractHandler {
                 final Map model = tmc.calcModel();
                 final int nRecs = ((List) model.get("records")).size();
                 System.out.printf("Records %d%n", nRecs);
-                App.metrics.counter("server.totalRecs").inc(nRecs);
+                App.metrics.counter("server.recs.total").inc(nRecs);
+                App.metrics.histogram("server.recs.histogram").update(nRecs);
                 if (reqIsHits) {
                     templateHits.process(model, response.getWriter());
                 } else {
@@ -94,6 +97,8 @@ public class HmaCatHandler extends AbstractHandler {
             throw new ServletException(ex);
         } catch (Exception ex) {
             throw new ServletException(ex);
+        } finally {
+            timerCtx.stop();
         }
     }
 
