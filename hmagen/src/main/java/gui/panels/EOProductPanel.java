@@ -16,18 +16,36 @@
 package gui.panels;
 
 import gui.Utils;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JSpinner;
 import main.App;
 import main.HmaGenSettings;
 
 /**
  * First panel for EOProduct extrinsic object attributes.
- * <p>
+ *
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class EOProductPanel extends javax.swing.JPanel {
 
+    private final DefaultComboBoxModel<FootprintPreset> dcbPresets = new DefaultComboBoxModel<>();
+
+    {
+        dcbPresets.addElement(new FootprintPreset("---", 0, 0, 0, 0));
+        dcbPresets.addElement(new FootprintPreset("Africa", -35, -20, 40, 60));
+        dcbPresets.addElement(new FootprintPreset("Asia", 10, 30, 81, 180));
+        dcbPresets.addElement(new FootprintPreset("Europe", 34, -10, 72, 42));
+        dcbPresets.addElement(new FootprintPreset("North America", 5, -170, 85, -50));
+        dcbPresets.addElement(new FootprintPreset("Oceania", -50, 90, 20, 180));
+        dcbPresets.addElement(new FootprintPreset("South America", -60, -85, 15, -30));
+    }
+
     public EOProductPanel() {
         initComponents();
+        ((JSpinner.DefaultEditor) spFtMinLat.getEditor()).getTextField().setColumns(5);
+        ((JSpinner.DefaultEditor) spFtMaxLat.getEditor()).getTextField().setColumns(5);
+        ((JSpinner.DefaultEditor) spFtMinLon.getEditor()).getTextField().setColumns(5);
+        ((JSpinner.DefaultEditor) spFtMaxLon.getEditor()).getTextField().setColumns(5);
     }
 
     @Override
@@ -49,8 +67,8 @@ public class EOProductPanel extends javax.swing.JPanel {
         Utils.widgetsEnable(flag && chSensing.isSelected(), lSt1, lSt2, lSt3, spSensFrom, spSensTo, spDuration, cbDurationUnit);
         Utils.widgetsEnable(flag && chOrbitNum.isSelected(), lOn1, lOn2, spOrbitFrom, spOrbitTo, chLastOrbitOfs);
         Utils.widgetsEnable(flag && chOrbitNum.isSelected() && chLastOrbitOfs.isSelected(), spLstOrbitOfs, lOf1);
-        Utils.widgetsEnable(flag && chFootprint.isSelected(), lF1, lF2, lF3, lF4, lF5, lF6, spFtMaxLat, spFtMaxLon, spFtMinLat,
-                spFtMinLon, spHeight, spWidth, chCenter);
+        Utils.widgetsEnable(flag && chFootprint.isSelected(), lF1, lF2, lF3, lF4, lF5, lF6, lF7, spFtMaxLat, spFtMaxLon, spFtMinLat,
+                spFtMinLon, spHeight, spWidth, chCenter, cbFtPreset);
     }
 
     public void setParentIdFromRequest(boolean b) {
@@ -68,7 +86,6 @@ public class EOProductPanel extends javax.swing.JPanel {
         spHeight = new javax.swing.JSpinner();
         chCenter = new javax.swing.JCheckBox();
         spWidth = new javax.swing.JSpinner();
-        lF2 = new javax.swing.JLabel();
         lSt3 = new javax.swing.JLabel();
         spSensFrom = new javax.swing.JSpinner();
         spSensTo = new javax.swing.JSpinner();
@@ -80,13 +97,10 @@ public class EOProductPanel extends javax.swing.JPanel {
         lOf1 = new javax.swing.JLabel();
         spLstOrbitOfs = new javax.swing.JSpinner();
         chSensing = new javax.swing.JCheckBox();
-        lF1 = new javax.swing.JLabel();
         chFootprint = new javax.swing.JCheckBox();
         lSt1 = new javax.swing.JLabel();
-        lF5 = new javax.swing.JLabel();
         spOrbitFrom = new javax.swing.JSpinner();
         spOrbitTo = new javax.swing.JSpinner();
-        spFtMaxLon = new javax.swing.JSpinner();
         lOn2 = new javax.swing.JLabel();
         chOrbitNum = new javax.swing.JCheckBox();
         lOn1 = new javax.swing.JLabel();
@@ -96,15 +110,21 @@ public class EOProductPanel extends javax.swing.JPanel {
         cbDurationUnit = new javax.swing.JComboBox();
         txPrefix = new javax.swing.JTextField();
         lPrefix = new javax.swing.JLabel();
+        chOrbitDir = new javax.swing.JCheckBox();
+        bOrbDirVals = new javax.swing.JButton();
+        lF1 = new javax.swing.JLabel();
+        lF2 = new javax.swing.JLabel();
         lF3 = new javax.swing.JLabel();
         lSt2 = new javax.swing.JLabel();
         lF4 = new javax.swing.JLabel();
+        lF5 = new javax.swing.JLabel();
+        lF6 = new javax.swing.JLabel();
+        lF7 = new javax.swing.JLabel();
+        spFtMaxLon = new javax.swing.JSpinner();
         spFtMaxLat = new javax.swing.JSpinner();
         spFtMinLon = new javax.swing.JSpinner();
-        lF6 = new javax.swing.JLabel();
         spFtMinLat = new javax.swing.JSpinner();
-        chOrbitDir = new javax.swing.JCheckBox();
-        bOrbDirVals = new javax.swing.JButton();
+        cbFtPreset = new javax.swing.JComboBox<FootprintPreset>();
 
         spHeight.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0E-4d, 90.0d, 0.01d));
         spHeight.setEditor(new javax.swing.JSpinner.NumberEditor(spHeight, "##.######"));
@@ -116,9 +136,6 @@ public class EOProductPanel extends javax.swing.JPanel {
         spWidth.setModel(new javax.swing.SpinnerNumberModel(2.0d, 1.0E-4d, 90.0d, 0.01d));
         spWidth.setEditor(new javax.swing.JSpinner.NumberEditor(spWidth, "##.######"));
         spWidth.setEnabled(false);
-
-        lF2.setText("max height");
-        lF2.setEnabled(false);
 
         lSt3.setText("to");
         lSt3.setEnabled(false);
@@ -182,9 +199,6 @@ public class EOProductPanel extends javax.swing.JPanel {
             }
         });
 
-        lF1.setText("max width");
-        lF1.setEnabled(false);
-
         chFootprint.setText("Footprint");
         chFootprint.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -195,18 +209,11 @@ public class EOProductPanel extends javax.swing.JPanel {
         lSt1.setText("from");
         lSt1.setEnabled(false);
 
-        lF5.setText("min lon");
-        lF5.setEnabled(false);
-
         spOrbitFrom.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(5)));
         spOrbitFrom.setEnabled(false);
 
         spOrbitTo.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(0), null, Integer.valueOf(5)));
         spOrbitTo.setEnabled(false);
-
-        spFtMaxLon.setModel(new javax.swing.SpinnerNumberModel(180.0d, -180.0d, 180.0d, 0.01d));
-        spFtMaxLon.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMaxLon, "##.######"));
-        spFtMaxLon.setEnabled(false);
 
         lOn2.setText("to");
         lOn2.setEnabled(false);
@@ -248,30 +255,6 @@ public class EOProductPanel extends javax.swing.JPanel {
 
         lPrefix.setText("Product identifier Prefix");
 
-        lF3.setText("within min lat");
-        lF3.setEnabled(false);
-
-        lSt2.setText("max duration");
-        lSt2.setEnabled(false);
-
-        lF4.setText("max lat");
-        lF4.setEnabled(false);
-
-        spFtMaxLat.setModel(new javax.swing.SpinnerNumberModel(90.0d, -90.0d, 90.0d, 0.01d));
-        spFtMaxLat.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMaxLat, "##.######"));
-        spFtMaxLat.setEnabled(false);
-
-        spFtMinLon.setModel(new javax.swing.SpinnerNumberModel(-180.0d, -180.0d, 180.0d, 0.01d));
-        spFtMinLon.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMinLon, "##.######"));
-        spFtMinLon.setEnabled(false);
-
-        lF6.setText("max lon");
-        lF6.setEnabled(false);
-
-        spFtMinLat.setModel(new javax.swing.SpinnerNumberModel(-90.0d, -90.0d, 90.0d, 0.01d));
-        spFtMinLat.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMinLat, "##.######"));
-        spFtMinLat.setEnabled(false);
-
         chOrbitDir.setText("Orbit direction");
         chOrbitDir.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -284,6 +267,54 @@ public class EOProductPanel extends javax.swing.JPanel {
         bOrbDirVals.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bOrbDirValsActionPerformed(evt);
+            }
+        });
+
+        lF1.setText("max width");
+        lF1.setEnabled(false);
+
+        lF2.setText("max height");
+        lF2.setEnabled(false);
+
+        lF3.setText("within min lat");
+        lF3.setEnabled(false);
+
+        lSt2.setText("max duration");
+        lSt2.setEnabled(false);
+
+        lF4.setText("max lat");
+        lF4.setEnabled(false);
+
+        lF5.setText("min lon");
+        lF5.setEnabled(false);
+
+        lF6.setText("max lon");
+        lF6.setEnabled(false);
+
+        lF7.setText("Preset");
+        lF7.setEnabled(false);
+
+        spFtMaxLon.setModel(new javax.swing.SpinnerNumberModel(180.0d, -180.0d, 180.0d, 0.01d));
+        spFtMaxLon.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMaxLon, "##.######"));
+        spFtMaxLon.setEnabled(false);
+
+        spFtMaxLat.setModel(new javax.swing.SpinnerNumberModel(90.0d, -90.0d, 90.0d, 0.01d));
+        spFtMaxLat.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMaxLat, "##.######"));
+        spFtMaxLat.setEnabled(false);
+
+        spFtMinLon.setModel(new javax.swing.SpinnerNumberModel(-180.0d, -180.0d, 180.0d, 0.01d));
+        spFtMinLon.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMinLon, "##.######"));
+        spFtMinLon.setEnabled(false);
+
+        spFtMinLat.setModel(new javax.swing.SpinnerNumberModel(-90.0d, -90.0d, 90.0d, 0.01d));
+        spFtMinLat.setEditor(new javax.swing.JSpinner.NumberEditor(spFtMinLat, "##.######"));
+        spFtMinLat.setEnabled(false);
+
+        cbFtPreset.setModel(dcbPresets);
+        cbFtPreset.setEnabled(false);
+        cbFtPreset.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbFtPresetItemStateChanged(evt);
             }
         });
 
@@ -355,36 +386,43 @@ public class EOProductPanel extends javax.swing.JPanel {
                                                 .addComponent(bOrbDirVals))
                                             .addComponent(chOrbitDir)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lF1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(spWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lF2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(chCenter))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(lF3)
-                                            .addComponent(lF5))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(spFtMinLon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(spFtMinLat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lF1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(spWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lF2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(spHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(lF3)
+                                                    .addComponent(lF5))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(spFtMinLon)
+                                                    .addComponent(spFtMinLat))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lF4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(lF6, javax.swing.GroupLayout.Alignment.TRAILING))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(spFtMaxLon)
+                                                    .addComponent(spFtMaxLat))))
+                                        .addGap(6, 6, 6)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lF4, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(lF6, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(spFtMaxLon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(spFtMaxLat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lF7)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(cbFtPreset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(chCenter)))))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lPrefix)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -449,7 +487,9 @@ public class EOProductPanel extends javax.swing.JPanel {
                     .addComponent(lF3)
                     .addComponent(spFtMinLat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lF4)
-                    .addComponent(spFtMaxLat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spFtMaxLat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lF7)
+                    .addComponent(cbFtPreset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(spFtMinLon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -482,19 +522,16 @@ public class EOProductPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_chLastOrbitOfsItemStateChanged
 
     private void chSensingItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chSensingItemStateChanged
-        Utils.widgetsEnable(chSensing.isSelected(), spSensFrom, spSensTo,
-                spDuration, cbDurationUnit, lSt1, lSt2, lSt3);
+        Utils.widgetsEnable(chSensing.isSelected(), spSensFrom, spSensTo, spDuration, cbDurationUnit, lSt1, lSt2, lSt3);
     }//GEN-LAST:event_chSensingItemStateChanged
 
     private void chFootprintItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chFootprintItemStateChanged
-        Utils.widgetsEnable(chFootprint.isSelected(), spWidth, spHeight,
-                spFtMinLat, spFtMaxLat, spFtMinLon, spFtMaxLon, chCenter, lF1,
-                lF2, lF3, lF4, lF5, lF6);
+        Utils.widgetsEnable(chFootprint.isSelected(), spWidth, spHeight, spFtMinLat, spFtMaxLat, spFtMinLon, spFtMaxLon, chCenter,
+                cbFtPreset, lF1, lF2, lF3, lF4, lF5, lF6, lF7);
     }//GEN-LAST:event_chFootprintItemStateChanged
 
     private void chOrbitNumItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chOrbitNumItemStateChanged
-        Utils.widgetsEnable(chOrbitNum.isSelected(), spOrbitFrom, spOrbitTo, lOn1,
-                lOn2, chLastOrbitOfs);
+        Utils.widgetsEnable(chOrbitNum.isSelected(), spOrbitFrom, spOrbitTo, lOn1, lOn2, chLastOrbitOfs);
         boolean flag = chOrbitNum.isSelected() && chLastOrbitOfs.isSelected();
         spLstOrbitOfs.setEnabled(flag);
         lOf1.setEnabled(flag);
@@ -515,12 +552,26 @@ public class EOProductPanel extends javax.swing.JPanel {
     private void chOrbitDirItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chOrbitDirItemStateChanged
         bOrbDirVals.setEnabled(chOrbitDir.isSelected());
     }//GEN-LAST:event_chOrbitDirItemStateChanged
+
+    private void cbFtPresetItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbFtPresetItemStateChanged
+        if (cbFtPreset.getSelectedIndex() >= 0) {
+            FootprintPreset fp = cbFtPreset.getModel().getElementAt(cbFtPreset.getSelectedIndex());
+            if (!fp.name.equals("---")) {
+                spFtMinLat.setValue(fp.minLat);
+                spFtMaxLat.setValue(fp.maxLat);
+                spFtMinLon.setValue(fp.minLon);
+                spFtMaxLon.setValue(fp.maxLon);
+            }
+        }
+    }//GEN-LAST:event_cbFtPresetItemStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton bOrbDirVals;
     public javax.swing.JButton bParentIdVals;
     public javax.swing.JButton bPrdTypeVals;
     public javax.swing.JButton bStatusVals;
     public javax.swing.JComboBox cbDurationUnit;
+    public javax.swing.JComboBox<FootprintPreset> cbFtPreset;
     public javax.swing.JCheckBox chCenter;
     public javax.swing.JCheckBox chFootprint;
     public javax.swing.JCheckBox chLastOrbitOfs;
@@ -536,6 +587,7 @@ public class EOProductPanel extends javax.swing.JPanel {
     public javax.swing.JLabel lF4;
     public javax.swing.JLabel lF5;
     public javax.swing.JLabel lF6;
+    public javax.swing.JLabel lF7;
     public javax.swing.JLabel lOf1;
     public javax.swing.JLabel lOn1;
     public javax.swing.JLabel lOn2;
@@ -557,4 +609,27 @@ public class EOProductPanel extends javax.swing.JPanel {
     public javax.swing.JSpinner spWidth;
     public javax.swing.JTextField txPrefix;
     // End of variables declaration//GEN-END:variables
+
+    final class FootprintPreset {
+
+        String name;
+        double minLat;
+        double maxLat;
+        double minLon;
+        double maxLon;
+
+        public FootprintPreset(String name, double minLat, double minLon, double maxLat, double maxLon) {
+            this.name = name;
+            this.minLat = minLat;
+            this.maxLat = maxLat;
+            this.minLon = minLon;
+            this.maxLon = maxLon;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+
+    }
 }
