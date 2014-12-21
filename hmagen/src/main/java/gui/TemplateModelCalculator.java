@@ -181,16 +181,14 @@ public class TemplateModelCalculator {
     private void genFootprintAndCenter(Map<String, Object> rec) {
         double mxH = (double) mf.pProd.spHeight.getValue();
         double mxW = (double) mf.pProd.spWidth.getValue();
-        double minLatCen = (double) mf.pProd.spFtMinLat.getValue() + mxH;
-        double maxLatCen = (double) mf.pProd.spFtMaxLat.getValue() - mxH;
-        double minLonCen = (double) mf.pProd.spFtMinLon.getValue() + mxW;
-        double maxLonCen = (double) mf.pProd.spFtMaxLon.getValue() - mxW;
+        double minLatCen = (double) mf.pProd.spFtMinLat.getValue() + mxH / 2.0;
+        double maxLatCen = (double) mf.pProd.spFtMaxLat.getValue() - mxH / 2.0;
+        double minLonCen = (double) mf.pProd.spFtMinLon.getValue() + mxW / 2.0;
+        double maxLonCen = (double) mf.pProd.spFtMaxLon.getValue() - mxW / 2.0;
         double cenLat = minLatCen + rng.nextDouble() * (maxLatCen - minLatCen);
         double cenLon = minLonCen + rng.nextDouble() * (maxLonCen - minLonCen);
         double h2 = rng.nextDouble() * mxH / 2.0;
         double w2 = rng.nextDouble() * mxW / 2.0;
-        double top = -90.0 + rng.nextDouble() * 180.0;
-        double left = -180.0 + rng.nextDouble() * 360.0;
         StringBuilder sb = new StringBuilder();
         sb.append(String.valueOf(cenLat + h2)).append(' ').append(String.valueOf(cenLon - w2)).append(' ');
         sb.append(String.valueOf(cenLat + h2)).append(' ').append(String.valueOf(cenLon + w2)).append(' ');
