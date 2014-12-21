@@ -13,7 +13,7 @@ Features
 * A classification can be generated too
 * Up to two `EOBrowseInformation` objects can be generated: thumbnail and quicklook
 * Option to link thumbnail and quicklook attributes (same index in the list of values)
-* Footprint can be restricted to a geographical range (min/max lat/lon)
+* Footprint can be restricted to a geographical range (min/max lat/lon), quick choice via presets
 * Generated GetRecordsResponse can be without leading spaces and optionally wrapped in SOAPV1.1 or SOAPV1.2 envelopes
 * Import/Export of generation settings
 * Generation in worker thread with progress notification
@@ -26,12 +26,13 @@ Features
 
 ### V. 0.2
 
-??-Nov-2014
+22-Dec-2014
 
 * Transitioned to maven build tool
 * It's now possible to specify the server port
 * Logging trough SLF4J api with Logback implementation
 * Statistics trough Dropwizard Metrics library
+* Footprint generation area presets
 
 ### V. 0.1
 
