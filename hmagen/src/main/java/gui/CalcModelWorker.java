@@ -15,6 +15,7 @@
  */
 package gui;
 
+import com.codahale.metrics.Timer;
 import freemarker.template.TemplateException;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -47,17 +48,21 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
 
     @Override
     protected Map doInBackground() throws Exception {
-        return modelCalculator.calcModel();
+        final Timer.Context timerCtx = App.metrics.timer("generator.gen.time").time();
+        Map ret = modelCalculator.calcModel();
+        timerCtx.stop();
+        return ret;
     }
 
     @Override
     protected void done() {
+        final Timer.Context timerCtx = App.metrics.timer("generator.write.time").time();
         try {
             Map model = get();
             try (Writer out = new BufferedWriter(new FileWriter(file))) {
                 mf.templateResults.process(model, out);
                 final int nRecs = ((List) model.get("records")).size();
-                App.metrics.counter("generator.totalRecs").inc(nRecs);
+                App.metrics.counter("generator.recs.total").inc(nRecs);
                 JOptionPane.showMessageDialog(mf, String.format("Generated %s products to:\n%s", nRecs, file.getAbsolutePath()), "Success",
                         JOptionPane.INFORMATION_MESSAGE);
             }
@@ -66,6 +71,7 @@ public class CalcModelWorker extends SwingWorker<Map, Integer> {
         } finally {
             mf.enableWidgets(true);
             mf.bServe.setEnabled(true);
+            timerCtx.stop();
         }
     }
 }
