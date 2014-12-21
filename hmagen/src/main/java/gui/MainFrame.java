@@ -227,6 +227,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         chCollsFromReq.setText("parent id from request");
+        chCollsFromReq.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chCollsFromReqItemStateChanged(evt);
+            }
+        });
 
         chRandomize.setText("randomize record number");
 
@@ -457,6 +462,10 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void chCollsFromReqItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chCollsFromReqItemStateChanged
+        pProd.setParentIdFromRequest(chCollsFromReq.isSelected());
+    }//GEN-LAST:event_chCollsFromReqItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JButton bGenerate;
