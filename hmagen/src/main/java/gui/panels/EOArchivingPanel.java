@@ -21,7 +21,7 @@ import main.HmaGenSettings;
 
 /**
  * Panel for EOArchiving extrinsic object attributes.
- **
+ *
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class EOArchivingPanel extends javax.swing.JPanel {

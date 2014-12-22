@@ -19,7 +19,7 @@ import java.util.Random;
 
 /**
  * HMA specific attribute of Integer datatype.
- **
+ *
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class IntSpecAttr implements SpecAttr {

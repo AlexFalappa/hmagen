@@ -30,7 +30,7 @@ import javax.swing.event.DocumentListener;
 
 /**
  * Dialog for entering a set of strings.
- **
+ *
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class SetOfValsDialog extends javax.swing.JDialog {
@@ -39,7 +39,7 @@ public class SetOfValsDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form ParentIdsDialog
-     **
+     *
      * @param parent
      * @param vals
      */

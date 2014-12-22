@@ -30,7 +30,7 @@ import javax.swing.plaf.nimbus.AbstractRegionPainter;
  * NetBeans style indeterminate progress bar.
  * <p>
  * Found on http://stackoverflow.com/questions/24409879/how-to-use-netbeans-indeterminate-progress-bar-style
- **
+ *
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 class IndeterminateRegionPainter extends AbstractRegionPainter {

@@ -28,7 +28,7 @@ import main.specattrs.SpecAttr;
 
 /**
  * Panel for EOProduct vendor specific attributes.
- **
+ *
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class EOSpecificAttrsPanel extends javax.swing.JPanel {

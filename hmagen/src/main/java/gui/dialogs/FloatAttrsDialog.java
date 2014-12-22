@@ -22,7 +22,7 @@ import main.specattrs.SpecAttr;
  * Dialog for specific attributes of type float.
  * <p>
  * A name and a float range are requested.
- **
+ *
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class FloatAttrsDialog extends BaseDialog {

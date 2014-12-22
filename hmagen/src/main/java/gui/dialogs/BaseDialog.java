@@ -21,7 +21,7 @@ import main.specattrs.SpecAttr;
 
 /**
  * Base class for specific attributes dialogs.
- **
+ *
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public abstract class BaseDialog extends JDialog {
