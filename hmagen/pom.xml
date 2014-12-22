@@ -7,6 +7,9 @@
     <version>0.3</version>
     <packaging>jar</packaging>
 
+    <name>HmaGen</name>
+    <description>An HMA Catalogue simulator and GetRecords responses generator</description>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -40,6 +43,31 @@
             <version>1.1.2</version>
         </dependency>
     </dependencies>
-    <name>HmaGen</name>
-    <description>An HMA Catalogue simulator and GetRecords responses generator</description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <!--Assemble main artifact with dependencies-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <descriptorId>jar-with-dependencies</descriptorId>
+                    <archive>
+                        <manifest>
+                            <mainClass>main.App</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
