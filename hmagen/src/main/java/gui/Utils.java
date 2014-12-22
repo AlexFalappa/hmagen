@@ -63,7 +63,7 @@ public class Utils {
 
     /**
      * Converts a <tt>DefaultListModel</tt> into an <tt>ArrayList</tt> object.
-     * <p>
+     **
      * @param <T>       the elements type
      * @param listModel a DefaultListModel to convert
      * @return an ArrayList containing the list model elements
@@ -78,7 +78,7 @@ public class Utils {
 
     /**
      * Converts an <tt>ArrayList</tt> into a <tt>DefaultListModel</tt> object.
-     * <p>
+     **
      * @param <T>  the elements type
      * @param list an ArrayList to convert
      * @return a DefaultListModel containing the list elements

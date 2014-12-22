@@ -21,7 +21,7 @@ import main.HmaGenSettings;
 
 /**
  * Second panel for EOProduct extrinsic object attributes.
- * <p>
+ **
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class EOProductPanel2 extends javax.swing.JPanel {

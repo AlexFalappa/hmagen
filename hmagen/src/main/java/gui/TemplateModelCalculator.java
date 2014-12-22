@@ -31,7 +31,7 @@ import main.specattrs.SpecAttr;
  * Calculates the freemarker template model.
  * <p>
  * Uses a thread local random number generator.
- * <p>
+ **
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class TemplateModelCalculator {

@@ -25,7 +25,7 @@ import main.specattrs.StringSpecAttr;
  * Dialog for specific attributes of type string.
  * <p>
  * A name and a list of strings are requested.
- * <p>
+ **
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class StringAttrsDialog extends BaseDialog {

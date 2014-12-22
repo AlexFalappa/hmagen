@@ -21,7 +21,7 @@ import main.HmaGenSettings;
 
 /**
  * Panel for EOBrowseInformation extrinsic object attributes.
- * <p>
+ **
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class EOBrowsePanel extends javax.swing.JPanel {

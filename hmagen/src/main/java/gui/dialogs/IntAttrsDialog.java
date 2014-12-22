@@ -22,7 +22,7 @@ import main.specattrs.SpecAttr;
  * Dialog for specific attributes of type integer.
  * <p>
  * A name and an integer range are requested.
- * <p>
+ **
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class IntAttrsDialog extends BaseDialog {

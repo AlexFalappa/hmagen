@@ -19,7 +19,7 @@ import java.util.Random;
 
 /**
  * HMA specific attribute of Float datatype.
- * <p>
+ **
  * @author Alessandro Falappa <alex.falappa@gmail.com>
  */
 public class FloatSpecAttr implements SpecAttr {
