@@ -609,27 +609,27 @@ public class EOProductPanel extends javax.swing.JPanel {
     public javax.swing.JSpinner spWidth;
     public javax.swing.JTextField txPrefix;
     // End of variables declaration//GEN-END:variables
+}
 
-    final class FootprintPreset {
+final class FootprintPreset {
 
-        String name;
-        double minLat;
-        double maxLat;
-        double minLon;
-        double maxLon;
+    String name;
+    double minLat;
+    double maxLat;
+    double minLon;
+    double maxLon;
 
-        public FootprintPreset(String name, double minLat, double minLon, double maxLat, double maxLon) {
-            this.name = name;
-            this.minLat = minLat;
-            this.maxLat = maxLat;
-            this.minLon = minLon;
-            this.maxLon = maxLon;
-        }
-
-        @Override
-        public String toString() {
-            return name;
-        }
-
+    public FootprintPreset(String name, double minLat, double minLon, double maxLat, double maxLon) {
+        this.name = name;
+        this.minLat = minLat;
+        this.maxLat = maxLat;
+        this.minLon = minLon;
+        this.maxLon = maxLon;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }
