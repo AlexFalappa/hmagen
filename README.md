@@ -24,6 +24,13 @@ Features
 
 ##Changelog
 
+### V. 0.3
+
+3-Jan-2015
+
+* Fixed broken preset load/save (#3)
+* Delay log of statistics
+
 ### V. 0.2
 
 22-Dec-2014
@@ -31,8 +38,8 @@ Features
 * Transitioned to maven build tool
 * It's now possible to specify the server port
 * Logging trough SLF4J api with Logback implementation
-* Statistics trough Dropwizard Metrics library
-* Footprint generation area presets
+* Statistics trough Dropwizard Metrics library (#1)
+* Footprint generation area presets (#2)
 
 ### V. 0.1
 
