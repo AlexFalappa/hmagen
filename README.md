@@ -28,7 +28,7 @@ Features
 
 3-Jan-2015
 
-* Fixed broken preset load/save (#3)
+* Fixed broken preset load/save ([#3](/../../issues/3))
 * Delay log of statistics
 
 ### V. 0.2
@@ -38,8 +38,8 @@ Features
 * Transitioned to maven build tool
 * It's now possible to specify the server port
 * Logging trough SLF4J api with Logback implementation
-* Statistics trough Dropwizard Metrics library (#1)
-* Footprint generation area presets (#2)
+* Statistics trough Dropwizard Metrics library ([#1](/../../issues/1))
+* Footprint generation area presets ([#2](/../../issues/2))
 
 ### V. 0.1
 
