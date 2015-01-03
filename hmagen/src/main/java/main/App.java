@@ -41,7 +41,7 @@ public class App {
                 .convertRatesTo(TimeUnit.SECONDS)
                 .convertDurationsTo(TimeUnit.MILLISECONDS)
                 .build();
-        reporter.start(1, TimeUnit.MINUTES);
+        reporter.start(10, TimeUnit.MINUTES);
         // set look and feel
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
