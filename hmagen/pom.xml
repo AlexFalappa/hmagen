@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>9.2.28.v20190418</version>
+            <version>9.4.20.v20190813</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
